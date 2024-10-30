@@ -1,18 +1,29 @@
 import { PrismaService } from '@/infra/database/prisma.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './users.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly prismaService: PrismaService) {};
 
     async create(user: CreateUserDto) {
+
+        const userAlreadyExists = await this.prismaService.tbUsuario.findUnique({
+            where: {
+                email: user.email
+            }
+        })
+        if(userAlreadyExists) throw new ConflictException("Usuário já cadastrado");
+
+        const hashedPassword = await bcrypt.hash(user.senha, 10);
+
         const createdUser = await this.prismaService.tbUsuario.create({
             data: {
                 nome: user.nome,
                 img: user.img,
                 email: user.email,
-                senha: user.senha,
+                senha: hashedPassword,
                 id_papel: user.id_papel
             }
         })
