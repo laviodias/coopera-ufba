@@ -2,7 +2,7 @@
 require('dotenv').config({ path: ['.env.ci', '.env'] });
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { ResearchGroupService } from '../research-group.service';
+import { ResearchGroupService } from '@/research-group/research-group.service';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { PrismaService } from '@/infra/database/prisma.service';
 
