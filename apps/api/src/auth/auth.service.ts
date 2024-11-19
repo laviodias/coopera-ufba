@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
+    const payload = { name: user.name, sub: user.id, role: user.role };
 
     return {
       access_token: this.jwtService.sign(payload),
@@ -32,12 +32,10 @@ export class AuthService {
 
     if (user) {
       const payload = { email };
-
-      const token = this.jwtService.sign(payload, {
+      this.jwtService.sign(payload, {
         secret: process.env.JWT_PASSWORD_TOKEN_SECRET,
         expiresIn: process.env.JWT_PASSWORD_TOKEN_EXPIRATION,
       });
-
       // TODO send email with token
 
       return { message: 'Password reset email sent' };
