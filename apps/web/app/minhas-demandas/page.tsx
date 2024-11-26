@@ -1,12 +1,11 @@
 "use client";
-import { Button } from '@/components/ui/button';
-import { CustomIcon } from '@/modules/components/icon/customIcon';
-import MinhasDemandasFilter from '@/modules/minhas-demandas/components/filter/minhasDemandasFilter';
-import MinhasDemandasTable from '@/modules/minhas-demandas/components/table/minhasDemandasTable';
-import { IoIosAddCircleOutline } from 'react-icons/io';
-import useGetMyDemands from '@/api/use-get-my-demands';
-import { useRouter } from 'next/navigation';
-import useDeleteDemand from '@/api/use-delete-demand';
+import { Button } from "@/components/ui/button";
+import { CustomIcon } from "@/modules/components/icon/customIcon";
+import MinhasDemandasFilter from "@/modules/minhas-demandas/components/filter/minhasDemandasFilter";
+import MinhasDemandasTable from "@/modules/minhas-demandas/components/table/minhasDemandasTable";
+import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
+import Link from "next/link";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 const MinhasDemandas = () => {
   const { data: demands = [] }  = useGetMyDemands();
@@ -35,15 +34,17 @@ const MinhasDemandas = () => {
   }
 
   return (
-    <main className="flex justify-center ">
+    <main className="flex justify-center flex-grow m-8">
       <section className="flex flex-col w-full max-w-7xl pt-12 gap-6">
         <div className="flex justify-between">
-          <h1 className="font-bold text-4xl text-blue-strong">
+          <h1 className="font-bold text-2xl text-blue-strong sm:text-4xl">
             Minhas Demandas
           </h1>
-          <Button className="rounded-full" onClick={handleRedirect}>
-            <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" /> Nova
-            demanda
+          <Button asChild className="rounded-full">
+            <Link href={"/cadastro-demandas"}>
+              <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />
+              Nova demanda
+            </Link>
           </Button>
         </div>
         <MinhasDemandasFilter />

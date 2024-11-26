@@ -37,7 +37,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
     getPaginationRowModel: getPaginationRowModel(),
   });
   return (
-    <div className="bg-white rounded-2xl px-6 py-8">
+    <div className="bg-white rounded-2xl px-3 py-4">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -45,7 +45,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead
-                    className="text-blue-strong font-semibold text-2xl"
+                    className="text-blue-strong font-semibold text-lg sm:text-2xl min-w-[150px]"
                     key={header.id}
                   >
                     {header.isPlaceholder
@@ -57,7 +57,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                   </TableHead>
                 );
               })}
-              <TableHead className="text-blue-strong font-semibold text-2xl">
+              <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
                 Ações
               </TableHead>
             </TableRow>
