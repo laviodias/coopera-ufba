@@ -1,5 +1,28 @@
-import { IsEmail, IsEnum, IsNotEmpty, Matches } from 'class-validator';
-import { UserRole } from '@prisma/client';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  Matches,
+} from 'class-validator';
+import { ResearcherType, UserRole } from '@prisma/client';
+
+export class CreateCompanyDto {
+  contactName?: string;
+
+  @IsEmail()
+  contactEmail?: string;
+
+  contactPhone?: string;
+}
+
+export class CreateResearcherDto {
+  urlLattes?: string;
+
+  @IsEnum(ResearcherType)
+  researcherType?: ResearcherType;
+}
+
 export class CreateUserDto {
   @IsNotEmpty()
   name: string;
@@ -9,14 +32,18 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @Matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-  )
+  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
   // 8 or more characters, at least one uppercase letter, one lowercase letter, one number and one special character
   password: string;
 
   @IsEnum(UserRole)
   role: UserRole;
+
+  @IsOptional()
+  company?: CreateCompanyDto;
+
+  @IsOptional()
+  researcher?: CreateResearcherDto;
 }
 
 export class UpdateUserDto {
@@ -24,6 +51,8 @@ export class UpdateUserDto {
   img?: string;
   email?: string;
   password?: string;
+
+  @IsOptional()
   @IsEnum(UserRole)
   role?: UserRole;
 }
