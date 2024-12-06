@@ -9,6 +9,7 @@ import { AuthService } from '@/auth/auth.service';
 import { UserService } from '@/user/user.service';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { MailService } from '@/mailsend/mail.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -25,6 +26,7 @@ describe('AuthController', () => {
         { provide: JwtService, useValue: mockJwtService },
         UserService,
         PrismaService,
+        MailService,
       ],
     }).compile();
 

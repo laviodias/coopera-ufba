@@ -1,3 +1,4 @@
+import { MailService } from '@/mailsend/mail.service';
 import { UserService } from '@/user/user.service';
 import { getUserType } from '@/user/utils/user.types.util';
 import {
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UserService,
+    private readonly mailService: MailService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -49,11 +51,18 @@ export class AuthService {
 
     if (user) {
       const payload = { email };
-      this.jwtService.sign(payload, {
+      const token = this.jwtService.sign(payload, {
         secret: process.env.JWT_PASSWORD_TOKEN_SECRET,
         expiresIn: process.env.JWT_PASSWORD_TOKEN_EXPIRATION,
       });
-      // TODO send email with token
+
+      const resetUrl = `${process.env.FRONT_END_ORIGIN}/reset-password?token=${token}`;
+      await this.mailService.sendEmail(
+        email,
+        'Password Reset Request',
+        user.name,
+        resetUrl,
+      );
 
       return { message: 'Password reset email sent' };
     }
