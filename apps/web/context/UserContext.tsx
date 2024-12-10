@@ -13,6 +13,7 @@ interface User {
   id: string;
   name: string;
   img: string;
+  role: "ADMIN" | "USER";
   utype: "COMPANY" | "RESEARCHER" | "NONE";
 }
 
