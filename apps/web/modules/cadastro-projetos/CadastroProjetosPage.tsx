@@ -1,6 +1,6 @@
 "use client";
 
-import useAddProject from '@/api/projects/use-add-project';
+import useAddProject from "@/api/projects/use-add-project";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,22 +8,22 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 
-import { useToast } from '@/hooks/use-toast';
-import { CreateProject } from '@/types/project';
-import { CalendarIcon } from '@radix-ui/react-icons';
-import { useParams, useRouter } from 'next/navigation';
+import { useToast } from "@/hooks/use-toast";
+import { CreateProject } from "@/types/project";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { useParams, useRouter } from "next/navigation";
 
-import { useForm } from 'react-hook-form';
-import { ProjectFormData } from './types/project-form-data';
-import Keywords from '@/components/keywords';
-import { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { ProjectFormData } from "./types/project-form-data";
+import Keywords from "@/components/keywords";
+import { useState } from "react";
+import { isBefore } from "date-fns";
 
 const CadastrarProjeto = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
-
 
   const {
     handleSubmit,
@@ -53,25 +53,38 @@ const CadastrarProjeto = () => {
 
   const [keywordRequired, setKeywordRequired] = useState<boolean>(false);
   const onSubmit = (data: ProjectFormData) => {
-
-    if(!selectedKeywords.length){
-      setKeywordRequired(true)
-      return
+    if (!selectedKeywords.length) {
+      setKeywordRequired(true);
+      return;
     }
-    
+
+    if (
+      data.finished_at &&
+      isBefore(new Date(data.finished_at), new Date(data.started_at))
+    ) {
+      toast({
+        variant: "destructive",
+        title: "Data inválida",
+        description: "Data de finalização deve ser posterior a data de início.",
+      });
+
+      return;
+    }
+
     const projectData: CreateProject = {
       researchGroupId: params.id,
       name: data.name,
       description: data.description,
       started_at: new Date(data.started_at),
-      finished_at: data.finished_at && new Date(data.finished_at),
+      finished_at: data.finished_at ? new Date(data.finished_at) : undefined,
       keywords: selectedKeywords,
     };
+
     mutate(projectData);
   };
 
   return (
-    <main className="p-8 w-full flex justify-center">
+    <main className="p-8 w-full flex flex-1 justify-center">
       <section className="max-w-7xl w-full">
         <Breadcrumb>
           <BreadcrumbList>
@@ -128,10 +141,12 @@ const CadastrarProjeto = () => {
 
             {errors.description && <span>Este Campo é obrigatório</span>}
 
-            <Keywords onChange={setSelectedKeywords } defaultValue={selectedKeywords} />
+            <Keywords
+              onChange={setSelectedKeywords}
+              defaultValue={selectedKeywords}
+            />
 
             {keywordRequired && <span>Este Campo é obrigatório</span>}
-
 
             <div className="grid grid-cols-2 gap-4">
               <label className="flex gap-2 font-bold text-blue-strong mt-4">
