@@ -1,4 +1,6 @@
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { api } from '@/lib/axios';
 
 
@@ -14,6 +16,7 @@ async function deleteDemand(demandId: string) {
 }
 
 export default function useDeleteDemand(onSuccess: () => void, onError: () => void) {
+
   const queryClient = useQueryClient();
   
   return useMutation({
@@ -22,6 +25,7 @@ export default function useDeleteDemand(onSuccess: () => void, onError: () => vo
       queryClient.invalidateQueries({ queryKey: ['demands']});
       onSuccess()
     },
+
     onError
   })
 }

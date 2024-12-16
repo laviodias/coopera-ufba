@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Link from 'next/link';
 import { loginFormSchema, LoginUserFormData } from '@/app/login/login.form.schema';
@@ -10,7 +11,6 @@ import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -22,7 +22,6 @@ export default function LoginPage() {
   async function loginUser(data: LoginUserFormData) {
     await loginStore.login(data.email, data.password, router); // Pass router to login method
   }
-
   return (
     <main className="h-screen flex flex-col items-center justify-center">
       <section className="w-full max-w-sm bg-white px-8 py-8 rounded-lg shadow-lg">

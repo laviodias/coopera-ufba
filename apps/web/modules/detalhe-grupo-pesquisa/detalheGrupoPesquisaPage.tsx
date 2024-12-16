@@ -1,39 +1,59 @@
 "use client";
 import {
   Breadcrumb,
+  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Button } from '@/components/ui/button';
-import { IoIosAddCircleOutline } from 'react-icons/io';
-import { CustomIcon } from '../components/icon/customIcon';
-import MembersSection from './components/membersSection';
-import { useParams } from 'next/navigation';
-import useGetResearchGroup from '@/api/grupos/use-get-research-group';
-import Link from 'next/link';
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { CustomIcon } from "../components/icon/customIcon";
+import Image from "next/image";
+import MembersSection from "./components/membersSection";
+import { useParams, useRouter } from "next/navigation";
+import useGetResearchGroup from "@/api/grupos/use-get-research-group";
+import React from "react";
+import ProjectsSection from "./components/projectsSection";
 
+enum ETabs {
+  MEMBERS = "membros",
+  PROJECTS = "projetos",
+}
 export default function DetalheGrupoPesquisaPage() {
   const params = useParams();
+  const router = useRouter();
   const groupId = params.id;
+
+  const [selectedTab, setSelectedTab] = React.useState<ETabs>(ETabs.MEMBERS);
 
   const {
     data: researchGroup,
+    isError,
+    error,
     isLoading,
   } = useGetResearchGroup(groupId as string);
   const handleAddProject = () => {
-    return (
-      <Link href={`/cadastro-projetos/${groupId}`}>cadastrar projeto</Link>
-    );
+    router.push(`/cadastro-projetos`);
+  };
+  const handleTabChange = (tab: ETabs) => {
+    setSelectedTab(tab);
   };
 
+  if (isError) {
+    router.push("/404");
+  }
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return (
+      <main className="p-8 w-full flex justify-center flex-grow ">
+        <h1>Carregando</h1>
+      </main>
+    );
   }
   return (
-    <main className="p-8 w-full flex justify-center">
+    <main className="p-8 w-full flex justify-center flex-grow ">
+
       <section className="max-w-7xl w-full">
         <div className="flex  flex-col">
           <Breadcrumb>
@@ -62,7 +82,7 @@ export default function DetalheGrupoPesquisaPage() {
 
             <Button className="rounded-full" onClick={handleAddProject}>
               <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
-              <Link href={`/cadastro-projetos/${groupId}`}>Novo Projeto</Link>
+              Novo Projeto
             </Button>
           </div>
         </div>
@@ -82,12 +102,30 @@ export default function DetalheGrupoPesquisaPage() {
 
           <div className="flex flex-col gap-5 w-[100%]">
             <div className="flex gap-5">
-              <Button className="rounded-full">Lista de Membros</Button>
+              <Button
+                className="rounded-full"
+                onClick={() => {
+                  handleTabChange(ETabs.MEMBERS);
+                }}
+              >
+                Lista de Membros
+              </Button>
 
-              <Button className="rounded-full">Lista de Projetos</Button>
+              <Button
+                className="rounded-full"
+                onClick={() => {
+                  handleTabChange(ETabs.PROJECTS);
+                }}
+              >
+                Lista de Projetos
+              </Button>
             </div>
             {researchGroup ? (
-              <MembersSection members={researchGroup?.members} />
+              selectedTab == ETabs.MEMBERS ? (
+                <MembersSection members={researchGroup?.members} />
+              ) : (
+                <ProjectsSection projects={researchGroup?.projects} />
+              )
             ) : (
               <div>Carregando...</div>
             )}

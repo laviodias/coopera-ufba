@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Button } from '@/modules/shared/ui/button';
-
 import '../../../app/globals.css';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import {
@@ -26,6 +25,7 @@ import Image from 'next/image';
 const headerLinks = {
   none: [
     {
+
       label: "Encontrar demandas",
       path: "/encontrar-demandas",
     },
@@ -40,6 +40,7 @@ const headerLinks = {
       path: "/",
     },
     {
+
       label: "Minhas demandas",
       path: "/minhas-demandas",
     },
@@ -90,16 +91,21 @@ const Header = () => {
     {
       id: "1",
       title: "Proposta recebida para [Nome da demanda]!",
+
       datetime: new Date(),
     },
     {
       id: "2",
+
       title: "Proposta recebida para [Nome da demanda]!",
+
       datetime: new Date(),
     },
     {
       id: "3",
+
       title: "Proposta recebida para [Nome da demanda]!",
+
       datetime: new Date(),
     },
   ] as Notification[];
@@ -191,7 +197,9 @@ const Header = () => {
                 </PopoverTrigger>
                 <PopoverContent className="grid gap-2">
                   <Link href={"/"} className="font-medium hover:underline">
+
                     Meu perfil
+
                   </Link>
                   <Link href={"/"} className="font-medium hover:underline">
                     Sair
@@ -280,7 +288,9 @@ const Header = () => {
                   href="/"
                   className="items-center font-bold text-blue-strong"
                 >
+
                   Meu perfil
+
                 </Link>
               </DrawerClose>
               <DrawerClose className="text-left" asChild>
