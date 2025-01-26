@@ -1,21 +1,25 @@
 "use client";
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
+  BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CustomIcon } from "../components/icon/customIcon";
-import Image from "next/image";
 import MembersSection from "./components/membersSection";
 import { useParams, useRouter } from "next/navigation";
 import useGetResearchGroup from "@/api/grupos/use-get-research-group";
 import React from "react";
 import ProjectsSection from "./components/projectsSection";
+import { TbUserCircle } from "react-icons/tb";
+import { useUser } from "@/context/UserContext";
+import Link from "next/link";
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
 
 enum ETabs {
   MEMBERS = "membros",
@@ -28,10 +32,11 @@ export default function DetalheGrupoPesquisaPage() {
 
   const [selectedTab, setSelectedTab] = React.useState<ETabs>(ETabs.PROJECTS);
 
+  const { user } = useUser();
+
   const {
     data: researchGroup,
     isError,
-    error,
     isLoading,
   } = useGetResearchGroup(groupId as string);
   const handleAddProject = () => {
@@ -51,6 +56,19 @@ export default function DetalheGrupoPesquisaPage() {
       </main>
     );
   }
+
+  console.log({ researchGroup });
+
+  const imageComponent =
+    !!researchGroup?.img && researchGroup.img.includes("/uploads") ? (
+      <img
+        src={`${apiURL}${researchGroup?.img}`}
+        alt="Grupo de Pesquisa"
+        className="max-w-[80%]"
+      />
+    ) : (
+      <TbUserCircle className="text-primary font-normal size-16 row-span-2 col-start-1" />
+    );
   return (
     <main className="p-8 w-full flex justify-center flex-grow ">
       <section className="max-w-7xl w-full">
@@ -60,7 +78,11 @@ export default function DetalheGrupoPesquisaPage() {
               <BreadcrumbItem>
                 <BreadcrumbLink
                   className="hover:text-blue-strong"
-                  href="/cadastro-projetos"
+                  href={
+                    user?.utype === "RESEARCHER"
+                      ? "/meus-grupos-pesquisa"
+                      : "/encontrar-grupo-pesquisa"
+                  }
                 >
                   Grupos de Pesquisa
                 </BreadcrumbLink>
@@ -79,24 +101,40 @@ export default function DetalheGrupoPesquisaPage() {
               {researchGroup?.name}
             </h1>
 
-            <Button className="rounded-full" onClick={handleAddProject}>
-              <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
-              Novo Projeto
-            </Button>
+            {user && (user.utype === "RESEARCHER" || user.role === "ADMIN") && (
+              <Button className="rounded-full" onClick={handleAddProject}>
+                <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
+                Novo Projeto
+              </Button>
+            )}
           </div>
         </div>
 
         <div className="flex w-[100%] gap-5">
           <div className="flex gap-5 p-5 items-center justify-center flex-col max-w-[30%] bg-[#fff] border-[2px] rounded-md border-[#C6C2DE]">
-            <img
-              src="https://ufba.br/sites/portal.ufba.br/files/noticias/brasao_ufba_-_copia.jpg"
-              alt="Grupo de Pesquisa"
-              className="max-w-[80%]"
-            />
+            {imageComponent}
 
             <h1 className="font-size-lg text-2xl">{researchGroup?.name}</h1>
 
             <p>{researchGroup?.description}</p>
+            {user?.utype === "COMPANY" && (
+              <Button
+                asChild
+                variant={"outline"}
+                className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
+              >
+                <Link
+                  href={{
+                    pathname: `/encontrar-grupo-pesquisa/contactar-grupo-pesquisa`,
+                    query: {
+                      id: groupId,
+                    },
+                  }}
+                >
+                  Entrar em contato
+                </Link>
+              </Button>
+            )}
           </div>
 
           <div className="flex flex-col gap-5 w-[100%]">
