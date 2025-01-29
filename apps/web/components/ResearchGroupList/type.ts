@@ -20,7 +20,7 @@ export type ResearchGroup = {
     id: number;
     name: string;
     description: string;
-    urlCNPQ: string;
+    urlCNPQ?: string;
     img: string;
     leader: Reseacher;
     members: Reseacher[];

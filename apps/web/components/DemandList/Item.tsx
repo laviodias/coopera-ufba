@@ -73,7 +73,7 @@ function Item(demand: Demanda) {
           <img
             src=""
             alt="Logo da Empresa"
-            className="row-span-2 col-start-1 row-start-1"
+            className="row-span-2 col-start-1 row-start-1 size-16"
           />
         ) : (
           <TbUserCircle className="text-primary font-normal size-16 row-span-2 col-start-1" />

@@ -3,7 +3,7 @@ export interface GrupoPesquisa {
   name: string;
   description: string;
   img: string;
-  urlCNPQ: string;
+  urlCNPQ?: string;
   leader: {
     id: number;
     name: string;

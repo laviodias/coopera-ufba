@@ -36,7 +36,7 @@ export type TResearchGroup = {
   id: string;
   name: string;
   description: string;
-  urlCNPQ: string;
+  urlCNPQ?: string;
   img: string | null;
   researcherId: string;
   leader: TLeader;

@@ -72,7 +72,6 @@ const CadastrarGruposPesquisa = () => {
     if (file) {
       filename = await handleFileUpload(file);
     }
-    console.log({ filename });
     const researchGroupData: CreateResearchGroup = {
       name: data.name,
       description: data.description,
@@ -80,7 +79,7 @@ const CadastrarGruposPesquisa = () => {
       knowledgeAreas: [data.knowledgeArea],
       researcherId: user ? user?.id : "",
       members: [user ? user?.id : ""],
-      urlCNPQ: data.urlCNPQ,
+      urlCNPQ: data?.urlCNPQ,
       img: filename,
     };
 
@@ -157,7 +156,7 @@ const CadastrarGruposPesquisa = () => {
                 </SelectTrigger>
                 <SelectContent>
                   {areas.map((area) => (
-                    <SelectItem value={area.id}>{area.name}</SelectItem>
+                    <SelectItem value={area.id} key={area.id}>{area.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -183,7 +182,7 @@ const CadastrarGruposPesquisa = () => {
                 type="url"
                 placeholder="URL CNPQ"
                 className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("urlCNPQ", { required: false })}
+                {...register("urlCNPQ", { required: false, setValueAs: (value) => value || null })}
               />
             </label>
 

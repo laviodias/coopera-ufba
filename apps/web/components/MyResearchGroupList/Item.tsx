@@ -13,7 +13,7 @@ interface ItemProp{
 function Item({idPesquisador,researchgroup}:ItemProp) {
     const hasImage = !!(researchgroup.img) && researchgroup.img?.includes("/uploads/")
     const imageComponent = <img src={`${apiURL}${researchgroup.img}`} alt="Logo do Grupo de Pesquisa"
-                                className="row-span-2 col-start-1 row-start-1" />
+                                className="row-span-2 col-start-1 row-start-1 size-16" />
 
     console.log({researchgroup})
 
