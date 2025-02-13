@@ -1,10 +1,16 @@
 export type Keyword = { id: string; name: string };
 export type Project = { id: string; name: string };
+export enum Status {
+  CREATED = "Criada",
+  ACCEPTED = "Aceita",
+  FINISHED = "Finalizada",
+  DELETED = "Excluida",
+};
 export interface Demanda {
   id: string;
   name: string;
   description: string;
-  status: string; //todo fazer um enum
+  status: Status;
   createdAt: string;
   projects: Project[];
   company: {

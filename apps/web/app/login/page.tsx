@@ -121,7 +121,7 @@ const Login = observer(() => {
           className="flex items-center justify-center mt-4 hover:underline"
         >
           <MoveLeftIcon />
-          <p style={{ marginLeft: 5, fontSize: 12 }}>Voltar para Home</p>
+          <p style={{ marginLeft: 5, fontSize: 12 }}>Voltar para página inicial</p>
         </Link>
 
         <p className="text-xs text-center mt-12">

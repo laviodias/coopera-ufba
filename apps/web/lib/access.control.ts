@@ -1,5 +1,5 @@
 import { loadUserFromLocalStorage } from '@/lib/user.storage';
-import { User, UserProfileType, UserRole } from '@/types/user';
+import { User, UserProfileType, UserRole } from '@/types/User';
 import { useRouter } from 'next/navigation';
 
 const profileAccessControl: Record<string, UserProfileType[]> = {

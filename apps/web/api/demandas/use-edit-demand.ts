@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { CreateDemand } from '@/types/demand';
+import { Demand } from '@/types/Demand';
 
 
-async function editDemand(_data: CreateDemand, id: string) {
+async function editDemand(_data: Demand, id: string) {
     const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
     const { data } = await api(apiURL, true).patch(
@@ -17,7 +17,7 @@ async function editDemand(_data: CreateDemand, id: string) {
 
 export default function useEditDemand(onSuccess: () => void, onError: () => void, id: string) {
     return useMutation({
-        mutationFn: (data: CreateDemand) => editDemand(data, id),
+        mutationFn: (data: Demand) => editDemand(data, id),
         onSuccess,
         onError
     })

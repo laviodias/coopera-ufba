@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { useUser } from "@/context/UserContext";
 import useAddResearchGroup from "@/api/research-group/use-add-research-group";
 import useGetAllKnowledgeAreas from "@/api/research-group/use-get-all-knowledgeAreas";
-import { CreateResearchGroup } from "@/types/researchGroup";
+import { CreateResearchGroup } from "@/types/ResearchGroup";
 import { useToast } from "@/hooks/use-toast";
 import { handleFileUpload } from "@/api/research-group/use-upload-file";
 

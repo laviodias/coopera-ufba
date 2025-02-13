@@ -8,13 +8,13 @@ export type TLeader = {
   updatedAt: string;
 };
 
-export type TUser = {
+export type User = {
   id: string;
   name: string;
   email: string;
 };
 
-export type TProject = {
+export type Project = {
   id: string;
   name: string;
   researchGroupId: string;
@@ -29,10 +29,10 @@ export type TMember = {
   researcherType: EResearcherType;
   createdAt: string;
   updatedAt: string;
-  user: TUser;
+  user: User;
 };
 
-export type TResearchGroup = {
+export type ResearchGroup = {
   id: string;
   name: string;
   description: string;
@@ -41,5 +41,5 @@ export type TResearchGroup = {
   researcherId: string;
   leader: TLeader;
   members: TMember[];
-  projects: TProject[];
+  projects: Project[];
 };

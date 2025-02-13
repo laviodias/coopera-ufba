@@ -1,6 +1,5 @@
 import { getUserFromData } from "../register.actions";
-import {CreateUser} from "@/context/userRegisterContext";
-import {ResearcherType, UserProfileType, UserRole} from "@/types/user";
+import { ResearcherType, UserProfileType, UserRole, User } from "@/types/User";
 
 describe('getUserFromData function', () => {
 
@@ -13,7 +12,7 @@ describe('getUserFromData function', () => {
       passwordConfirmation: 'secretPassword',
     };
 
-    const expectedUser: CreateUser = {
+    const expectedUser: User = {
       ...userData,
       role: UserRole.USER,
       company: {
@@ -36,7 +35,7 @@ describe('getUserFromData function', () => {
       passwordConfirmation: 'secretPassword',
     };
 
-    const expectedUser: CreateUser = {
+    const expectedUser: User = {
       ...userData,
       role: UserRole.USER,
       researcher: {
@@ -72,7 +71,7 @@ describe('getUserFromData function', () => {
       passwordConfirmation: 'secretPassword',
     };
 
-    const expectedUser: CreateUser = {
+    const expectedUser: User = {
       ...userData,
       role: UserRole.USER,
     };

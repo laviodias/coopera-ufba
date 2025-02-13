@@ -19,9 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserType } from "../../types/user";
+import { UserType } from "../../types/User";
 import { Input } from "@/components/ui/input";
-import { AdminUpdateUser, UserRole, UserStatus } from "@/types/user";
+import { AdminUpdateUser, UserRole, UserStatus } from "@/types/User";
 import useAdminUpdateUser from "@/api/admin/user/use-update-users";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";

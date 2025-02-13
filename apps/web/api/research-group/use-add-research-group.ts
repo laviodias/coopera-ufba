@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
-import { CreateResearchGroup } from "@/types/researchGroup";
+import { ResearchGroup } from "@/types/ResearchGroup";
 
-async function addResearchGroup(_data: CreateResearchGroup) {
+async function addResearchGroup(_data: ResearchGroup) {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
 
   const { data } = await api(apiURL, true).post(
@@ -18,7 +18,7 @@ export default function useAddResearchGroup(
   onError: () => void
 ) {
   return useMutation({
-    mutationFn: (data: CreateResearchGroup) => addResearchGroup(data),
+    mutationFn: (data: ResearchGroup) => addResearchGroup(data),
     onSuccess,
     onError,
   });

@@ -8,12 +8,25 @@ import {
 } from "@/components/ui/table";
 
 import React from "react";
-import { TProject } from "../types/researchgroup.type";
+import { Project } from "@/types/Project";
+import Link from "next/link";
+import { useUser } from "@/context/UserContext";
 
 type TProps = {
-  projects: TProject[];
+  projects: Project[];
 };
 export default function ProjectsSection(props: TProps) {
+  const { user } = useUser();
+  console.log(props.projects)
+
+  const onClickDelete = (id: string) => {};
+
+  /* const isCurrentUserLeader = (projectIndex: number) => {
+    if (!user) return false;
+
+    return user.id == props.projects[projectIndex].leader.userId;
+  } */
+
   return (
     <div className="bg-white rounded-2xl px-3 py-4 w-[100%]">
       <Table>
@@ -22,23 +35,43 @@ export default function ProjectsSection(props: TProps) {
             <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
               Nome
             </TableHead>
-            {/*
+
             <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
-              Status
+              Demanda
             </TableHead>
-            */}
+            
+            <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
+              Ações
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {props.projects.map((project) => {
+          {props.projects.length ? props.projects.map((project) => {
             return (
               <TableRow>
                 <TableCell className="text-blue-light py-6">
                   {project.name}
                 </TableCell>
+
+                <TableCell className="text-blue-light py-6">
+                  {project?.demand?.name || "Nenhuma"}
+                </TableCell>
+
+                <TableCell className="text-blue-light py-6">
+                  <div className="flex gap-2">
+                    <Link href={`/projetos/${project.id}`} className="text-blue-light">Editar</Link>
+                    <button onClick={() => onClickDelete(project.id)} className="text-blue-light">Excluir</button>
+                  </div>
+                </TableCell>
               </TableRow>
             );
-          })}
+          }) : (
+            <TableRow>
+              <TableCell className="text-blue-light py-6 text-centerT" colSpan={2}>
+                Nenhum projeto encontrado
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>

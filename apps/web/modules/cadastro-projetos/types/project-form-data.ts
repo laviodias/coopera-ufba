@@ -3,4 +3,5 @@ export type ProjectFormData = {
   description: string;
   link?: string;
   keywords: string;
+  demandId?: string;
 };

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 
-import { UserType } from "../../types/user";
+import { UserType } from "../../types/User";
 import { columns } from "./columns";
 import { Pagination } from "./pagination";
 

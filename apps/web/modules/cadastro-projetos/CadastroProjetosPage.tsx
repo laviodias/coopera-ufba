@@ -12,34 +12,30 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { useToast } from "@/hooks/use-toast";
-import { CreateProject } from "@/types/project";
-import { CalendarIcon } from "@radix-ui/react-icons";
+import { Project } from "@/types/Project";
 import { useParams, useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { ProjectFormData } from "./types/project-form-data";
 import Keywords from "@/components/keywords";
 import { useState } from "react";
-import { isBefore } from "date-fns";
-import { useUser } from "@/context/UserContext";
+import useGetAllDemands from "@/api/demandas/use-get-all-demands";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CadastrarProjeto = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
+  const [selectedDemand, setSelectedDemand] = useState<string>();
+  const { data: demands = [] } = useGetAllDemands();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<ProjectFormData>();
-  const { user } = useUser();
-
+  
   const { toast } = useToast();
   const params = useParams<{ id: string }>();
   const router = useRouter();
-
-  if (!user) {
-    router.push("/login");
-  }
 
   const { mutate } = useAddProject(
     () => {
@@ -66,12 +62,12 @@ const CadastrarProjeto = () => {
       return;
     }
 
-    const projectData: CreateProject = {
+    const projectData: Partial<Project> = {
       researchGroupId: params.id,
       name: data.name,
-      description: data.description,
       link: data.link,
       keywords: selectedKeywords,
+      demandId: selectedDemand,
     };
 
     mutate(projectData);
@@ -127,18 +123,6 @@ const CadastrarProjeto = () => {
               )}
             </label>
 
-            <label className="font-bold text-blue-strong mt-4">
-              Descrição*
-              <textarea
-                {...register("description", { required: true })}
-                placeholder="Digite o texto..."
-                rows={4}
-                className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
-              />
-            </label>
-
-            {errors.description && <span>Este Campo é obrigatório</span>}
-
             <Keywords
               onChange={setSelectedKeywords}
               defaultValue={selectedKeywords}
@@ -152,8 +136,24 @@ const CadastrarProjeto = () => {
                 type="url"
                 placeholder="Informe link do projeto"
                 className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("link", { required: false })}
+                {...register("link", { required: false, setValueAs: (value) => value || null })}
               />
+            </label>
+
+            <label className="font-bold text-blue-strong mt-4">
+              Vincular Demanda
+              <Select onValueChange={setSelectedDemand} {...register("demandId")}>
+                <SelectTrigger className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2">
+                  <SelectValue placeholder={"Selecione uma demanda"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {demands.map((demand) => (
+                    <SelectItem key={demand.id} value={demand.id}>
+                      {demand.company.user.name} - {demand.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </label>
 
             <div className="flex flex-row gap-4 justify-center mt-10">

@@ -16,7 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { CreateDemand } from "@/types/demand";
+import { Demand } from "@/types/Demand";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { FiInfo } from "react-icons/fi";
@@ -51,7 +51,7 @@ const EditarDemanda = () => {
     register,
     formState: { errors },
     setValue,
-  } = useForm<CreateDemand>();
+  } = useForm<Demand>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -83,8 +83,8 @@ const EditarDemanda = () => {
     params.id
   );
 
-  const onSubmit = (data: CreateDemand) => {
-    const demandData: CreateDemand = {
+  const onSubmit = (data: Demand) => {
+    const demandData: Demand = {
       name: data.name,
       description: data.description,
       // links: data.links

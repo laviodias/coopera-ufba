@@ -1,9 +1,9 @@
 import { api } from "@/lib/axios"
-import { AdminUpdateUser } from "@/types/user"
+import { User } from "@/types/User"
 import { useMutation } from "@tanstack/react-query"
 
 
-async function adminUpdateUserMethod(userId: string, _data: AdminUpdateUser) {
+async function adminUpdateUserMethod(userId: string, _data: User) {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
   const { data } = await api(apiURL, true).patch(
@@ -19,7 +19,7 @@ async function adminUpdateUserMethod(userId: string, _data: AdminUpdateUser) {
 
 export default function useAdminUpdateUser(userId: string, onSuccess: () => void, onError: () => void) {
   return useMutation({
-    mutationFn: (data: AdminUpdateUser) => adminUpdateUserMethod(userId, data),
+    mutationFn: (data: User) => adminUpdateUserMethod(userId, data),
     onSuccess: () => {
       onSuccess();
     },

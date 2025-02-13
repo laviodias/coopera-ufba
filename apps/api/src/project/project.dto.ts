@@ -6,7 +6,7 @@ import {
   IsUUID,
 } from 'class-validator';
 
-export class CreateProjectDto {
+export class ProjectDto {
   @IsNotEmpty()
   @IsString()
   name: string;

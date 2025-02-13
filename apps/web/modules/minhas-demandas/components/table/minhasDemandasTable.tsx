@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { IoMdCreate } from "react-icons/io";
-import { Demanda } from "../../interfaces/demanda";
+import { Demanda, Status } from "../../interfaces/demanda";
 import { CustomIcon } from "@/modules/components/icon/customIcon";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { format } from "date-fns";
@@ -37,6 +37,15 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
       header: "Data de criação",
       cell: ({ row }) => format(row.getValue("createdAt"), "dd/MM/yyyy"),
     },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => Status[row.getValue("status") as keyof typeof Status]
+    },
+    /* {
+      accessorKey: "projects",
+      header: "Projeto",
+    }, */
   ];
 
   const table = useReactTable({
@@ -66,7 +75,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                   </TableHead>
                 );
               })}
-              <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
+              <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl text-center">
                 Ações
               </TableHead>
             </TableRow>
@@ -85,7 +94,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                   </TableCell>
                 ))}
                 <TableCell>
-                  <div className="flex gap-8">
+                  <div className="flex gap-2 justify-center">
                     <Button
                       variant={"ghost"}
                       size={"icon"}

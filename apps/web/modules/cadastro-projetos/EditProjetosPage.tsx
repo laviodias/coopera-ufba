@@ -1,5 +1,6 @@
 "use client";
 
+import useAddProject from "@/api/projects/use-add-project";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,65 +9,71 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { useForm } from "react-hook-form";
-import useAddDemand from "@/api/demandas/use-add-demand";
-import { Demand } from "@/types/Demand";
-import { useToast } from "@/hooks/use-toast";
-import { checkAccessAndRedirect } from "@/lib/access.control";
-import { usePathname, useRouter } from "next/navigation";
-import { FiInfo } from "react-icons/fi";
-import { useState } from "react";
-import Keywords from "@/components/keywords";
 
-const CadastrarDemanda = () => {
-  const router = useRouter();
-  checkAccessAndRedirect(router, usePathname());
+import { useToast } from "@/hooks/use-toast";
+import { Project } from "@/types/Project";
+import { useParams, useRouter } from "next/navigation";
+
+import { useForm } from "react-hook-form";
+import { ProjectFormData } from "./types/project-form-data";
+import Keywords from "@/components/keywords";
+import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { Project } from "@/components/ResearchGroupList/type";
+
+const EditarProjeto = ({ projeto }: { projeto: Project }) => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<Demand>();
-  const { toast } = useToast();
+  } = useForm<ProjectFormData>();
+  const { user } = useUser();
 
-  const { mutate, isPending } = useAddDemand(
+  const { toast } = useToast();
+  const params = useParams<{ id: string }>();
+  const router = useRouter();
+
+  if (!user) {
+    router.push("/login");
+  }
+
+  const { mutate } = useAddProject(
     () => {
       toast({
         variant: "success",
         title: "Sucesso",
-        description: "A demanda foi cadastrada com sucesso.",
+        description: "O projeto foi salvo com sucesso.",
       });
-
-      router.push("/minhas-demandas");
+      router.back();
     },
     () => {
       toast({
         variant: "destructive",
         title: "Ocorreu um error",
-        description: "Ocorreu um erro ao tentar criar nova demanda.",
+        description: "Ocorreu um erro ao tentar salvar este projeto.",
       });
     }
   );
 
-  const onSubmit = (data: Demand) => {
-    const demandData: Demand = {
+  const [keywordRequired, setKeywordRequired] = useState<boolean>(false);
+  const onSubmit = (data: ProjectFormData) => {
+    if (!selectedKeywords.length) {
+      setKeywordRequired(true);
+      return;
+    }
+
+    const projectData: Project = {
+      researchGroupId: params.id,
       name: data.name,
       description: data.description,
       link: data.link,
-      public: data.public == "on",
       keywords: selectedKeywords,
     };
 
-    mutate(demandData);
+    mutate(projectData);
   };
 
   const handleRedirect = () => {
@@ -74,29 +81,29 @@ const CadastrarDemanda = () => {
   };
 
   return (
-    <main className="p-8 w-full flex justify-center">
+    <main className="p-8 w-full flex flex-1 justify-center">
       <section className="max-w-7xl w-full">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
                 className="hover:text-blue-strong"
-                href="/minhas-demandas"
+                href={`/detalhe-grupo-pesquisa/${params.id}`}
               >
-                Minhas demandas
+                Detalhes do Grupo de Pesquisa
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="text-primary font-bold">
-                Cadastrar demandas
+                Editar Projeto
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <div className="flex mb-4">
           <h1 className="text-4xl font-bold text-blue-strong">
-            Cadastrar demanda
+            Editar Projeto
           </h1>
         </div>
         <div className="p-4 bg-white shadow rounded-xl mt-4 h-[700] max-w-[1350]">
@@ -129,60 +136,34 @@ const CadastrarDemanda = () => {
               />
             </label>
 
-            <div className="flex gap-2 items-center">
-              <Switch {...register("public")} />
-              <label>Demanda Pública?</label>
-
-              <Tooltip>
-                <TooltipTrigger>
-                  <FiInfo color="#6E6893" />
-                </TooltipTrigger>
-                <TooltipContent className="bg-black/80 max-w-60">
-                  Demandas públicas são visíveis para todos os usuários do site.
-                </TooltipContent>
-              </Tooltip>
-            </div>
-
-            <label className="font-bold text-blue-strong mt-4">
-              Link
-              <input
-                type="url"
-                placeholder="Informe link da demanda"
-                className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("link", { required: false })}
-              />
-            </label>
-
-            <div className="font-bold text-base text-blue-strong">
-              <label>Anexo</label>
-              <div className="flex items-center mt-2">
-                <Button className="rounded-full py-2.5 px-8">
-                  Adicionar anexo
-                </Button>
-              </div>
-            </div>
+            {errors.description && <span>Este Campo é obrigatório</span>}
 
             <Keywords
               onChange={setSelectedKeywords}
               defaultValue={selectedKeywords}
             />
 
-            {errors.description && <span>This field is required</span>}
+            {keywordRequired && <span>Este Campo é obrigatório</span>}
+
+            <label className="font-bold text-blue-strong mt-4">
+              Link
+              <input
+                type="url"
+                placeholder="Informe link do projeto"
+                className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
+                {...register("link", { required: false, setValueAs: (value) => value || null })}
+              />
+            </label>
 
             <div className="flex flex-row gap-4 justify-center mt-10">
-              <Button
-                type="submit"
-                className="rounded-full py-2.5 px-8"
-                disabled={isPending}
-              >
-                {isPending ? "Cadastrando..." : "Cadastrar demanda"}
+              <Button type="submit" className="rounded-full py-2.5 px-8">
+                Salvar projeto
               </Button>
-
               <Button
                 variant={"outline"}
                 className="rounded-full py-2.5 px-8"
-                onClick={handleRedirect}
                 type="reset"
+                onClick={handleRedirect}
               >
                 Cancelar
               </Button>
@@ -194,4 +175,4 @@ const CadastrarDemanda = () => {
   );
 };
 
-export default CadastrarDemanda;
+export default EditarProjeto;

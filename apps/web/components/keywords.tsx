@@ -6,7 +6,7 @@ import useAddKeyword from '../api/keywords/use-add-keyword';
 import useGetKeywords from '../api/keywords/use-get-keywords';
 
 
-function Keywords({ onChange, defaultValue = []  }: {onChange: Dispatch<SetStateAction<string[]>>, defaultValue: string[]}) {
+function Keywords({ onChange, defaultValue = [], optional = false  }: {onChange: Dispatch<SetStateAction<string[]>>, defaultValue: string[], optional?: boolean}) {
   const {data: keywords = [], refetch} = useGetKeywords();
   const mappedKeywords = keywords.map(({name, id}) => ({label: name, value:id}))
 
@@ -34,7 +34,7 @@ function Keywords({ onChange, defaultValue = []  }: {onChange: Dispatch<SetState
 
   return (
     <div className="font-bold text-base text-blue-strong">
-      <label>Palavra-chave</label>
+      <label>Palavra-chave{optional ? "" : "*"}</label>
       <div className="flex items-center mt-2">
         <MultiSelect
           options={mappedKeywords}

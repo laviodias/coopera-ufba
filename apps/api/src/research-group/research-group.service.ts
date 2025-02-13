@@ -112,7 +112,11 @@ export class ResearchGroupService {
       },
       include: {
         leader: true,
-        projects: true,
+        projects: {
+          include: {
+            demand: true,
+          }
+        }
       },
     });
 
@@ -137,7 +141,11 @@ export class ResearchGroupService {
       },
       include: {
         leader: true,
-        projects: true,
+        projects: {
+          include: {
+            demand: true,
+          }
+        },
         members: {
           include: {
             user: {

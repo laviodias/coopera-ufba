@@ -1,5 +1,6 @@
-import { CreateUser, CreateUserCompany, CreateUserResearcher } from "./register.types";
-import {ResearcherType, UserProfileType, UserRole} from "@/types/user";
+import { Company } from "@/types/Company";
+import { Researcher, ResearcherTypeEnum } from "@/types/Researcher";
+import { UserTypeEnum, UserRoleEnum, User } from "@/types/User";
 
 
 export function getUserFromData(userData: {
@@ -8,30 +9,30 @@ export function getUserFromData(userData: {
     email: string,
     password: string,
     passwordConfirmation: string
-  }): CreateUser {
+  }): User {
 
-    let company: CreateUserCompany | undefined;
-    let researcher: CreateUserResearcher | undefined;
+    let company: Partial<Company> | undefined;
+    let researcher: Partial<Researcher> | undefined;
 
-    if (userData.utype == UserProfileType.COMPANY) {
+    if (userData.utype == UserTypeEnum.COMPANY) {
         company = {
             contactName: userData.name,
             contactEmail: userData.email
         }
-    } else if (userData.utype == UserProfileType.RESEARCHER) {
+    } else if (userData.utype == UserTypeEnum.RESEARCHER) {
         researcher = {
-            researcherType: ResearcherType.STUDENT
+            researcherType: ResearcherTypeEnum.STUDENT
         }
     } else {
         researcher = undefined;
         company = undefined;
     }
 
-    const createUser: CreateUser = {
+    const createUser: Partial<User> = {
         ...userData,
-        role: UserRole.USER,
-        company: company, 
-        researcher: researcher,
+        role: UserRoleEnum.USER,
+        company: company as Company, 
+        researcher: researcher as Researcher
     };
     return createUser;
 }

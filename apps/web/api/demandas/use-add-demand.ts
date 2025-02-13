@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { CreateDemand } from '@/types/demand';
+import { Demand } from '@/types/Demand';
 
 
-async function addDemand(_data: CreateDemand) {
+async function addDemand(_data: Demand) {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
   const { data } = await api(apiURL, true).post(
@@ -17,7 +17,7 @@ async function addDemand(_data: CreateDemand) {
 
 export default function useAddDemand(onSuccess: () => void, onError: () => void) {
   return useMutation({
-    mutationFn: (data: CreateDemand) => addDemand( data),
+    mutationFn: (data: Demand) => addDemand( data),
     onSuccess,
     onError
   })

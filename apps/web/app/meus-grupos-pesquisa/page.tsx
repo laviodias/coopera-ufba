@@ -40,6 +40,7 @@ function MeusGruposPesquisa() {
           handleSearch={handleSearch}
           setOrder={setOrder}
           order={order}
+          isSearching={!!search}
         />
 
         {pesquisador && <MyResearchGroupList pesquisador={pesquisador} />}

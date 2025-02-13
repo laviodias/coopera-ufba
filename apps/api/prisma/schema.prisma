@@ -13,6 +13,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  APPROVED
+  BLOCK
+  PENDING
+}
+
+enum DemandStatus {
+  CREATED
+  ACCEPTED
+  FINISHED
+  DELETED
+}
+
+enum NotificationStartedBy {
+  RESEARCHGROUP
+  COMPANY
+}
+
+enum ResearcherType {
+  STUDENT
+  TEACHER
+}
+
 model User {
   id         String      @id @default(uuid())
   email      String      @unique
@@ -26,17 +54,6 @@ model User {
   updatedAt  DateTime    @updatedAt
   company    Company?
   researcher Researcher?
-}
-
-enum UserRole {
-  USER
-  ADMIN
-}
-
-enum UserStatus {
-  APPROVED
-  BLOCK
-  PENDING
 }
 
 model Keyword {
@@ -68,11 +85,6 @@ model Researcher {
   researchGroupsAsMember ResearchGroup[] @relation("ResearchGroupMembers")
   createdAt              DateTime        @default(now())
   updatedAt              DateTime        @updatedAt
-}
-
-enum ResearcherType {
-  STUDENT
-  TEACHER
 }
 
 model ResearchGroup {
@@ -117,9 +129,9 @@ model Demand {
   name          String
   link          String?
   company       Company        @relation(fields: [companyId], references: [userId])
-  description   String
   companyId     String
-  status        String         @default("CREATED")
+  description   String
+  status        DemandStatus   @default(CREATED)
   public        Boolean        @default(true)
   projects      Project[]
   keywords      Keyword[]
@@ -138,11 +150,6 @@ model Notification {
   researchGroupId String
   started_by      NotificationStartedBy
   createdAt       DateTime              @default(now())
-}
-
-enum NotificationStartedBy {
-  RESEARCHGROUP
-  COMPANY
 }
 
 model Attachment {

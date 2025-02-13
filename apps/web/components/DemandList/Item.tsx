@@ -21,29 +21,7 @@ function Item(demand: Demanda) {
 
   return (
     <li className="px-4 py-5 bg-white border rounded-2xl">
-      <div className="flex xs:items-center justify-between mb-8 flex-col xs:flex-row">
-        <h2 className="text-3xl font-semibold">{demand.name}</h2>
-        {user?.utype !== "COMPANY" && (
-          <Button
-            asChild
-            variant={"outline"}
-            className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
-          >
-            <Link
-              href={{
-                pathname: `${pathname}/contactar-empresa`,
-                query: {
-                  idDemanda: demand.id,
-                  nomeContato: demand.company.contactName,
-                  emailContato: demand.company.contactEmail,
-                },
-              }}
-            >
-              Entrar em contato
-            </Link>
-          </Button>
-        )}
-      </div>
+      <h2 className="text-3xl font-semibold">{demand.name}</h2>
 
       <p className="text-blue-light text-sm mb-4">
         Publicado{" "}
@@ -68,7 +46,7 @@ function Item(demand: Demanda) {
         </ul>
       )}
 
-      <div className="grid grid-cols-[auto_1fr] grid-rows-4 gap-x-1.5">
+      <div className="grid grid-cols-[auto_1fr] grid-rows-3 gap-x-1.5">
         {demand.company.image ? (
           <img
             src=""
@@ -94,6 +72,27 @@ function Item(demand: Demanda) {
           {addressToString(demand.company.address)}
         </p>
       </div>
+
+      {user?.utype !== "COMPANY" && (
+          <Button
+            asChild
+            variant={"outline"}
+            className="px-9 py-2.5 rounded-full xs:mt-0"
+          >
+            <Link
+              href={{
+                pathname: `${pathname}/contactar-empresa`,
+                query: {
+                  idDemanda: demand.id,
+                  nomeContato: demand.company.contactName,
+                  emailContato: demand.company.contactEmail,
+                },
+              }}
+            >
+              Entrar em contato
+            </Link>
+          </Button>
+        )}
     </li>
   );
 }

@@ -1,4 +1,4 @@
-import {UserProfileType, UserRole} from '@/types/user';
+import {UserProfileType, UserRole} from '@/types/User';
 import {hasAccess} from "@/lib/access.control";
 
 

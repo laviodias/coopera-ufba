@@ -9,7 +9,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { CreateProjectDto } from './project.dto';
+import { ProjectDto } from './project.dto';
 import { UpdateProjectDto } from './project.dto';
 import { ResearchGroupService } from '@/research-group/research-group.service';
 
@@ -37,7 +37,7 @@ export class ProjectController {
   }
 
   @Post()
-  async create(@Body() project: CreateProjectDto) {
+  async create(@Body() project: ProjectDto) {
     const researchGroup = await this.researchGroupService.findOne(
       project.researchGroupId,
     );

@@ -8,7 +8,7 @@ export class MailService {
   async sendEmail(to: string, subject: string, name: string, resetUrl: string) {
     const url = 'https://api.sendinblue.com/v3/smtp/email';
     const data = {
-      sender: { name: 'Coopera UFBA', email: 'ufba-projects@outlook.com' },
+      sender: { name: 'Coopera UFBA', email: 'cooperaufba@gmail.com' },
       to: [{ email: to }],
       subject,
       templateId: 1,
@@ -34,7 +34,7 @@ export class MailService {
   async sendTextEmail(to: string, subject: string, text: string) {
     const url = 'https://api.sendinblue.com/v3/smtp/email';
     const data = {
-      sender: { name: 'Coopera UFBA', email: 'ufba-projects@outlook.com' },
+      sender: { name: 'Coopera UFBA', email: 'cooperaufba@gmail.com' },
       to: [{ email: to }],
       subject,
       htmlContent: text,

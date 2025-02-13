@@ -39,9 +39,7 @@ export default function DetalheGrupoPesquisaPage() {
     isError,
     isLoading,
   } = useGetResearchGroup(groupId as string);
-  const handleAddProject = () => {
-    router.push(`/cadastro-projetos/${groupId}`);
-  };
+
   const handleTabChange = (tab: ETabs) => {
     setSelectedTab(tab);
   };
@@ -56,8 +54,6 @@ export default function DetalheGrupoPesquisaPage() {
       </main>
     );
   }
-
-  console.log({ researchGroup });
 
   const imageComponent =
     !!researchGroup?.img && researchGroup.img.includes("/uploads") ? (
@@ -102,10 +98,21 @@ export default function DetalheGrupoPesquisaPage() {
             </h1>
 
             {user && (user.utype === "RESEARCHER" || user.role === "ADMIN") && (
-              <Button className="rounded-full" onClick={handleAddProject}>
-                <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
-                Novo Projeto
-              </Button>
+              selectedTab === ETabs.PROJECTS ? (
+                <Link href={`/cadastro-projetos/${groupId}`}>
+                  <Button className="rounded-full">
+                      <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
+                      Novo Projeto
+                  </Button>
+                </Link>
+              ) : (
+                <Link href={`/cadastro-membros/${groupId}`}>
+                  <Button className="rounded-full">
+                      <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
+                      Novo Membro
+                  </Button>
+                </Link>
+              )
             )}
           </div>
         </div>
@@ -141,6 +148,7 @@ export default function DetalheGrupoPesquisaPage() {
             <div className="flex gap-5">
               <Button
                 className="rounded-full"
+                variant={selectedTab === ETabs.PROJECTS ? "default" : "secondary"}
                 onClick={() => {
                   handleTabChange(ETabs.PROJECTS);
                 }}
@@ -150,6 +158,7 @@ export default function DetalheGrupoPesquisaPage() {
 
               <Button
                 className="rounded-full"
+                variant={selectedTab === ETabs.MEMBERS ? "default" : "secondary"}
                 onClick={() => {
                   handleTabChange(ETabs.MEMBERS);
                 }}
@@ -159,7 +168,7 @@ export default function DetalheGrupoPesquisaPage() {
             </div>
             {researchGroup ? (
               selectedTab == ETabs.MEMBERS ? (
-                <MembersSection members={researchGroup?.members} />
+                <MembersSection members={researchGroup?.members} leaderId={researchGroup?.leader.userId}/>
               ) : (
                 <ProjectsSection projects={researchGroup?.projects} />
               )

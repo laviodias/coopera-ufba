@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
-import { CreateProject } from "@/types/project";
+import { Project } from "@/types/Project";
 
-async function addProject(_data: CreateProject) {
+async function addProject(_data: Partial<Project>) {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
 
   const { data } = await api(apiURL, true).post(
@@ -19,7 +19,7 @@ export default function useAddProject(
   onError: () => void
 ) {
   return useMutation({
-    mutationFn: (data: CreateProject) => addProject(data),
+    mutationFn: (data: Partial<Project>) => addProject(data),
     onSuccess,
     onError,
   });

@@ -77,8 +77,8 @@ export class DemandService {
 
   async delete(id: string) {
     return this.prismaService.demand.update({
-      data: { status: 'DELETED' },
       where: { id },
+      data: { status: 'DELETED' },
     });
   }
 

@@ -6,7 +6,7 @@ import {
   persistUserToLocalStorage,
 } from "@/lib/user.storage";
 import userService from "@/api/user.service";
-import { User, UserProfileType, UserRole } from "@/types/user";
+import { User, UserTypeEnum, UserRoleEnum } from "@/types/User";
 
 class LoginContext {
   isLoading: boolean = false;
@@ -20,15 +20,15 @@ class LoginContext {
     makeAutoObservable(this);
   }
 
-  redirectUser(userRole: UserRole, userType: UserProfileType) {
+  redirectUser(userRole: UserRoleEnum, userType: UserTypeEnum) {
     switch (userRole) {
-      case UserRole.ADMIN:
+      case UserRoleEnum.ADMIN:
         return "/painel-administrativo";
     }
     switch (userType) {
-      case UserProfileType.COMPANY:
+      case UserTypeEnum.COMPANY:
         return "/encontrar-grupo-pesquisa";
-      case UserProfileType.RESEARCHER:
+      case UserTypeEnum.RESEARCHER:
         return "/encontrar-demandas";
       default:
         return "/";
