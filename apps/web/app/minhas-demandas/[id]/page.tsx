@@ -189,7 +189,7 @@ const EditarDemanda = () => {
               </div>
             )}
 
-            {errors.link && <span>This field is required</span>}
+            {errors.link && <span>Este campo é obrigatório</span>}
             <label className="font-bold text-blue-strong mt-4">
               Link
               <input
@@ -217,7 +217,7 @@ const EditarDemanda = () => {
               />
             )}
 
-            {errors.description && <span>This field is required</span>}
+            {errors.description && <span>Este campo é obrigatório</span>}
 
             <div className="flex flex-row gap-4 justify-center mt-10">
               <Button

@@ -80,7 +80,6 @@ const Header = () => {
   const { user, setUser } = useUser();
 
   const { data: unseenNotifications } = useGetUnseenNotificationsCount();
-  console.log('unseenNotifications', unseenNotifications);
 
   const formatName = (name: string) => {
     const firstName = name.split(" ")[0];

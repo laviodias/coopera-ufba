@@ -1,5 +1,6 @@
 import { Attachment } from './Attachment';
 import { Company } from './Company';
+import { Project } from './Project';
 
 export enum DemandStatusEnum {
   CREATED = 'CREATED',
@@ -18,4 +19,5 @@ export type Demand = {
   company: Company;
   status: DemandStatusEnum;
   attachments: Attachment[];
+  projects: Project[] | string[];
 }

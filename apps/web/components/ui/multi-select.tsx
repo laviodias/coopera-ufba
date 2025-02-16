@@ -121,7 +121,7 @@ export const MultiSelect = React.forwardRef<
       onValueChange,
       variant,
       defaultValue = [],
-      placeholder = "Select options",
+      placeholder = "Selecione opções",
       animation = 0,
       maxCount = 3,
       modalPopover = false,
@@ -339,7 +339,7 @@ export const MultiSelect = React.forwardRef<
                         onSelect={handleClear}
                         className="flex-1 justify-center cursor-pointer"
                       >
-                        Clear
+                        Limpar
                       </CommandItem>
                       <Separator
                         orientation="vertical"
@@ -351,7 +351,7 @@ export const MultiSelect = React.forwardRef<
                     onSelect={() => setIsPopoverOpen(false)}
                     className="flex-1 justify-center cursor-pointer max-w-full"
                   >
-                    Close
+                    Fechar
                   </CommandItem>
                 </div>
               </CommandGroup>

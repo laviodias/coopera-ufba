@@ -26,7 +26,7 @@ describe('US: As company user, I want...', () => {
 
     cy.get('input[name="name"]').type('Test Project');
     cy.get('button').contains('Cadastrar demanda').click();
-    cy.get('span').contains('This field is required').should('be.visible');
+    cy.get('span').contains('Este campo é obrigatório').should('be.visible');
   });
 
   it('should successfully submit the form with all fields filled', () => {

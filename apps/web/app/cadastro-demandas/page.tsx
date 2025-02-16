@@ -23,13 +23,27 @@ import { useToast } from "@/hooks/use-toast";
 import { checkAccessAndRedirect } from "@/lib/access.control";
 import { usePathname, useRouter } from "next/navigation";
 import { FiInfo } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Keywords from "@/components/keywords";
+import { MultiSelect } from "@/components/ui/multi-select";
+import useGetAvailableProjects from "@/api/projects/use-get-available-projects";
 
 const CadastrarDemanda = () => {
   const router = useRouter();
   checkAccessAndRedirect(router, usePathname());
+  const { data: availableProjects } = useGetAvailableProjects();
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
+  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+  const [projectOptions, setProjectOptions] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    if (availableProjects) {
+      setProjectOptions(availableProjects.map((project) => ({
+        value: project.id,
+        label: `${project.name} - ${project.researchGroup.name}`,
+      })));
+    }
+  }, [availableProjects]);
 
   const {
     handleSubmit,
@@ -58,15 +72,16 @@ const CadastrarDemanda = () => {
   );
 
   const onSubmit = (data: Demand) => {
-    const demandData: Demand = {
+    const demandData: Partial<Demand> = {
       name: data.name,
       description: data.description,
       link: data.link,
-      public: data.public == "on",
+      public: data.public.toString() == "on",
       keywords: selectedKeywords,
+      projects: selectedProjects,
     };
 
-    mutate(demandData);
+    mutate(demandData as Demand);
   };
 
   const handleRedirect = () => {
@@ -167,7 +182,18 @@ const CadastrarDemanda = () => {
               defaultValue={selectedKeywords}
             />
 
-            {errors.description && <span>This field is required</span>}
+            {errors.description && <span>Este campo é obrigatório</span>}
+
+            <label className="font-bold text-blue-strong mt-4">
+              Vincular Projetos
+              <MultiSelect
+                options={projectOptions}
+                placeholder="Selecione o(s) projeto(s)"
+                variant="inverted"
+                value={selectedProjects}
+                onValueChange={setSelectedProjects}
+              />
+            </label>
 
             <div className="flex flex-row gap-4 justify-center mt-10">
               <Button

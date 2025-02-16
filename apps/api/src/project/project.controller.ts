@@ -26,6 +26,11 @@ export class ProjectController {
     return this.projectService.findAll();
   }
 
+  @Get('/available')
+  findAvailable() {
+    return this.projectService.findAvailable();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.projectService.findOne(id);

@@ -16,8 +16,9 @@ export class DemandService {
   ) {}
 
   async create(demand: CreateDemandDTO, companyId: string): Promise<Demand> {
-    const { name, description, link, keywords = [] } = demand;
+    const { name, description, link, keywords = [], projects = [], public: publicDemand } = demand;
     const keywordsIds = keywords.map((k) => ({ id: k }));
+    const projectsIds = projects.map((p) => ({ id: p }));
 
     return this.prismaService.demand.create({
       data: {
@@ -25,9 +26,12 @@ export class DemandService {
         description: description,
         name: name,
         link: link,
-        public: demand.public,
+        public: publicDemand,
         keywords: {
           connect: keywordsIds,
+        },
+        projects: {
+          connect: projectsIds,
         },
       },
     });

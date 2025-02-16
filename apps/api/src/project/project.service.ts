@@ -78,6 +78,25 @@ export class ProjectService {
     return projects;
   }
 
+  async findAvailable() {
+    const projects = await this.prismaService.project.findMany({
+      where: {
+        demandId: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        researchGroup: {
+          select: {
+            name: true,
+            id: true,
+          },
+        }
+      }
+    });
+    return projects;
+  }
+
   async update(id: string, project: UpdateProjectDto) {
     const updatedProject = await this.prismaService.project.update({
       where: {

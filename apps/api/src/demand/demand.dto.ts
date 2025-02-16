@@ -14,6 +14,7 @@ export class CreateDemandDTO {
   link?: string;
 
   keywords?: string[];
+  projects?: string[];
 }
 
 export class UpdateDemandDTO {
