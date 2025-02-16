@@ -14,7 +14,7 @@ async function getNotification(): Promise<Notification[]> {
 
 export default function useGetNotification() {
   return useQuery({
-    queryKey: ["notification"],
+    queryKey: ["notifications"],
     queryFn: () => getNotification()
   });
 }

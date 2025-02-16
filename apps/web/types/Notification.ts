@@ -7,4 +7,5 @@ export type Notification = {
   userId: string;
   user: User;
   createdAt: Date;
+  read: boolean;
 };

@@ -30,6 +30,7 @@ import useGetMyResearchGroups from "@/api/research-group/use-get-my-research-gro
 import { MyResearchGroup } from "../meus-grupos-pesquisa/interfaces/pesquisador-grupo";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
+import useSendNotification from "@/api/notifications/use-send-notifications";
 
 interface Props {
   query: any;
@@ -58,15 +59,29 @@ const ContactCompany = ({ query }: Props) => {
     router.back();
   }
 
+  const { mutate: mutateNotification } = useSendNotification();
+  function sendNotification() {
+    if(!demanda) return;
+
+    const receiverId = demanda.company.user.id;
+    const message = `Você recebeu uma proposta de ${demanda.company.contactName} para a demanda "${demanda.name}". Cheque seu e-mail para mais informações.`
+
+    mutateNotification({
+      userId: receiverId,
+      message
+    })  
+  }
+
   const { toast } = useToast();
 
-  const { mutate, isPending } = useSendMail(
+  const { mutate } = useSendMail(
     () => {
       toast({
         variant: "success",
         title: "Sucesso",
         description: "O email foi enviado com sucesso.",
       });
+      sendNotification();
     },
     () => {
       toast({

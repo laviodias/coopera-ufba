@@ -27,6 +27,7 @@ import { authStore } from "@/context/loginContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import NotificationList from "./notifications";
+import useGetUnseenNotificationsCount from "@/api/notifications/use-get-unseen-notifications-count";
 
 const headerLinks = {
   NONE: [
@@ -77,6 +78,9 @@ const Header = () => {
   const router = useRouter();
 
   const { user, setUser } = useUser();
+
+  const { data: unseenNotifications } = useGetUnseenNotificationsCount();
+  console.log('unseenNotifications', unseenNotifications);
 
   const formatName = (name: string) => {
     const firstName = name.split(" ")[0];
@@ -143,8 +147,11 @@ const Header = () => {
             <div className="flex gap-2">
               {user?.name ? formatName(user.name) : ""}
               <Popover>
-                <PopoverTrigger>
+                <PopoverTrigger className="relative">
                   <TbBell className="text-primary/80 hover:text-primary size-8 cursor-pointer" />
+                  {unseenNotifications && unseenNotifications > 0 && (
+                    <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
+                  )}
                 </PopoverTrigger>
                 <PopoverContent>
                   <NotificationList />

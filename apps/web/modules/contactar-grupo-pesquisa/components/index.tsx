@@ -1,6 +1,7 @@
 "use client";
 import useGetMyDemands from "@/api/demandas/use-get-my-demands";
 import useGetResearchGroup from "@/api/grupos/use-get-research-group";
+import useSendNotification from "@/api/notifications/use-send-notifications";
 import useSendMail from "@/api/research-group/use-receive-email-from-company";
 import {
   Breadcrumb,
@@ -41,15 +42,31 @@ const ContactResearchGroup = ({ query }: Props) => {
     router.push("/login");
   }
 
+  const { mutate: mutateNotification } = useSendNotification();
+
+  function sendNotification() {
+    const receiverId = researchGroup?.leader.userId;
+    if(!receiverId) return;
+
+    const message = `Você recebeu uma proposta de ${user?.name} do grupo "${researchGroup.name}" para a demanda "${selectedDemand}". Cheque seu e-mail para mais informações.`
+
+    mutateNotification({
+      userId: receiverId,
+      message
+    });
+  }
+
   const { toast } = useToast();
 
   const { mutate } = useSendMail(
     () => {
+      console.log('sucesso');
       toast({
         variant: "success",
         title: "Sucesso",
         description: "O email foi enviado com sucesso.",
       });
+      sendNotification();
     },
     () => {
       toast({

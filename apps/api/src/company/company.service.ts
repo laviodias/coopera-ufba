@@ -23,11 +23,11 @@ export class CompanyService {
       throw new NotFoundException('Company not found');
     }
 
-    this.mailService.sendTextEmail(
+    /* this.mailService.sendTextEmail(
       company?.email,
       'Coopera UFBA - Nova mensagem',
       `Nova mensagem do grupo de pesquisa: ${research_group}. <br> Mensagem: <br> ${message}`,
-    );
+    ); */
 
     return 'Email sent';
   }
