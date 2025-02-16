@@ -29,6 +29,7 @@ export class UpdateDemandDTO {
   link?: string;
 
   keywords?: string[];
+  projects?: string[];
 }
 
 export class SuggestDemandDTO {

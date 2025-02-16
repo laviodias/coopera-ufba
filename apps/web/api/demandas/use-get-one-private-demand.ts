@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
+import { Demand } from "@/types/Demand";
 
-async function getOnePrivateDemand(id: string): Promise<Demanda> {
+async function getOnePrivateDemand(id: string): Promise<Demand> {
     const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
 
-    const { data } = await api(apiURL, true).get<Demanda>(`/demand/private/${id}`);
+    const { data } = await api(apiURL, true).get<Demand>(`/demand/private/${id}`);
 
     return data;
 }
 
 export default function useGetOnePrivateDemand(
-    onSuccess: (data: Demanda) => void,
+    onSuccess: (data: Demand) => void,
     onError: () => void
 ) {
     return useMutation({

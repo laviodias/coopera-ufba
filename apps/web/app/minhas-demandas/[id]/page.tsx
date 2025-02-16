@@ -23,15 +23,31 @@ import { FiInfo } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import Keywords from "@/components/keywords";
 import { useParams } from "next/navigation";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
 import useEditDemand from "@/api/demandas/use-edit-demand";
 import useGetOnePrivateDemand from "@/api/demandas/use-get-one-private-demand";
+import { MultiSelect } from "@/components/ui/multi-select";
+import useGetAvailableProjects from "@/api/projects/use-get-available-projects";
+import { Keyword } from "@/types/Keyword";
+import { Project } from "@/types/Project";
 
 const EditarDemanda = () => {
   const router = useRouter();
   const params = useParams<{ id: string }>();
+  const { data: availableProjects } = useGetAvailableProjects();
+
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
-  const [demanda, setDemanda] = useState<Demanda>();
+  const [demanda, setDemanda] = useState<Demand>();
+  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+  const [projectOptions, setProjectOptions] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    if (availableProjects) {
+      setProjectOptions(availableProjects.map((project) => ({
+        value: project.id,
+        label: `${project.name} - ${project.researchGroup.name}`,
+      })));
+    }
+  }, [availableProjects]);
 
   const getDemand = useGetOnePrivateDemand(
     (data) => {
@@ -56,7 +72,22 @@ const EditarDemanda = () => {
 
   useEffect(() => {
     if (demanda) {
-      setSelectedKeywords(demanda.keywords.map((keyword) => keyword.id));
+      if(demanda.keywords)
+        setSelectedKeywords(demanda.keywords.map((keyword) => (keyword as Keyword).id));
+
+      if(demanda.projects) {
+        if(projectOptions.length == availableProjects?.length) {
+          setProjectOptions((prev) => [
+            ...prev,
+            ...demanda.projects.map((project) => ({
+              value: (project as Project).id,
+              label: `${(project as Project).name} - ${(project as Project).researchGroup.name}`,
+            }))
+          ])
+        }
+        setSelectedProjects(demanda.projects.map((project) => (project as Project).id));
+      }
+
       setValue("name", demanda.name);
       setValue("description", demanda.description);
       setValue("link", demanda.link);
@@ -84,19 +115,15 @@ const EditarDemanda = () => {
   );
 
   const onSubmit = (data: Demand) => {
-    const demandData: Demand = {
+    const demandData: Partial<Demand> = {
       name: data.name,
       description: data.description,
-      // links: data.links
-      //     ? Array.isArray(data.links)
-      //         ? data.links
-      //         : [data.links]
-      //     : [],
       link: data.link,
       public: data.public,
       keywords: selectedKeywords,
+      projects: selectedProjects,
     };
-    mutate(demandData);
+    mutate(demandData as Demand);
   };
 
   const handleRedirect = () => {
@@ -216,6 +243,17 @@ const EditarDemanda = () => {
                 defaultValue={selectedKeywords}
               />
             )}
+
+            <label className="font-bold text-blue-strong mt-4">
+              Vincular Projetos
+              <MultiSelect
+                options={projectOptions}
+                placeholder="Selecione o(s) projeto(s)"
+                variant="inverted"
+                onValueChange={setSelectedProjects}
+                defaultValue={selectedProjects}
+              />
+          </label>
 
             {errors.description && <span>Este campo é obrigatório</span>}
 

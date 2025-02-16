@@ -1,5 +1,6 @@
 import { Attachment } from './Attachment';
 import { Company } from './Company';
+import { Keyword } from './Keyword';
 import { Project } from './Project';
 
 export enum DemandStatusEnum {
@@ -15,7 +16,7 @@ export type Demand = {
   description: string;
   link?: string;
   public: boolean;
-  keywords?: string[];
+  keywords?: Keyword[] | string[];
   company: Company;
   status: DemandStatusEnum;
   attachments: Attachment[];

@@ -88,8 +88,9 @@ export class DemandService {
   }
 
   async patch(id: string, demand: UpdateDemandDTO): Promise<Demand> {
-    const { keywords = [] } = demand;
+    const { keywords = [], projects = [] } = demand;
     const keywordsIds = keywords.map((k) => ({ id: k }));
+    const projectsIds = projects.map((p) => ({ id: p }));
 
     delete demand.keywords;
 
@@ -101,7 +102,7 @@ export class DemandService {
 
     return this.prismaService.demand.update({
       where: { id },
-      data: { ...updated, keywords: { set: [], connect: keywordsIds } },
+      data: { ...updated, keywords: { set: [], connect: keywordsIds }, projects: { set: [], connect: projectsIds } },
     });
   }
 
@@ -139,6 +140,15 @@ export class DemandService {
           },
         },
         keywords: true,
+        projects: {
+          include: {
+            researchGroup: {
+              select: {
+                name: true,
+              }
+            },
+          },
+        },
       },
     });
 
