@@ -22,13 +22,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { Separator } from "@/components/ui/separator";
 import { useUser } from "@/context/UserContext";
 import { authStore } from "@/context/loginContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import NotificationList from "./notifications";
 
 const headerLinks = {
   NONE: [
@@ -73,12 +71,6 @@ const headerLinks = {
   ],
 };
 
-type Notification = {
-  id: string;
-  title: string;
-  datetime: Date;
-};
-
 const Header = () => {
   const isDesktop = useMediaQuery("(min-width: 64rem)");
 
@@ -101,24 +93,6 @@ const Header = () => {
       ? "ADMIN"
       : user.utype
     : "NONE";
-
-  const notifications = [
-    {
-      id: "1",
-      title: "Proposta recebida para [Nome da demanda]!",
-      datetime: new Date(),
-    },
-    {
-      id: "2",
-      title: "Proposta recebida para [Nome da demanda]!",
-      datetime: new Date(),
-    },
-    {
-      id: "3",
-      title: "Proposta recebida para [Nome da demanda]!",
-      datetime: new Date(),
-    },
-  ] as Notification[];
 
   function handleLogout() {
     authStore.logout();
@@ -173,38 +147,7 @@ const Header = () => {
                   <TbBell className="text-primary/80 hover:text-primary size-8 cursor-pointer" />
                 </PopoverTrigger>
                 <PopoverContent>
-                  {notifications.length > 0 ? (
-                    <>
-                      <ul className="space-y-3 max-h-44 px-2 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300">
-                        {notifications.map((notification) => (
-                          <>
-                            <li key={notification.id} className="flex flex-col">
-                              <Link
-                                href={`/notificacao/${notification.id}`}
-                                className="text-sm hover:underline"
-                              >
-                                {notification.title}
-                              </Link>
-                              <small className="text-blue-light text-xs">
-                                {formatDistanceToNow(notification.datetime, {
-                                  locale: ptBR,
-                                })}
-                              </small>
-                            </li>
-                            <Separator />
-                          </>
-                        ))}
-                      </ul>
-                      <Link
-                        href={"notificacao"}
-                        className="text-center text-sm text-blue-light block pt-4 hover:text-blue-strong hover:underline"
-                      >
-                        Ver mais
-                      </Link>
-                    </>
-                  ) : (
-                    "Não há novas notificações"
-                  )}
+                  <NotificationList />
                 </PopoverContent>
               </Popover>
               <Popover>

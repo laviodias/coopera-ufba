@@ -25,7 +25,6 @@ const MeusGruposPesquisaFilter = ({
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
-          hasClearInput
           onClear={() => handleSearch()}
           isSearching={isSearching}
         />

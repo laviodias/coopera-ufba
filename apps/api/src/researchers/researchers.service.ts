@@ -1,5 +1,6 @@
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { SeedKnowledgeAreas } from 'prisma/seed/knowledgeareas';
 
 @Injectable()
 export class ResearchersService {
@@ -88,6 +89,8 @@ export class ResearchersService {
                   },
                 },
                 img: true,
+                knowledgeAreas: true,
+
               },
               orderBy: {
                 createdAt: order || 'asc',

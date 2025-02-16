@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { TbUserCircle } from 'react-icons/tb';
-import { ResearchGroup } from './type';
 import { Button } from '../ui/button';
+import { ResearchGroup } from '@/types/ResearchGroup';
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
@@ -11,6 +11,7 @@ interface ItemProp{
 }
 
 function Item({idPesquisador,researchgroup}:ItemProp) {
+    console.log(researchgroup)
     const hasImage = !!(researchgroup.img) && researchgroup.img?.includes("/uploads/")
     const imageComponent = <img src={`${apiURL}${researchgroup.img}`} alt="Logo do Grupo de Pesquisa"
                                 className="row-span-2 col-start-1 row-start-1 size-16" />
@@ -27,6 +28,19 @@ function Item({idPesquisador,researchgroup}:ItemProp) {
                 {idPesquisador === researchgroup.leader.userId ? 'Líder' : 'Membro'}
             </p>
         </div>
+
+        <ul className="my-4 flex gap-2">
+            {
+            researchgroup.knowledgeAreas.map((area) => (
+                <li
+                key={area.id}
+                className="px-3 py-2 text-center bg-border rounded-full text-xs"
+                >
+                {area.name}
+                </li>
+            ))
+            }
+        </ul>
 
         <Button
             variant={"outline"}

@@ -31,11 +31,6 @@ enum DemandStatus {
   DELETED
 }
 
-enum NotificationStartedBy {
-  RESEARCHGROUP
-  COMPANY
-}
-
 enum ResearcherType {
   STUDENT
   TEACHER
@@ -100,7 +95,6 @@ model ResearchGroup {
   projects       Project[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  Notifications  Notification[]
 }
 
 model KnowledgeArea {
@@ -135,21 +129,19 @@ model Demand {
   public        Boolean        @default(true)
   projects      Project[]
   keywords      Keyword[]
-  notifications Notification[]
   attachments   Attachment[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
 
 model Notification {
-  id              String                @id @default(uuid())
+  id              String   @id @default(uuid())
   message         String
-  demand          Demand                @relation(fields: [demandId], references: [id])
-  demandId        String
-  researchGroup   ResearchGroup         @relation(fields: [researchGroupId], references: [id])
-  researchGroupId String
-  started_by      NotificationStartedBy
-  createdAt       DateTime              @default(now())
+  userId          String
+  url             String?
+  read            Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Attachment {

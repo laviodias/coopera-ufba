@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 import { FiSearch } from "react-icons/fi";
 import useGetAllResearchGroups from "@/api/research-group/use-get-all-research-group";
 import { useEffect, useState } from "react";
-import useSearchResearchGroup from "@/api/research-group/use-search-research-group";
 import useGetAllKnowledgeAreas from "@/api/research-group/use-get-all-knowledgeAreas";
+import { ResearchGroup } from "@/types/ResearchGroup";
 
 function EncontrarGrupoPesquisa() {
   const { data } = useGetAllResearchGroups();
@@ -25,19 +25,45 @@ function EncontrarGrupoPesquisa() {
     }
   }, [data]);
 
-  const { data: searchData } = useSearchResearchGroup(search, selectedAreas);
-
   useEffect(() => {
-    if (searchData) {
-      setResearchgroups(searchData);
-    } else {
-      setResearchgroups(data || []);
-    }
-  }, [searchData, data]);
+    handleFilters();
+  }, [selectedAreas, search]);
 
   function handleSearch() {
     const searchValue = document.querySelector("input")?.value;
     setSearch(searchValue || "");
+  }
+
+  function filterByArea(currentValues: ResearchGroup[]) {
+    const filtered = currentValues.filter((group) =>
+      selectedAreas.some((area) => group.knowledgeAreas.filter((a) => a.name === area).length > 0)
+    );
+    
+    return filtered
+  }
+
+  function filterByNameAndDescription(currentValues: ResearchGroup[]) {
+    const filtered = currentValues.filter((group) =>
+      group.name.toLowerCase().includes(search.toLowerCase()) ||
+      group.description.toLowerCase().includes(search.toLowerCase())
+    );
+      
+    return filtered
+  }
+
+  function handleFilters() {
+    if(!data) return
+
+    let filteredResearchGroups = data;
+    if (selectedAreas.length > 0) {
+      filteredResearchGroups = filterByArea(filteredResearchGroups);
+    }
+
+    if (search) {
+      filteredResearchGroups = filterByNameAndDescription(filteredResearchGroups);
+    }
+
+    setResearchgroups(filteredResearchGroups);
   }
 
   useEffect(() => {
@@ -80,6 +106,8 @@ function EncontrarGrupoPesquisa() {
         <Input
           className="bg-white h-12 rounded-lg"
           placeholder="Buscar grupo de pesquisa"
+          onClear={() => setSearch("")}
+          isSearching={search.length > 0}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleSearch();

@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { GrupoPesquisa } from '@/modules/meus-grupos-pesquisa/interfaces/grupo-pesquisa';
+import { ResearchGroup } from '@/types/ResearchGroup';
 
-async function getAllResearchGroups(): Promise<GrupoPesquisa[]> {
+async function getAllResearchGroups(): Promise<ResearchGroup[]> {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
-  const { data } = await api(apiURL, false).get<GrupoPesquisa[]>(`/researchgroup/all`)
+  const { data } = await api(apiURL, false).get<ResearchGroup[]>(`/researchgroup/all`)
 
   return data
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { ResearchGroup } from "./types";
+import { ResearchGroup } from "@/types/ResearchGroup";
 
 function truncate(str: string, n: number, useWordBoundary: boolean) {
   if (str.length <= n) {
@@ -24,6 +24,20 @@ function Item(researchgroup: ResearchGroup) {
       <p className="mb-8 text-justify">
         {truncate(researchgroup.description, 200, true)}
       </p>
+
+      <ul className="mb-8 flex gap-2">
+        {
+          researchgroup.knowledgeAreas.map((area) => (
+            <li
+              key={area.id}
+              className="px-3 py-2 text-center bg-border rounded-full text-xs"
+            >
+              {area.name}
+            </li>
+          ))
+        }
+      </ul>
+
 
       <Button
         asChild

@@ -14,18 +14,19 @@ import { useUser } from "@/context/UserContext";
 
 type TProps = {
   projects: Project[];
+  leaderId: String;
 };
 export default function ProjectsSection(props: TProps) {
   const { user } = useUser();
-  console.log(props.projects)
+  console.log(props.projects);
 
   const onClickDelete = (id: string) => {};
 
-  /* const isCurrentUserLeader = (projectIndex: number) => {
+  const isCurrentUserLeader = () => {
     if (!user) return false;
 
-    return user.id == props.projects[projectIndex].leader.userId;
-  } */
+    return user.id == props.leaderId;
+  }
 
   return (
     <div className="bg-white rounded-2xl px-3 py-4 w-[100%]">
@@ -39,16 +40,17 @@ export default function ProjectsSection(props: TProps) {
             <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
               Demanda
             </TableHead>
-            
-            <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
-              Ações
-            </TableHead>
+            {isCurrentUserLeader() && (
+              <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
+                Ações
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
           {props.projects.length ? props.projects.map((project) => {
             return (
-              <TableRow>
+              <TableRow key={project.id}>
                 <TableCell className="text-blue-light py-6">
                   {project.name}
                 </TableCell>
@@ -57,12 +59,14 @@ export default function ProjectsSection(props: TProps) {
                   {project?.demand?.name || "Nenhuma"}
                 </TableCell>
 
-                <TableCell className="text-blue-light py-6">
-                  <div className="flex gap-2">
-                    <Link href={`/projetos/${project.id}`} className="text-blue-light">Editar</Link>
-                    <button onClick={() => onClickDelete(project.id)} className="text-blue-light">Excluir</button>
-                  </div>
-                </TableCell>
+                {isCurrentUserLeader() && (
+                  <TableCell className="text-blue-light py-6">
+                    <div className="flex gap-2">
+                      <Link href={`/projetos/${project.id}`} className="text-blue-light">Editar</Link>
+                      <button onClick={() => onClickDelete(project.id)} className="text-blue-light">Excluir</button>
+                    </div>
+                  </TableCell>
+                )}
               </TableRow>
             );
           }) : (

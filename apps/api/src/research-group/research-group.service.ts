@@ -13,7 +13,11 @@ import { MailService } from '../mailsend/mail.service';
 @Injectable()
 export class ResearchGroupService {
   findAll() {
-    return this.prismaService.researchGroup.findMany();
+    return this.prismaService.researchGroup.findMany({
+      include: {
+        knowledgeAreas: true,
+      }
+    });
   }
   constructor(
     private readonly mailService: MailService,
@@ -224,8 +228,11 @@ export class ResearchGroupService {
     });
   }
 
-  async search(query: string, area: string) {
+  async search(query: string) {
     return await this.prismaService.researchGroup.findMany({
+      include: {
+        knowledgeAreas: true,
+      },
       where: {
         OR: [
           {
@@ -240,15 +247,6 @@ export class ResearchGroupService {
               mode: 'insensitive',
             },
           },
-        ],
-        AND: [
-          area
-            ? {
-                knowledgeAreas: {
-                  some: { name: { in: area.split('/'), mode: 'insensitive' } },
-                },
-              }
-            : {},
         ],
       },
     });

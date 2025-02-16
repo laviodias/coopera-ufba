@@ -168,9 +168,9 @@ export default function DetalheGrupoPesquisaPage() {
             </div>
             {researchGroup ? (
               selectedTab == ETabs.MEMBERS ? (
-                <MembersSection members={researchGroup?.members} leaderId={researchGroup?.leader.userId}/>
+                <MembersSection members={researchGroup?.members} leaderId={researchGroup?.leader.userId} />
               ) : (
-                <ProjectsSection projects={researchGroup?.projects} />
+                <ProjectsSection projects={researchGroup?.projects} leaderId={researchGroup?.leader.userId} />
               )
             ) : (
               <div>Carregando...</div>

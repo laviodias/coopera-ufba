@@ -8,6 +8,7 @@ export enum ResearcherTypeEnum {
 
 export type Researcher = {
   user: User;
+  userId: string;
   urlLattes?: string;
   researcherType: ResearcherTypeEnum;
   researchGroupsAsLeader: ResearchGroup[];

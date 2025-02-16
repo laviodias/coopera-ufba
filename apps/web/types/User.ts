@@ -4,6 +4,7 @@ import { Researcher } from "./Researcher";
 export enum UserRoleEnum {
   USER="USER",
   ADMIN="ADMIN",
+  ANY="ANY",
 }
 
 export enum UserStatusEnum {
@@ -16,6 +17,7 @@ export enum UserTypeEnum {
   COMPANY="COMPANY",
   RESEARCHER="RESEARCHER",
   NONE="NONE",
+  ANY="ANY",
 }
 
 export type User = {

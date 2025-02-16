@@ -1,21 +1,21 @@
 import { loadUserFromLocalStorage } from '@/lib/user.storage';
-import { User, UserProfileType, UserRole } from '@/types/User';
+import { User, UserTypeEnum, UserRoleEnum } from '@/types/User';
 import { useRouter } from 'next/navigation';
 
-const profileAccessControl: Record<string, UserProfileType[]> = {
-    '/cadastro-demandas': [UserProfileType.COMPANY],
-    '/minhas-demandas': [UserProfileType.COMPANY],
-    '/dashboard': [UserProfileType.RESEARCHER],
-    '/user-register': [UserProfileType.ANY],
-    '/login': [UserProfileType.ANY]
+const profileAccessControl: Record<string, UserTypeEnum[]> = {
+    '/cadastro-demandas': [UserTypeEnum.COMPANY],
+    '/minhas-demandas': [UserTypeEnum.COMPANY],
+    '/dashboard': [UserTypeEnum.RESEARCHER],
+    '/user-register': [UserTypeEnum.ANY],
+    '/login': [UserTypeEnum.ANY]
 };
 
-const roleAccessControl: Record<string, UserRole[]> = {
-    '/cadastro-demandas': [UserRole.ANY],
-    '/minhas-demandas': [UserRole.ANY],
-    '/dashboard': [UserRole.ADMIN],
-    '/user-register': [UserRole.ANY],
-    '/login': [UserRole.ANY],
+const roleAccessControl: Record<string, UserRoleEnum[]> = {
+    '/cadastro-demandas': [UserRoleEnum.ANY],
+    '/minhas-demandas': [UserRoleEnum.ANY],
+    '/dashboard': [UserRoleEnum.ADMIN],
+    '/user-register': [UserRoleEnum.ANY],
+    '/login': [UserRoleEnum.ANY],
 };
 
 export function hasAccess(user: User, route: string): boolean {
@@ -23,11 +23,11 @@ export function hasAccess(user: User, route: string): boolean {
     const allowedRoles = roleAccessControl[route] || [];
 
     const profileCanAccess =
-        allowedProfiles.includes(UserProfileType.ANY) ||
+        allowedProfiles.includes(UserTypeEnum.ANY) ||
         allowedProfiles.includes(user.utype);
 
     const roleCanAccess =
-        allowedRoles.includes(UserRole.ANY) ||
+        allowedRoles.includes(UserRoleEnum.ANY) ||
         allowedRoles.includes(user.role);
 
     return profileCanAccess && roleCanAccess;

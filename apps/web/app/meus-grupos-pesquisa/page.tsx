@@ -32,8 +32,8 @@ function MeusGruposPesquisa() {
             Meus Grupos de Pesquisa
           </h1>
           <Button className="rounded-full" onClick={handleAddResearchGroup}>
-            <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" /> Novo
-            grupo de pesquisa
+            <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />
+            Novo grupo de pesquisa
           </Button>
         </div>
         <MeusGruposPesquisaFilter

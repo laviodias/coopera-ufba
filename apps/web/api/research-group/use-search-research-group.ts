@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { GrupoPesquisa } from '@/modules/meus-grupos-pesquisa/interfaces/grupo-pesquisa';
+import { ResearchGroup } from '@/types/ResearchGroup';
 
-async function searchResearchGroup(query: string, area: string[]): Promise<GrupoPesquisa[]> {
+async function searchResearchGroup(query: string): Promise<ResearchGroup[]> {
     const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
-    const { data } = await api(apiURL, false).post<GrupoPesquisa[]>(`/researchgroup/search?data=${query}&area=${area.join('/')}`);
+    const { data } = await api(apiURL, false).post<ResearchGroup[]>(`/researchgroup/search?data=${query}`);
 
     return data
 }
 
-export default function useSearchResearchGroup(query: string, area: string[]) {
+export default function useSearchResearchGroup(query: string) {
     return useQuery({
-        queryKey: ['search-research-group', query, area],
-        queryFn: () => searchResearchGroup(query, area),
+        queryKey: ['search-research-group', query],
+        queryFn: () => searchResearchGroup(query),
     })
 }

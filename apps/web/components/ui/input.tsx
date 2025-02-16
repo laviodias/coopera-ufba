@@ -4,19 +4,18 @@ import { cn } from '@/lib/utils';
 import { FilterXIcon } from 'lucide-react';
 
 export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onClear'> & {
-  hasClearInput?: boolean
   onClear?: () => void
-  isSearching: boolean
+  isSearching?: boolean
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    const onClear = () => {
+  ({ className, type, isSearching = false, onClear = () => {}, ...props }, ref) => {
+    const onClickClear = () => {
       const input = document.querySelector("input");
       if(!input) return
 
       input.value = "";
-      props.onClear && props.onClear();
+      onClear();
     }
     return (
       <div className='relative w-full'>
@@ -29,10 +28,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {props.hasClearInput && props.isSearching && (
+        {isSearching && (
           <FilterXIcon
             className='absolute right-2 top-3 cursor-pointer'
-            onClick={() => onClear()}
+            onClick={() => onClickClear()}
           />
         )}
       </div>

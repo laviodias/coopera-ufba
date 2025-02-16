@@ -85,8 +85,8 @@ export class ResearchGroupController {
   }
 
   @Post('search')
-  search(@Query('data') query: string, @Query('area') area: string) {
-    return this.researchGroupsService.search(query, area);
+  search(@Query('data') query: string) {
+    return this.researchGroupsService.search(query);
   }
 
   @Get('/knowledgearea/all')

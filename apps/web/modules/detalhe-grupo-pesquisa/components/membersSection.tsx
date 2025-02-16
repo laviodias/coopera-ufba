@@ -8,13 +8,13 @@ import {
 } from "@/components/ui/table";
 
 import React from "react";
-import { TMember } from "../types/researchgroup.type";
 import { translateResearchType } from "@/modules/shared/utils/translateReasearchType.util";
 import { Crown, TrashIcon } from "lucide-react";
 import { useUser } from "@/context/UserContext";
+import { Researcher } from "@/types/Researcher";
 
 type TProps = {
-  members: TMember[];
+  members: Researcher[];
   leaderId: string;
 };
 export default function MembersSection(props: TProps) {
@@ -67,7 +67,7 @@ export default function MembersSection(props: TProps) {
         <TableBody>
           {props.members.map((member) => {
             return (
-              <TableRow>
+              <TableRow key={member.user.id}>
                 <TableCell className="text-blue-light py-6 flex gap-2 items-center">
                   {member.user.name}
                   {isMemberLeader(member.user.id) && <Crown className="w-4 h-4" />}

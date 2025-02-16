@@ -10,7 +10,6 @@ import { SeedResearchGroups } from './seed/researchgroups';
 import { SeedProjects } from './seed/projects';
 import { SeedCompanies } from './seed/companies';
 import { SeedDemands } from './seed/demands';
-import { SeedNotifications } from './seed/notifications';
 
 const prisma = new PrismaClient();
 
@@ -23,7 +22,6 @@ async function main() {
   await SeedCompanies(prisma);
   await SeedProjects(prisma);
   await SeedDemands(prisma);
-  await SeedNotifications(prisma);
 
   console.log('Banco de dados preenchido com dados padrão.');
 }
