@@ -1,5 +1,6 @@
 import { Company } from "./Company";
 import { Researcher } from "./Researcher";
+import { Notification } from "./Notification";
 
 export enum UserRoleEnum {
   USER="USER",
@@ -32,4 +33,5 @@ export type User = {
   company?: Company;
   researcher?: Researcher;
   utype: UserTypeEnum;
+  notifications?: Notification[];
 }

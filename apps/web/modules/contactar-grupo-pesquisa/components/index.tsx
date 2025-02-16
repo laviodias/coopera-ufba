@@ -31,7 +31,6 @@ interface Props {
 
 const ContactResearchGroup = ({ query }: Props) => {
   const { data: demands = [] } = useGetMyDemands();
-  const [group, setGroup] = useState<{ id: string; name: string } | null>(null);
   const [selectedDemand, setSelectedDemand] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const router = useRouter();
@@ -44,7 +43,7 @@ const ContactResearchGroup = ({ query }: Props) => {
 
   const { toast } = useToast();
 
-  const { mutate, isPending } = useSendMail(
+  const { mutate } = useSendMail(
     () => {
       toast({
         variant: "success",

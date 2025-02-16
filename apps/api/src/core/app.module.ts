@@ -16,6 +16,7 @@ import { MailModule } from '@/mailsend/mail.module';
 import { KeywordsModule } from '@/keywords/keywords.module';
 import { CompanyModule } from '@/company/company.module';
 import { FileModule } from '@/file/file.module';
+import { NotificationsModule } from '@/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { FileModule } from '@/file/file.module';
     KeywordsModule,
     CompanyModule,
     FileModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, PrismaService, JwtService],
