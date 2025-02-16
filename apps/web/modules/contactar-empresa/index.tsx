@@ -64,7 +64,7 @@ const ContactCompany = ({ query }: Props) => {
     if(!demanda) return;
 
     const receiverId = demanda.company.user.id;
-    const message = `Você recebeu uma proposta de ${demanda.company.contactName} para a demanda "${demanda.name}". Cheque seu e-mail para mais informações.`
+    const message = `Você recebeu uma proposta de ${user?.name} do grupo "${selectedGroup}" para a demanda "${demanda.name}". Cheque seu e-mail para mais informações.`
 
     mutateNotification({
       userId: receiverId,
