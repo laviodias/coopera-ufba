@@ -42,10 +42,10 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
       header: "Status",
       cell: ({ row }) => Status[row.getValue("status") as keyof typeof Status]
     },
-    /* {
+    {
       accessorKey: "projects",
-      header: "Projeto",
-    }, */
+      header: "Projetos",
+    },
   ];
 
   const table = useReactTable({
@@ -88,9 +88,9 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells().map((cell: any) => (
                   <TableCell className="text-blue-light py-6" key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {Array.isArray(cell.getValue()) ? cell.getValue().map((item: { name: string }) => item.name).join(', ') : flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
                 <TableCell>
