@@ -94,6 +94,21 @@ export class ResearchGroupController {
     return this.researchGroupsService.findAllKnowledgeAreas();
   }
 
+  @Get('/:id/members')
+  findMembers(@Param('id') id: string) {
+    return this.researchGroupsService.findMembers(id);
+  }
+
+  @Delete('/:id/members/:memberId')
+  removeMember(@Param('id') id: string, @Param('memberId') memberId: string) {
+    return this.researchGroupsService.removeMember(id, memberId);
+  }
+
+  @Post('/:id/members/:userEmail')
+  addMember(@Param('id') id: string, @Param('userEmail') userEmail: string) {
+    return this.researchGroupsService.addMember(id, userEmail);
+  }
+
   @Post('/send-email')
   sendEmail(
     @Body()

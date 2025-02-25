@@ -84,6 +84,87 @@ export class ResearchGroupService {
     };
   }
 
+  async findMembers(id: string) {
+    const group = await this.prismaService.researchGroup.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        members: {
+          include: {
+            user: {
+              select: {
+                name: true,
+              },
+            },
+          }
+        },
+      },
+    });
+
+    if (!group) throw new NotFoundException('Grupo de pesquisa não encontrado');
+
+    return group.members;    
+  }
+
+  async removeMember(id: string, userId: string) {
+    const group = await this.prismaService.researchGroup.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!group) throw new NotFoundException('Grupo de pesquisa não encontrado');
+
+    return this.prismaService.researchGroup.update({
+      where: {
+        id,
+      },
+      data: {
+        members: {
+          disconnect: {
+            userId,
+          },
+        },
+      },
+    });
+  }
+
+  async addMember(id: string, userEmail: string) {
+    const group = await this.prismaService.researchGroup.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!group) throw new NotFoundException('Grupo de pesquisa não encontrado');
+
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+      include: {
+        researcher: true
+      }
+    });
+
+    if (!user) throw new NotFoundException('Usuário nao encontrado');
+    if (!user.researcher) throw new NotFoundException('Usuário não é pesquisador');
+
+    return this.prismaService.researchGroup.update({
+      where: {
+        id,
+      },
+      data: {
+        members: {
+          connect: {
+            userId: user.id,
+          },
+        },
+      },
+    });
+  }
+
   async findOneWithMembers(id: string) {
     const group = await this.prismaService.researchGroup.findUnique({
       where: {

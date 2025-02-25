@@ -148,9 +148,9 @@ const Header = () => {
               <Popover>
                 <PopoverTrigger className="relative">
                   <TbBell className="text-primary/80 hover:text-primary size-8 cursor-pointer" />
-                  {unseenNotifications && unseenNotifications > 0 && (
+                  {unseenNotifications && unseenNotifications > 0 ? (
                     <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
-                  )}
+                  ) : null}
                 </PopoverTrigger>
                 <PopoverContent>
                   <NotificationList />

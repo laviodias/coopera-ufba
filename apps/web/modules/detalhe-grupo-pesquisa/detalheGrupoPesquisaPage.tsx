@@ -18,6 +18,8 @@ import ProjectsSection from "./components/projectsSection";
 import { TbUserCircle } from "react-icons/tb";
 import { useUser } from "@/context/UserContext";
 import Link from "next/link";
+import { GerenciarMembrosModal } from "../gerenciar-membros/gerenciarMembrosModal";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -31,6 +33,7 @@ export default function DetalheGrupoPesquisaPage() {
   const groupId = params.id;
 
   const [selectedTab, setSelectedTab] = React.useState<ETabs>(ETabs.PROJECTS);
+  const [showAddMemberModal, setShowAddMemberModal] = React.useState(false);
 
   const { user } = useUser();
 
@@ -43,6 +46,10 @@ export default function DetalheGrupoPesquisaPage() {
   const handleTabChange = (tab: ETabs) => {
     setSelectedTab(tab);
   };
+
+  const openAddMemberModal = () => {
+    setShowAddMemberModal(true);
+  }
 
   if (isError) {
     router.push("/404");
@@ -106,12 +113,10 @@ export default function DetalheGrupoPesquisaPage() {
                   </Button>
                 </Link>
               ) : (
-                <Link href={`/cadastro-membros/${groupId}`}>
-                  <Button className="rounded-full">
-                      <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
-                      Novo Membro
-                  </Button>
-                </Link>
+                <Button className="ml-1 rounded-full" onClick={() => openAddMemberModal()}>
+                    <CustomIcon icon={IoPersonCircleOutline} className="!size-5" />{" "}
+                    Gerenciar Membros
+                </Button>
               )
             )}
           </div>
@@ -178,6 +183,8 @@ export default function DetalheGrupoPesquisaPage() {
           </div>
         </div>
       </section>
+
+      {showAddMemberModal && (<GerenciarMembrosModal groupId={groupId as string} onCloseModal={() => setShowAddMemberModal(false)}/>)}
     </main>
   );
 }

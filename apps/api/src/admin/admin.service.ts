@@ -47,17 +47,40 @@ export class AdminService {
   }
 
   async editUser(userId: string, updateUserDto: UpdateUserDto) {
-    const { role, status } = updateUserDto;
+    const { role, status, utype } = updateUserDto;
 
     const data: Partial<User> = {
       role,
       status,
     };
 
-    await this.prismaService.user.update({
+    const response = await this.prismaService.user.update({
       where: { id: userId },
       data,
+      include: {
+        researcher: true,
+      }
     });
+
+    if(utype) {
+      if(response.researcher) {
+        return await this.prismaService.researcher.update({
+          where: { userId },
+          data: {
+            researcherType: utype.split('_')[1]
+          },
+        })
+      } else {
+        return await this.prismaService.researcher.create({
+          data: {
+            userId,
+            researcherType: utype.split('_')[1]
+          }
+        })
+      }
+    };
+
+    return response;
   }
 
   async deleteUser(id: string) {

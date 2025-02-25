@@ -19,9 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserType } from "../../types/User";
 import { Input } from "@/components/ui/input";
-import { AdminUpdateUser, UserRole, UserStatus } from "@/types/User";
+import { User, UserRoleEnum, UserStatusEnum } from "@/types/User";
 import useAdminUpdateUser from "@/api/admin/user/use-update-users";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -29,11 +28,12 @@ import { useRouter } from "next/navigation";
 const FormSchema = z.object({
   name: z.string(),
   role: z.string(),
+  utype: z.string(),
   status: z.string(),
 });
 
 interface EditFormProps {
-  user: UserType;
+  user: User;
   closeModal: () => void;
 }
 
@@ -45,6 +45,7 @@ export function EditForm({ user, closeModal }: EditFormProps) {
     defaultValues: {
       name: user.name,
       role: user.role,
+      utype: user.utype,
       status: user.status,
     },
   });
@@ -75,10 +76,11 @@ export function EditForm({ user, closeModal }: EditFormProps) {
 
     closeModal();
 
-    const userData: AdminUpdateUser = {
-      role: data.role as UserRole,
-      status: data.status as UserStatus,
-    }
+    const userData = {
+      role: data.role as UserRoleEnum,
+      status: data.status as UserStatusEnum,
+      utype: data.utype,
+    } as User;
     mutate(userData);
   }
 
@@ -119,6 +121,29 @@ export function EditForm({ user, closeModal }: EditFormProps) {
                 <SelectContent>
                   <SelectItem value="ADMIN">Administrador</SelectItem>
                   <SelectItem value="USER">Usuário</SelectItem>
+                  <SelectItem value="NONE">Nenhum</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="utype"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tipo</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="bg-white h-12 text-blue-strong">
+                    <SelectValue placeholder="Selecione o papel do usuário" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="RESEARCHER_STUDENT">Pesquisador Estudante</SelectItem>
+                  <SelectItem value="RESEARCHER_TEACHER">Pesquisador Professor</SelectItem>
+                  <SelectItem value="COMPANY">Empresa</SelectItem>
                   <SelectItem value="NONE">Nenhum</SelectItem>
                 </SelectContent>
               </Select>

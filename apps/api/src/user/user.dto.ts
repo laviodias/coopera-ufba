@@ -5,7 +5,7 @@ import {
   IsOptional,
   Matches,
 } from 'class-validator';
-import { ResearcherType, UserRole, UserStatus } from '@prisma/client';
+import { ResearcherType, User, UserRole, UserStatus } from '@prisma/client';
 
 export class CreateCompanyDto {
   contactName?: string;
@@ -27,6 +27,7 @@ export class UpdateUserDto {
   @IsEnum(UserRole)
   role: UserRole;
   status: UserStatus;
+  utype: any;
 }
 
 export class CreateUserDto {

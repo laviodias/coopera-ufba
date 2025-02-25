@@ -7,12 +7,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { UserType } from "../../types/User";
 import { Edit } from "lucide-react";
 import { EditForm } from "./edit-form";
 import { useState } from "react";
+import { User } from "@/types/User";
 
-function EditModal(user: UserType) {
+function EditModal(user: User) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleCloseModal() {
