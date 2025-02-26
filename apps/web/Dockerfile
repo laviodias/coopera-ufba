@@ -11,9 +11,6 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Adicionar variável para o endereço da API
-ARG API_URL
-ENV NEXT_PUBLIC_API_URL=${API_URL}
 RUN npm run build
 
 # Estágio de produção
