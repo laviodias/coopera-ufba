@@ -40,7 +40,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/nest-cli.json ./nest-cli.json
-# Se você tiver outros arquivos de configuração, adicione-os aqui
+COPY --from=builder /app/start.sh ./start.sh
 
 # Script para inicialização
 RUN chmod +x start.sh
