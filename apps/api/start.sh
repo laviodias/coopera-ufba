@@ -1,17 +1,15 @@
 #!/bin/sh
 echo "Esperando o banco de dados estar acessível..."
-until npx prisma migrate deploy; do
-  echo "Aguardando banco de dados..."
-  sleep 3
-done
+sleep 5
+npx prisma migrate deploy;
 
 # Criando diretório para o arquivo de controle, se necessário
-mkdir -p $(dirname $HOME/.seeds-executed)
+mkdir -p $(dirname ./.seeds-executed)
 
-if [ ! -f $HOME/.seeds-executed ]; then
+if [ ! -f ./.seeds-executed ]; then
   echo "Executando seeds do banco de dados..."
   npm run seed-db
-  touch $HOME/.seeds-executed
+  touch ./.seeds-executed
 else
   echo "Seeds já foram executados anteriormente."
 fi
