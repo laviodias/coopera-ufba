@@ -8,6 +8,7 @@
     "format": "prettier --write \"{app,components,modules,api,hooks,lib,context}/**/*.{js,jsx,ts,tsx}\"",
     "start": "next start -p 3001",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "cy:open": "cypress open",
     "test": "jest",
     "test_end2end": "cypress open",
