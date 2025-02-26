@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import homeBanner from "@/public/home-banner.png";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
@@ -36,7 +35,9 @@ export default function Home() {
           )}
         </div>
         <Image
-          src={homeBanner}
+          src="/home-banner.png"
+          width="619"
+          height="485"
           alt="Banner da página inicial"
           className="relative xl:-right-8 max-lg:my-8 lg lg:max-xl:h-80"
         />

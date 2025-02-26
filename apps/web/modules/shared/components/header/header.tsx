@@ -14,7 +14,6 @@ import {
 } from '@/modules/shared/ui/drawer';
 import { FiMenu } from 'react-icons/fi';
 
-import ufbaLogo from '@/public/logo.png';
 import { TbBell, TbUserCircle } from 'react-icons/tb';
 import { Popover, PopoverContent, PopoverTrigger } from '@/modules/shared/ui/popover';
 import { formatDistanceToNow } from 'date-fns';
@@ -114,7 +113,7 @@ const Header = () => {
     <header className="flex justify-center shadow-custom bg-white">
       <div className="flex justify-between px-4 w-full max-w-7xl">
         <Link href={"/"} className="flex items-center gap-3 py-4">
-          <Image src={ufbaLogo} alt="logo ufba" />
+          <Image src="/logo.png" alt="logo ufba" />
           <h1 className="text-3xl font-bold text-blue-strong">COOPERA-UFBA</h1>
         </Link>
         <div className="flex gap-5 items-center">
@@ -215,7 +214,7 @@ const Header = () => {
     <Drawer direction="right">
       <header className="flex justify-between shadow-custom bg-white p-4">
         <Link href={"/"} className="flex items-center gap-3">
-          <Image src={ufbaLogo} alt="logo ufba" />
+          <Image src="/logo.png" alt="logo ufba" />
           <h1 className="text-3xl font-bold text-blue-strong">COOPERA-UFBA</h1>
         </Link>
         <DrawerTrigger>
@@ -231,7 +230,7 @@ const Header = () => {
                 href={"/"}
                 className="flex items-center justify-center gap-3 py-4"
               >
-                <Image src={ufbaLogo} alt="logo ufba" />
+                <Image src="/logo.png" alt="logo ufba" />
                 <h1 className="text-3xl font-bold text-blue-strong">
                   COOPERA-UFBA
                 </h1>

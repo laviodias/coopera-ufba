@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/drawer";
 import { FiMenu } from "react-icons/fi";
 
-import ufbaLogo from "@/public/logo.png";
 import { TbBell, TbUserCircle } from "react-icons/tb";
 import {
   Popover,
@@ -107,7 +106,7 @@ const Header = () => {
     <header className="flex justify-center shadow-custom bg-white z-50">
       <div className="flex justify-between px-4 w-full max-w-screen-xl">
         <Link href={"/"} className="flex items-center gap-3 py-4">
-          <Image src={ufbaLogo} alt="logo ufba" />
+          <Image src="/logo.png" width="31" height="50" alt="logo ufba" />
           <h1 className="text-3xl font-bold text-blue-strong">COOPERA-UFBA</h1>
         </Link>
         <div className="flex gap-5 items-center">
@@ -204,7 +203,7 @@ const Header = () => {
       <header className="shadow-custom bg-white p-4 z-50">
         <div className="flex justify-between max-w-screen-xl mx-auto">
           <Link href={"/"} className="flex items-center gap-3">
-            <Image src={ufbaLogo} alt="logo ufba" />
+            <Image src="/logo.png" width="31" height="50" alt="logo ufba" />
             <h1 className="text-3xl font-bold text-blue-strong">
               COOPERA-UFBA
             </h1>
@@ -223,7 +222,7 @@ const Header = () => {
                 href={"/"}
                 className="flex items-center justify-center gap-3 py-4"
               >
-                <Image src={ufbaLogo} alt="logo ufba" />
+                <Image src="/logo.png" width="31" height="50" alt="logo ufba" />
                 <h1 className="text-3xl font-bold text-blue-strong">
                   COOPERA-UFBA
                 </h1>
