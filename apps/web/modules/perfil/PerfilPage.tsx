@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Edit } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { Edit } from 'lucide-react';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UserContextType, useUser } from "@/context/UserContext";
-import { toast } from "@/hooks/use-toast";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { UserContextType, useUser } from '@/context/UserContext';
+import { toast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
 
 const updateUserFormData = z.object({
-  name: z.string().trim().min(1, "Nome é obrigatório"),
-  email: z.string().trim().email("E-mail inválido"),
-  lattes: z.string().trim().url("Link inválido").optional(),
+  name: z.string().trim().min(1, 'Nome é obrigatório'),
+  email: z.string().trim().email('E-mail inválido'),
+  lattes: z.string().trim().url('Link inválido').optional(),
   contactName: z.string().trim().optional(),
-  contactEmail: z.string().trim().email("E-mail inválido").optional(),
-  contactPhone: z.string().trim().url("Formato do link inválido").optional(),
+  contactEmail: z.string().trim().email('E-mail inválido').optional(),
+  contactPhone: z.string().trim().url('Formato do link inválido').optional(),
   img: z.any(),
 });
 
@@ -47,8 +47,8 @@ function PerfilPage() {
 
   function onSubmit(data: z.infer<typeof updateUserFormData>) {
     toast({
-      title: "Cadastro atualizado com sucesso!",
-      variant: "success",
+      title: 'Cadastro atualizado com sucesso!',
+      variant: 'success',
     });
 
     const updatedUser = {
@@ -74,7 +74,7 @@ function PerfilPage() {
           disabled={isEditing}
         >
           <Edit color="white" />
-          {isEditing ? "Editando..." : "Editar cadastro"}
+          {isEditing ? 'Editando...' : 'Editar cadastro'}
         </Button>
       </div>
 
@@ -121,7 +121,7 @@ function PerfilPage() {
             )}
           />
 
-          {user?.utype === "RESEARCHER" ? (
+          {user?.utype === 'RESEARCHER' ? (
             <>
               <FormField
                 control={form.control}
@@ -142,7 +142,7 @@ function PerfilPage() {
                 )}
               />
             </>
-          ) : user?.utype === "COMPANY" ? (
+          ) : user?.utype === 'COMPANY' ? (
             <>
               <FormField
                 control={form.control}

@@ -1,12 +1,12 @@
-"use client";
-import { Button } from "@/components/ui/button";
+'use client';
+import { Button } from '@/components/ui/button';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -14,13 +14,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { IoMdCreate } from "react-icons/io";
-import { Demanda, Status } from "../../interfaces/demanda";
-import { CustomIcon } from "@/modules/components/icon/customIcon";
-import { GoArrowLeft, GoArrowRight } from "react-icons/go";
-import { format } from "date-fns";
-import { DeleteModal } from "../modal/deleteModal";
+} from '@/components/ui/table';
+import { IoMdCreate } from 'react-icons/io';
+import { Demanda, Status } from '../../interfaces/demanda';
+import { CustomIcon } from '@/modules/components/icon/customIcon';
+import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
+import { format } from 'date-fns';
+import { DeleteModal } from '../modal/deleteModal';
 interface Params {
   data: Demanda[];
   onDelete: (id: string) => void;
@@ -29,22 +29,22 @@ interface Params {
 const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
   const columns: ColumnDef<Demanda>[] = [
     {
-      accessorKey: "name",
-      header: "Título",
+      accessorKey: 'name',
+      header: 'Título',
     },
     {
-      accessorKey: "createdAt",
-      header: "Data de criação",
-      cell: ({ row }) => format(row.getValue("createdAt"), "dd/MM/yyyy"),
+      accessorKey: 'createdAt',
+      header: 'Data de criação',
+      cell: ({ row }) => format(row.getValue('createdAt'), 'dd/MM/yyyy'),
     },
     {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => Status[row.getValue("status") as keyof typeof Status]
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => Status[row.getValue('status') as keyof typeof Status],
     },
     {
-      accessorKey: "projects",
-      header: "Projetos",
+      accessorKey: 'projects',
+      header: 'Projetos',
     },
   ];
 
@@ -70,7 +70,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );
@@ -86,18 +86,26 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
+                data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell: any) => (
                   <TableCell className="text-blue-light py-6" key={cell.id}>
-                    {Array.isArray(cell.getValue()) ? cell.getValue().map((item: { name: string }) => item.name).join(', ') : flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {Array.isArray(cell.getValue())
+                      ? cell
+                          .getValue()
+                          .map((item: { name: string }) => item.name)
+                          .join(', ')
+                      : flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
                   </TableCell>
                 ))}
                 <TableCell>
                   <div className="flex gap-2 justify-center">
                     <Button
-                      variant={"ghost"}
-                      size={"icon"}
+                      variant={'ghost'}
+                      size={'icon'}
                       onClick={() => onEdit(row.original.id)}
                       title="Editar"
                     >

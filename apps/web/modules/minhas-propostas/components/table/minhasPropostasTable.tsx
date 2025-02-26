@@ -4,8 +4,8 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   flexRender,
-} from "@tanstack/react-table";
-import { Proposta } from "../../interfaces/proposta";
+} from '@tanstack/react-table';
+import { Proposta } from '../../interfaces/proposta';
 import {
   Table,
   TableBody,
@@ -13,9 +13,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 
 interface Params {
   data: Proposta[];
@@ -23,24 +23,24 @@ interface Params {
 const MinhasPropostasTable = ({ data }: Params) => {
   const columns: ColumnDef<Proposta>[] = [
     {
-      accessorKey: "demand",
-      header: "Demanda",
+      accessorKey: 'demand',
+      header: 'Demanda',
     },
     {
-      accessorKey: "company",
-      header: "Empresa",
+      accessorKey: 'company',
+      header: 'Empresa',
     },
     {
-      accessorKey: "researchGroup",
-      header: "Grupo de Pesquisa",
+      accessorKey: 'researchGroup',
+      header: 'Grupo de Pesquisa',
     },
     {
-      accessorKey: "status",
-      header: "Status",
+      accessorKey: 'status',
+      header: 'Status',
     },
     {
-      accessorKey: "createdAt",
-      header: "Criado Em",
+      accessorKey: 'createdAt',
+      header: 'Criado Em',
     },
   ];
 
@@ -67,7 +67,7 @@ const MinhasPropostasTable = ({ data }: Params) => {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );
@@ -80,7 +80,7 @@ const MinhasPropostasTable = ({ data }: Params) => {
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
+                data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell

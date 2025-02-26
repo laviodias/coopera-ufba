@@ -5,13 +5,13 @@ import {
   TableBody,
   TableCell,
   Table,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import React from "react";
-import { translateResearchType } from "@/modules/shared/utils/translateReasearchType.util";
-import { Crown } from "lucide-react";
-import { useUser } from "@/context/UserContext";
-import { Researcher } from "@/types/Researcher";
+import React from 'react';
+import { translateResearchType } from '@/modules/shared/utils/translateReasearchType.util';
+import { Crown } from 'lucide-react';
+import { useUser } from '@/context/UserContext';
+import { Researcher } from '@/types/Researcher';
 
 type TProps = {
   members: Researcher[];
@@ -22,7 +22,7 @@ export default function MembersSection(props: TProps) {
 
   const isMemberLeader = (id: string) => {
     return props.leaderId == id;
-  }
+  };
 
   return (
     <div className="bg-white rounded-2xl px-3 py-4 w-[100%]">
@@ -48,7 +48,9 @@ export default function MembersSection(props: TProps) {
               <TableRow key={member.user.id}>
                 <TableCell className="text-blue-light py-6 flex gap-2 items-center">
                   {member.user.name}
-                  {isMemberLeader(member.user.id) && <Crown className="w-4 h-4" />}
+                  {isMemberLeader(member.user.id) && (
+                    <Crown className="w-4 h-4" />
+                  )}
                 </TableCell>
                 <TableCell className="text-blue-light py-6">
                   {member.user.email}

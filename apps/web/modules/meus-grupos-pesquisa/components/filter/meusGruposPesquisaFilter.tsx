@@ -1,20 +1,20 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { CustomIcon } from "@/modules/components/icon/customIcon";
-import { isSea } from "node:sea";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { CustomIcon } from '@/modules/components/icon/customIcon';
+import { isSea } from 'node:sea';
 
-import { IoSearch } from "react-icons/io5";
+import { IoSearch } from 'react-icons/io5';
 
 interface MeusGruposPesquisaFilterProps {
   handleSearch: () => void;
-  setOrder: (value: "asc" | "desc") => void;
-  order: "asc" | "desc";
-  isSearching: boolean
+  setOrder: (value: 'asc' | 'desc') => void;
+  order: 'asc' | 'desc';
+  isSearching: boolean;
 }
 
 const MeusGruposPesquisaFilter = ({
   handleSearch,
-  isSearching
+  isSearching,
 }: MeusGruposPesquisaFilterProps) => {
   return (
     <div className="flex flex-col sm:flex-row gap-2">
@@ -23,7 +23,7 @@ const MeusGruposPesquisaFilter = ({
           className="bg-white px-4 h-12"
           placeholder="Buscar"
           onKeyDown={(e) => {
-            if (e.key === "Enter") handleSearch();
+            if (e.key === 'Enter') handleSearch();
           }}
           onClear={() => handleSearch()}
           isSearching={isSearching}

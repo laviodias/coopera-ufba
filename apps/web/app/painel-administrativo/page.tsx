@@ -1,4 +1,4 @@
-import { PainelAdministrativoPage } from "@/modules/painel-administrativo";
+import { PainelAdministrativoPage } from '@/modules/painel-administrativo';
 
 const PainelAdministrativo = () => {
   return <PainelAdministrativoPage />;

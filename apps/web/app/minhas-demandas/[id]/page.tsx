@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Breadcrumb,
@@ -7,28 +7,28 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
-import { Demand } from "@/types/Demand";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
-import { FiInfo } from "react-icons/fi";
-import { useEffect, useState } from "react";
-import Keywords from "@/components/keywords";
-import { useParams } from "next/navigation";
-import useEditDemand from "@/api/demandas/use-edit-demand";
-import useGetOnePrivateDemand from "@/api/demandas/use-get-one-private-demand";
-import { MultiSelect } from "@/components/ui/multi-select";
-import useGetAvailableProjects from "@/api/projects/use-get-available-projects";
-import { Keyword } from "@/types/Keyword";
-import { Project } from "@/types/Project";
+import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import { Demand } from '@/types/Demand';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
+import { FiInfo } from 'react-icons/fi';
+import { useEffect, useState } from 'react';
+import Keywords from '@/components/keywords';
+import { useParams } from 'next/navigation';
+import useEditDemand from '@/api/demandas/use-edit-demand';
+import useGetOnePrivateDemand from '@/api/demandas/use-get-one-private-demand';
+import { MultiSelect } from '@/components/ui/multi-select';
+import useGetAvailableProjects from '@/api/projects/use-get-available-projects';
+import { Keyword } from '@/types/Keyword';
+import { Project } from '@/types/Project';
 
 const EditarDemanda = () => {
   const router = useRouter();
@@ -38,14 +38,18 @@ const EditarDemanda = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
   const [demanda, setDemanda] = useState<Demand>();
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
-  const [projectOptions, setProjectOptions] = useState<{ value: string; label: string }[]>([]);
+  const [projectOptions, setProjectOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
 
   useEffect(() => {
     if (availableProjects) {
-      setProjectOptions(availableProjects.map((project) => ({
-        value: project.id,
-        label: `${project.name} - ${project.researchGroup.name}`,
-      })));
+      setProjectOptions(
+        availableProjects.map((project) => ({
+          value: project.id,
+          label: `${project.name} - ${project.researchGroup.name}`,
+        })),
+      );
     }
   }, [availableProjects]);
 
@@ -53,7 +57,7 @@ const EditarDemanda = () => {
     (data) => {
       setDemanda(data);
     },
-    () => {}
+    () => {},
   );
 
   useEffect(() => {
@@ -72,46 +76,50 @@ const EditarDemanda = () => {
 
   useEffect(() => {
     if (demanda) {
-      if(demanda.keywords)
-        setSelectedKeywords(demanda.keywords.map((keyword) => (keyword as Keyword).id));
+      if (demanda.keywords)
+        setSelectedKeywords(
+          demanda.keywords.map((keyword) => (keyword as Keyword).id),
+        );
 
-      if(demanda.projects) {
-        if(projectOptions.length == availableProjects?.length) {
+      if (demanda.projects) {
+        if (projectOptions.length == availableProjects?.length) {
           setProjectOptions((prev) => [
             ...prev,
             ...demanda.projects.map((project) => ({
               value: (project as Project).id,
               label: `${(project as Project).name} - ${(project as Project).researchGroup.name}`,
-            }))
-          ])
+            })),
+          ]);
         }
-        setSelectedProjects(demanda.projects.map((project) => (project as Project).id));
+        setSelectedProjects(
+          demanda.projects.map((project) => (project as Project).id),
+        );
       }
 
-      setValue("name", demanda.name);
-      setValue("description", demanda.description);
-      setValue("link", demanda.link);
+      setValue('name', demanda.name);
+      setValue('description', demanda.description);
+      setValue('link', demanda.link);
     }
   }, [demanda]);
 
   const { mutate, isPending } = useEditDemand(
     () => {
       toast({
-        variant: "success",
-        title: "Sucesso",
-        description: "A demanda foi editada com sucesso.",
+        variant: 'success',
+        title: 'Sucesso',
+        description: 'A demanda foi editada com sucesso.',
       });
 
-      router.push("/minhas-demandas");
+      router.push('/minhas-demandas');
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um error",
-        description: "Ocorreu um erro ao tentar criar nova demanda.",
+        variant: 'destructive',
+        title: 'Ocorreu um error',
+        description: 'Ocorreu um erro ao tentar criar nova demanda.',
       });
     },
-    params.id
+    params.id,
   );
 
   const onSubmit = (data: Demand) => {
@@ -164,7 +172,7 @@ const EditarDemanda = () => {
             <label className="font-bold text-blue-strong mt-4">
               Título*
               <input
-                {...register("name", { required: false })}
+                {...register('name', { required: false })}
                 type="text"
                 placeholder="Título do projeto"
                 className="w-full py-3 px-4 text-base font-medium rounded-lg border mt-2"
@@ -180,7 +188,7 @@ const EditarDemanda = () => {
             <label className="font-bold text-blue-strong mt-4">
               Descrição*
               <textarea
-                {...register("description", { required: false })}
+                {...register('description', { required: false })}
                 placeholder="Digite o texto..."
                 rows={4}
                 className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
@@ -192,7 +200,7 @@ const EditarDemanda = () => {
               <div className="flex gap-2 items-center">
                 <label className="inline-flex items-center cursor-pointer">
                   <input
-                    {...register("public")}
+                    {...register('public')}
                     type="checkbox"
                     defaultChecked={demanda?.public}
                     value=""
@@ -223,7 +231,7 @@ const EditarDemanda = () => {
                 type="url"
                 placeholder="Informe link da demanda"
                 className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("link", { required: false })}
+                {...register('link', { required: false })}
                 defaultValue={demanda?.link}
               />
             </label>
@@ -253,7 +261,7 @@ const EditarDemanda = () => {
                 onValueChange={setSelectedProjects}
                 defaultValue={selectedProjects}
               />
-          </label>
+            </label>
 
             {errors.description && <span>Este campo é obrigatório</span>}
 
@@ -263,11 +271,11 @@ const EditarDemanda = () => {
                 className="rounded-full py-2.5 px-8"
                 disabled={isPending}
               >
-                {isPending ? "Editando..." : "Editar demanda"}
+                {isPending ? 'Editando...' : 'Editar demanda'}
               </Button>
 
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 className="rounded-full py-2.5 px-8"
                 type="reset"
                 onClick={handleRedirect}

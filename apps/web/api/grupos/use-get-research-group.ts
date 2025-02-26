@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/axios";
-import { ResearchGroup } from "@/types/ResearchGroup";
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/axios';
+import { ResearchGroup } from '@/types/ResearchGroup';
 
 async function getResearchGroup(groupId: string): Promise<ResearchGroup> {
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
   const { data } = await api(apiURL, true).get<ResearchGroup>(
-    `/researchgroup/${groupId}?members=true&projects=true`
+    `/researchgroup/${groupId}?members=true&projects=true`,
   );
 
   return data;
@@ -14,7 +14,7 @@ async function getResearchGroup(groupId: string): Promise<ResearchGroup> {
 
 export default function useGetResearchGroup(groupId: string) {
   return useQuery({
-    queryKey: ["researchGroup", groupId],
+    queryKey: ['researchGroup', groupId],
     queryFn: () => getResearchGroup(groupId),
     enabled: !!groupId,
   });

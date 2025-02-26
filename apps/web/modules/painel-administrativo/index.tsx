@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import useGetAllUsers from "@/api/admin/user/use-get-all-users";
-import { UsersTable } from "./components/UsersTable";
+import useGetAllUsers from '@/api/admin/user/use-get-all-users';
+import { UsersTable } from './components/UsersTable';
 
 const PainelAdministrativoPage = () => {
   const { data: users = [] } = useGetAllUsers();

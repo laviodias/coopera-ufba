@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { loadUserFromLocalStorage } from "@/lib/user.storage";
+import { loadUserFromLocalStorage } from '@/lib/user.storage';
 import React, {
   createContext,
   useState,
   useContext,
   ReactNode,
   useEffect,
-} from "react";
+} from 'react';
 
 export interface UserContextType {
   id: string;
   name: string;
   email: string;
   img: string;
-  role: "ADMIN" | "USER";
-  utype: "COMPANY" | "RESEARCHER" | "NONE";
+  role: 'ADMIN' | 'USER';
+  utype: 'COMPANY' | 'RESEARCHER' | 'NONE';
 }
 
 interface UserContextData {
@@ -46,7 +46,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 export const useUser = (): UserContextData => {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error("useUser must be used within an UserProvider");
+    throw new Error('useUser must be used within an UserProvider');
   }
   return context;
 };

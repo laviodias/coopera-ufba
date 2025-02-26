@@ -1,5 +1,5 @@
-import { ResearchGroup } from "@/types/ResearchGroup";
-import { Item } from "./Item";
+import { ResearchGroup } from '@/types/ResearchGroup';
+import { Item } from './Item';
 
 type ResearchGroupListProps = {
   researchgroups: ResearchGroup[];

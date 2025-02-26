@@ -1,13 +1,13 @@
-"use client";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import Link from "next/link";
-import { TbUserCircle } from "react-icons/tb";
-import { Button } from "../ui/button";
-import { Address } from "./types";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
-import { usePathname } from "next/navigation";
-import { useUser } from "@/context/UserContext";
+'use client';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import Link from 'next/link';
+import { TbUserCircle } from 'react-icons/tb';
+import { Button } from '../ui/button';
+import { Address } from './types';
+import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import { usePathname } from 'next/navigation';
+import { useUser } from '@/context/UserContext';
 
 function addressToString(address?: Address) {
   if (!address) return;
@@ -24,7 +24,7 @@ function Item(demand: Demanda) {
       <h2 className="text-3xl font-semibold">{demand.name}</h2>
 
       <p className="text-blue-light text-sm mb-4">
-        Publicado{" "}
+        Publicado{' '}
         {formatDistanceToNow(demand.createdAt, {
           locale: ptBR,
           addSuffix: true,
@@ -73,26 +73,26 @@ function Item(demand: Demanda) {
         </p>
       </div>
 
-      {user?.utype !== "COMPANY" && (
-          <Button
-            asChild
-            variant={"outline"}
-            className="px-9 py-2.5 rounded-full xs:mt-0"
+      {user?.utype !== 'COMPANY' && (
+        <Button
+          asChild
+          variant={'outline'}
+          className="px-9 py-2.5 rounded-full xs:mt-0"
+        >
+          <Link
+            href={{
+              pathname: `${pathname}/contactar-empresa`,
+              query: {
+                idDemanda: demand.id,
+                nomeContato: demand.company.contactName,
+                emailContato: demand.company.contactEmail,
+              },
+            }}
           >
-            <Link
-              href={{
-                pathname: `${pathname}/contactar-empresa`,
-                query: {
-                  idDemanda: demand.id,
-                  nomeContato: demand.company.contactName,
-                  emailContato: demand.company.contactEmail,
-                },
-              }}
-            >
-              Entrar em contato
-            </Link>
-          </Button>
-        )}
+            Entrar em contato
+          </Link>
+        </Button>
+      )}
     </li>
   );
 }

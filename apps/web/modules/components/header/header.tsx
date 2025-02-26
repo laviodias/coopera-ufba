@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
-import "../../../app/globals.css";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import '../../../app/globals.css';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import {
   Drawer,
   DrawerClose,
@@ -12,67 +12,67 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { FiMenu } from "react-icons/fi";
+} from '@/components/ui/drawer';
+import { FiMenu } from 'react-icons/fi';
 
-import { TbBell, TbUserCircle } from "react-icons/tb";
+import { TbBell, TbUserCircle } from 'react-icons/tb';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { useUser } from "@/context/UserContext";
-import { authStore } from "@/context/loginContext";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import NotificationList from "./notifications";
-import useGetUnseenNotificationsCount from "@/api/notifications/use-get-unseen-notifications-count";
+} from '@/components/ui/popover';
+import { useUser } from '@/context/UserContext';
+import { authStore } from '@/context/loginContext';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import NotificationList from './notifications';
+import useGetUnseenNotificationsCount from '@/api/notifications/use-get-unseen-notifications-count';
 
 const headerLinks = {
   NONE: [
     {
-      label: "Encontrar demandas",
-      path: "/encontrar-demandas",
+      label: 'Encontrar demandas',
+      path: '/encontrar-demandas',
     },
     {
-      label: "Encontrar Grupos de Pesquisa",
-      path: "/encontrar-grupo-pesquisa",
+      label: 'Encontrar Grupos de Pesquisa',
+      path: '/encontrar-grupo-pesquisa',
     },
   ],
   COMPANY: [
     {
-      label: "Encontrar Grupos de Pesquisa",
-      path: "/encontrar-grupo-pesquisa",
+      label: 'Encontrar Grupos de Pesquisa',
+      path: '/encontrar-grupo-pesquisa',
     },
     {
-      label: "Minhas demandas",
-      path: "/minhas-demandas",
+      label: 'Minhas demandas',
+      path: '/minhas-demandas',
     },
   ],
   RESEARCHER: [
     {
-      label: "Encontrar demandas",
-      path: "/encontrar-demandas",
+      label: 'Encontrar demandas',
+      path: '/encontrar-demandas',
     },
     // {
     //   label: "Minhas Propostas",
     //   path: "/minhas-propostas",
     // },
     {
-      label: "Meus Grupos de pesquisa",
-      path: "/meus-grupos-pesquisa",
+      label: 'Meus Grupos de pesquisa',
+      path: '/meus-grupos-pesquisa',
     },
   ],
   ADMIN: [
     {
-      label: "Painel Administrativo",
-      path: "/painel-administrativo",
+      label: 'Painel Administrativo',
+      path: '/painel-administrativo',
     },
   ],
 };
 
 const Header = () => {
-  const isDesktop = useMediaQuery("(min-width: 64rem)");
+  const isDesktop = useMediaQuery('(min-width: 64rem)');
 
   const router = useRouter();
 
@@ -81,31 +81,31 @@ const Header = () => {
   const { data: unseenNotifications } = useGetUnseenNotificationsCount();
 
   const formatName = (name: string) => {
-    const firstName = name.split(" ")[0];
+    const firstName = name.split(' ')[0];
     return (
       <p className="self-center text-primary font-bold">
-        Olá,{" "}
+        Olá,{' '}
         {firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase()}
       </p>
     );
   };
 
   const linksType = user
-    ? user.role === "ADMIN"
-      ? "ADMIN"
+    ? user.role === 'ADMIN'
+      ? 'ADMIN'
       : user.utype
-    : "NONE";
+    : 'NONE';
 
   function handleLogout() {
     authStore.logout();
     setUser(null);
-    router.push("/");
+    router.push('/');
   }
 
   return isDesktop ? (
     <header className="flex justify-center shadow-custom bg-white z-50">
       <div className="flex justify-between px-4 w-full max-w-screen-xl">
-        <Link href={"/"} className="flex items-center gap-3 py-4">
+        <Link href={'/'} className="flex items-center gap-3 py-4">
           <Image src="/logo.png" width="31" height="50" alt="logo ufba" />
           <h1 className="text-3xl font-bold text-blue-strong">COOPERA-UFBA</h1>
         </Link>
@@ -121,29 +121,29 @@ const Header = () => {
           ))}
         </div>
         <div className="flex gap-2.5 items-center content-center">
-          {linksType === "NONE" ? (
+          {linksType === 'NONE' ? (
             <>
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 asChild
                 className="rounded-full py-2.5 px-8 border-primary"
               >
                 <Link
-                  href={"/login"}
+                  href={'/login'}
                   className="font-medium text-primary bg-white text-base"
                 >
                   Entrar
                 </Link>
               </Button>
               <Button asChild className="rounded-full py-2.5 px-8">
-                <Link href={"/user-register"} className="font-medium">
+                <Link href={'/user-register'} className="font-medium">
                   Cadastrar-se
                 </Link>
               </Button>
             </>
           ) : (
             <div className="flex gap-2">
-              {user?.name ? formatName(user.name) : ""}
+              {user?.name ? formatName(user.name) : ''}
               <Popover>
                 <PopoverTrigger className="relative">
                   <TbBell className="text-primary/80 hover:text-primary size-8 cursor-pointer" />
@@ -161,26 +161,26 @@ const Header = () => {
                 </PopoverTrigger>
                 <PopoverContent className="grid gap-2">
                   <Link
-                    href={"/perfil"}
+                    href={'/perfil'}
                     className="font-medium hover:underline text-blue-strong"
                   >
                     Meu perfil
                   </Link>
 
-                  {["COMPANY", "RESEARCHER"].includes(linksType) && (
+                  {['COMPANY', 'RESEARCHER'].includes(linksType) && (
                     <>
                       <Link
                         key={linksType}
                         href={
-                          linksType === "COMPANY"
-                            ? "/minhas-demandas"
-                            : "/meus-grupos-pesquisa"
+                          linksType === 'COMPANY'
+                            ? '/minhas-demandas'
+                            : '/meus-grupos-pesquisa'
                         }
                         className="font-medium hover:underline text-blue-strong"
                       >
-                        {linksType === "COMPANY"
-                          ? "Minhas demandas"
-                          : "Meus Grupos de pesquisa"}
+                        {linksType === 'COMPANY'
+                          ? 'Minhas demandas'
+                          : 'Meus Grupos de pesquisa'}
                       </Link>
                     </>
                   )}
@@ -202,7 +202,7 @@ const Header = () => {
     <Drawer direction="right">
       <header className="shadow-custom bg-white p-4 z-50">
         <div className="flex justify-between max-w-screen-xl mx-auto">
-          <Link href={"/"} className="flex items-center gap-3">
+          <Link href={'/'} className="flex items-center gap-3">
             <Image src="/logo.png" width="31" height="50" alt="logo ufba" />
             <h1 className="text-3xl font-bold text-blue-strong">
               COOPERA-UFBA
@@ -219,7 +219,7 @@ const Header = () => {
           <DrawerTitle>
             <DrawerClose asChild>
               <Link
-                href={"/"}
+                href={'/'}
                 className="flex items-center justify-center gap-3 py-4"
               >
                 <Image src="/logo.png" width="31" height="50" alt="logo ufba" />
@@ -243,15 +243,15 @@ const Header = () => {
             </DrawerClose>
           ))}
 
-          {linksType === "NONE" ? (
+          {linksType === 'NONE' ? (
             <>
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 asChild
                 className="rounded-full w-full py-2.5 px-8 border-primary"
               >
                 <Link
-                  href={"/login"}
+                  href={'/login'}
                   className="font-medium text-primary text-base"
                 >
                   Entrar
@@ -259,7 +259,7 @@ const Header = () => {
               </Button>
 
               <Button asChild className="rounded-full w-full py-2.5 px-8">
-                <Link href={"/user-register"} className="font-medium">
+                <Link href={'/user-register'} className="font-medium">
                   Cadastrar-se
                 </Link>
               </Button>
@@ -282,21 +282,21 @@ const Header = () => {
                   Meu perfil
                 </Link>
               </DrawerClose>
-              {["COMPANY", "RESEARCHER"].includes(linksType) && (
+              {['COMPANY', 'RESEARCHER'].includes(linksType) && (
                 <>
                   <DrawerClose className="text-left" asChild>
                     <Link
                       key={linksType}
                       href={
-                        linksType === "COMPANY"
-                          ? "/minhas-demandas"
-                          : "/meus-grupos-pesquisa"
+                        linksType === 'COMPANY'
+                          ? '/minhas-demandas'
+                          : '/meus-grupos-pesquisa'
                       }
                       className="items-center font-bold text-blue-strong"
                     >
-                      {linksType === "COMPANY"
-                        ? "Minhas demandas"
-                        : "Meus Grupos de pesquisa"}
+                      {linksType === 'COMPANY'
+                        ? 'Minhas demandas'
+                        : 'Meus Grupos de pesquisa'}
                     </Link>
                   </DrawerClose>
                 </>

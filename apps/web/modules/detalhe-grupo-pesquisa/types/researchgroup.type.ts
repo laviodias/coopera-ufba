@@ -1,4 +1,4 @@
-export type EResearcherType = "TEACHER" | "STUDENT";
+export type EResearcherType = 'TEACHER' | 'STUDENT';
 
 export type TLeader = {
   userId: string;

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,70 +6,70 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { PiArrowBendDoubleUpLeft } from "react-icons/pi";
-import { CustomIcon } from "../components/icon/customIcon";
-import Link from "next/link";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { PiArrowBendDoubleUpLeft } from 'react-icons/pi';
+import { CustomIcon } from '../components/icon/customIcon';
+import Link from 'next/link';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import useGetOneDemand from "@/api/demandas/use-get-one-demand";
-import { useEffect, useState } from "react";
-import { Demanda } from "../minhas-demandas/interfaces/demanda";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import useSendMail from "@/api/demandas/use-send-email";
-import { useToast } from "@/hooks/use-toast";
-import useGetMyResearchGroups from "@/api/research-group/use-get-my-research-group";
-import { MyResearchGroup } from "../meus-grupos-pesquisa/interfaces/pesquisador-grupo";
-import { useUser } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
-import useSendNotification from "@/api/notifications/use-send-notifications";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import useGetOneDemand from '@/api/demandas/use-get-one-demand';
+import { useEffect, useState } from 'react';
+import { Demanda } from '../minhas-demandas/interfaces/demanda';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import useSendMail from '@/api/demandas/use-send-email';
+import { useToast } from '@/hooks/use-toast';
+import useGetMyResearchGroups from '@/api/research-group/use-get-my-research-group';
+import { MyResearchGroup } from '../meus-grupos-pesquisa/interfaces/pesquisador-grupo';
+import { useUser } from '@/context/UserContext';
+import { useRouter } from 'next/navigation';
+import useSendNotification from '@/api/notifications/use-send-notifications';
 
 interface Props {
   query: any;
 }
 const ContactCompany = ({ query }: Props) => {
   const [demanda, setDemanda] = useState<Demanda>();
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>('');
   const [myResearchGroups, setMyResearchGroups] = useState<MyResearchGroup[]>(
-    []
+    [],
   );
   const { user } = useUser();
   const router = useRouter();
-  const [selectedGroup, setSelectedGroup] = useState<string>("");
+  const [selectedGroup, setSelectedGroup] = useState<string>('');
   const getDemand = useGetOneDemand(
     (data) => {
       setDemanda(data);
     },
-    () => {}
+    () => {},
   );
 
   if (!user) {
-    router.push("/login");
+    router.push('/login');
   }
 
-  if (user?.utype !== "RESEARCHER") {
+  if (user?.utype !== 'RESEARCHER') {
     router.back();
   }
 
   const { mutate: mutateNotification } = useSendNotification();
   function sendNotification() {
-    if(!demanda) return;
+    if (!demanda) return;
 
     const receiverId = demanda.company.user.id;
-    const message = `Você recebeu uma proposta de ${user?.name} do grupo "${selectedGroup}" para a demanda "${demanda.name}". Cheque seu e-mail para mais informações.`
+    const message = `Você recebeu uma proposta de ${user?.name} do grupo "${selectedGroup}" para a demanda "${demanda.name}". Cheque seu e-mail para mais informações.`;
 
     mutateNotification({
       userId: receiverId,
-      message
-    })  
+      message,
+    });
   }
 
   const { toast } = useToast();
@@ -77,25 +77,25 @@ const ContactCompany = ({ query }: Props) => {
   const { mutate } = useSendMail(
     () => {
       toast({
-        variant: "success",
-        title: "Sucesso",
-        description: "O email foi enviado com sucesso.",
+        variant: 'success',
+        title: 'Sucesso',
+        description: 'O email foi enviado com sucesso.',
       });
       sendNotification();
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um error",
-        description: "Ocorreu um erro ao tentar enviar o email.",
+        variant: 'destructive',
+        title: 'Ocorreu um error',
+        description: 'Ocorreu um erro ao tentar enviar o email.',
       });
-    }
+    },
   );
 
-  const myResearchGroup = useGetMyResearchGroups("", "asc");
+  const myResearchGroup = useGetMyResearchGroups('', 'asc');
 
   useEffect(() => {
-    const idDemanda = query.get("idDemanda");
+    const idDemanda = query.get('idDemanda');
 
     if (idDemanda) {
       getDemand.mutate(idDemanda);
@@ -146,7 +146,7 @@ const ContactCompany = ({ query }: Props) => {
             Contactar Empresa
           </h2>
           <Button asChild className="rounded-full w-fit">
-            <Link href={"/encontrar-demandas"}>
+            <Link href={'/encontrar-demandas'}>
               <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
               Voltar ao menu de demandas
             </Link>
@@ -156,19 +156,19 @@ const ContactCompany = ({ query }: Props) => {
       <section className="flex flex-col lg:flex-row gap-6 max-w-7xl">
         <aside className=" lg:w-1/4 bg-white p-5 flex flex-col rounded-xl border gap-4 h-hull">
           <h3 className="text-2xl sm:text-3xl font-semibold text-blue-strong self-center">
-            {demanda ? demanda.name : ""}
+            {demanda ? demanda.name : ''}
           </h3>
           <span className="text-sm text-blue-light mt-2">
-            Publicado{" "}
+            Publicado{' '}
             {demanda
               ? formatDistanceToNow(demanda.createdAt, {
                   locale: ptBR,
                   addSuffix: true,
                 })
-              : ""}
+              : ''}
           </span>
           <p className="text-blue-strong text-justify leading-5">
-            {demanda ? demanda.description : ""}
+            {demanda ? demanda.description : ''}
           </p>
           <div className="flex flex-wrap gap-2">
             {demanda
@@ -180,7 +180,7 @@ const ContactCompany = ({ query }: Props) => {
                     {project.name}
                   </div>
                 ))
-              : ""}
+              : ''}
             {demanda
               ? demanda.keywords?.map((keyoword) => (
                   <div
@@ -190,7 +190,7 @@ const ContactCompany = ({ query }: Props) => {
                     {keyoword.name}
                   </div>
                 ))
-              : ""}
+              : ''}
           </div>
           <span className="font-semibold">
             Empresa {demanda?.company?.user.name}
@@ -205,7 +205,7 @@ const ContactCompany = ({ query }: Props) => {
           <hr className="my-4" />
           <section className="flex flex-col gap-4">
             <p className="text-xl">
-              <span className="font-semibold">Empresa: </span>{" "}
+              <span className="font-semibold">Empresa: </span>{' '}
               {demanda?.company?.user.name}
             </p>
           </section>

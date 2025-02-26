@@ -1,6 +1,6 @@
-"use client";
-import { IconBaseProps } from "react-icons";
-import { IconType } from "react-icons";
+'use client';
+import { IconBaseProps } from 'react-icons';
+import { IconType } from 'react-icons';
 
 interface CustomIconProps extends IconBaseProps {
   icon: IconType;

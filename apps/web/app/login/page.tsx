@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { observer } from "mobx-react-lite";
-import { loginFormSchema, LoginUserFormData } from "./login.form.schema";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useUser } from "@/context/UserContext";
-import loginStore from "@/context/loginContext/login.context";
-import { authStore } from "@/context/loginContext";
-import { loadUserFromLocalStorage } from "@/lib/user.storage";
-import { useState } from "react";
-import { EyeIcon, EyeOffIcon, MoveLeftIcon } from "lucide-react";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { observer } from 'mobx-react-lite';
+import { loginFormSchema, LoginUserFormData } from './login.form.schema';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useUser } from '@/context/UserContext';
+import loginStore from '@/context/loginContext/login.context';
+import { authStore } from '@/context/loginContext';
+import { loadUserFromLocalStorage } from '@/lib/user.storage';
+import { useState } from 'react';
+import { EyeIcon, EyeOffIcon, MoveLeftIcon } from 'lucide-react';
 
 const Login = observer(() => {
   const router = useRouter();
@@ -50,7 +50,7 @@ const Login = observer(() => {
               id="email"
               placeholder="Digite seu e-mail"
               className="border border-zinc-200 shadow-sm rounded-lg p-2"
-              {...register("email")}
+              {...register('email')}
             />
             {errors.email && (
               <span className="text-red-600">{errors.email.message}</span>
@@ -60,11 +60,11 @@ const Login = observer(() => {
           <div className="flex flex-col gap-1 relative">
             <label htmlFor="password">Senha</label>
             <input
-              type={passwordVisible ? "text" : "password"}
+              type={passwordVisible ? 'text' : 'password'}
               id="password"
               placeholder="Digite sua senha"
               className="border border-zinc-200 shadow-sm rounded-lg p-2"
-              {...register("password")}
+              {...register('password')}
             />
             <span className="absolute right-3 top-10">
               <button
@@ -101,13 +101,13 @@ const Login = observer(() => {
             type="submit"
             className="rounded-full h-10 mt-8"
             style={{
-              backgroundColor: "#6D5BD0",
-              fontWeight: "bold",
-              color: "white",
+              backgroundColor: '#6D5BD0',
+              fontWeight: 'bold',
+              color: 'white',
             }}
             disabled={authStore.isLoading}
           >
-            {authStore.isLoading ? "Carregando..." : "Acessar"}
+            {authStore.isLoading ? 'Carregando...' : 'Acessar'}
           </button>
 
           {authStore.errorMessage && (
@@ -117,15 +117,17 @@ const Login = observer(() => {
           )}
         </form>
         <Link
-          href={"/"}
+          href={'/'}
           className="flex items-center justify-center mt-4 hover:underline"
         >
           <MoveLeftIcon />
-          <p style={{ marginLeft: 5, fontSize: 12 }}>Voltar para página inicial</p>
+          <p style={{ marginLeft: 5, fontSize: 12 }}>
+            Voltar para página inicial
+          </p>
         </Link>
 
         <p className="text-xs text-center mt-12">
-          Ainda não possui uma conta?{" "}
+          Ainda não possui uma conta?{' '}
           <Link href="/user-register" className="text-center underline">
             Cadastre-se
           </Link>

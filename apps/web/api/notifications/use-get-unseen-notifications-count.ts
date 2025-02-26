@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/axios";
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/axios';
 
 async function getUnseenNotificationsCount(): Promise<number> {
-  const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
   const { data } = await api(apiURL, true).get<number>(
-    `/notifications/unseen-count`
+    `/notifications/unseen-count`,
   );
 
   return data;
@@ -13,7 +13,7 @@ async function getUnseenNotificationsCount(): Promise<number> {
 
 export default function useGetUnseenNotificationsCount() {
   return useQuery({
-    queryKey: ["notifications-unseen-count"],
-    queryFn: () => getUnseenNotificationsCount()
+    queryKey: ['notifications-unseen-count'],
+    queryFn: () => getUnseenNotificationsCount(),
   });
 }

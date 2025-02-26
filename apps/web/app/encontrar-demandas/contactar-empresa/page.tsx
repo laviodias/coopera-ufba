@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import ContactCompany from "@/modules/contactar-empresa";
-import { useSearchParams } from "next/navigation";
+import ContactCompany from '@/modules/contactar-empresa';
+import { useSearchParams } from 'next/navigation';
 
 const ContactarEmpresa = () => {
   const searchParams = useSearchParams();

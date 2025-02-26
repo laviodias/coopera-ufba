@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Breadcrumb,
@@ -7,23 +7,23 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
-import { useUser } from "@/context/UserContext";
-import useAddResearchGroup from "@/api/research-group/use-add-research-group";
-import useGetAllKnowledgeAreas from "@/api/research-group/use-get-all-knowledgeAreas";
-import { CreateResearchGroup } from "@/types/ResearchGroup";
-import { useToast } from "@/hooks/use-toast";
-import { handleFileUpload } from "@/api/research-group/use-upload-file";
+} from '@/components/ui/select';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import { useUser } from '@/context/UserContext';
+import useAddResearchGroup from '@/api/research-group/use-add-research-group';
+import useGetAllKnowledgeAreas from '@/api/research-group/use-get-all-knowledgeAreas';
+import { CreateResearchGroup } from '@/types/ResearchGroup';
+import { useToast } from '@/hooks/use-toast';
+import { handleFileUpload } from '@/api/research-group/use-upload-file';
 
 const CadastrarGruposPesquisa = () => {
   const {
@@ -33,7 +33,7 @@ const CadastrarGruposPesquisa = () => {
     formState: { errors },
   } = useForm<CreateResearchGroup>();
   const { user, setUser } = useUser();
-  const [knowledgeArea, setKnowledgeArea] = useState("");
+  const [knowledgeArea, setKnowledgeArea] = useState('');
   const { data: knowledgeAreas } = useGetAllKnowledgeAreas();
   const [areas, setAreas] = useState<{ id: string; name: string }[]>([]);
   const { toast } = useToast();
@@ -44,7 +44,7 @@ const CadastrarGruposPesquisa = () => {
   };
 
   useEffect(() => {
-    setValue("knowledgeArea", knowledgeArea);
+    setValue('knowledgeArea', knowledgeArea);
   }, [knowledgeArea, setValue]);
 
   useEffect(() => {
@@ -54,17 +54,17 @@ const CadastrarGruposPesquisa = () => {
   const { mutate, isPending } = useAddResearchGroup(
     () => {
       toast({
-        title: "Sucesso",
-        description: "O grupo de pesquisa foi cadastrado com sucesso.",
+        title: 'Sucesso',
+        description: 'O grupo de pesquisa foi cadastrado com sucesso.',
       });
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um erro",
-        description: "Ocorreu um erro ao tentar criar novo grupo de pesquisa.",
+        variant: 'destructive',
+        title: 'Ocorreu um erro',
+        description: 'Ocorreu um erro ao tentar criar novo grupo de pesquisa.',
       });
-    }
+    },
   );
 
   const onSubmit = async (data: CreateResearchGroup) => {
@@ -77,8 +77,8 @@ const CadastrarGruposPesquisa = () => {
       description: data.description,
       knowledgeArea: data.knowledgeArea,
       knowledgeAreas: [data.knowledgeArea],
-      researcherId: user ? user?.id : "",
-      members: [user ? user?.id : ""],
+      researcherId: user ? user?.id : '',
+      members: [user ? user?.id : ''],
       urlCNPQ: data?.urlCNPQ,
       img: filename,
     };
@@ -120,7 +120,7 @@ const CadastrarGruposPesquisa = () => {
             <label className="font-bold text-blue-strong mt-4">
               Nome*
               <input
-                {...register("name", { required: true })}
+                {...register('name', { required: true })}
                 type="text"
                 placeholder="Nome do Grupo de Pesquisa"
                 className="w-full py-3 px-4 text-base font-medium rounded-lg border mt-2"
@@ -134,7 +134,7 @@ const CadastrarGruposPesquisa = () => {
             <label className="font-bold text-blue-strong mt-4">
               Descrição*
               <textarea
-                {...register("description", { required: true })}
+                {...register('description', { required: true })}
                 placeholder="Digite o texto..."
                 rows={4}
                 className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
@@ -149,14 +149,16 @@ const CadastrarGruposPesquisa = () => {
               Área de Pesquisa*
               <Select
                 onValueChange={setKnowledgeArea}
-                {...register("knowledgeArea", { required: true })}
+                {...register('knowledgeArea', { required: true })}
               >
                 <SelectTrigger className="w-full py-6 px-4 text-base font-medium rounded-lg border mt-2 data-[placeholder]:text-muted-foreground">
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>
                 <SelectContent>
                   {areas.map((area) => (
-                    <SelectItem value={area.id} key={area.id}>{area.name}</SelectItem>
+                    <SelectItem value={area.id} key={area.id}>
+                      {area.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -182,7 +184,10 @@ const CadastrarGruposPesquisa = () => {
                 type="url"
                 placeholder="URL CNPQ"
                 className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("urlCNPQ", { required: false, setValueAs: (value) => value || null })}
+                {...register('urlCNPQ', {
+                  required: false,
+                  setValueAs: (value) => value || null,
+                })}
               />
             </label>
 
@@ -192,10 +197,10 @@ const CadastrarGruposPesquisa = () => {
                 className="rounded-full py-2.5 px-8"
                 disabled={isPending}
               >
-                {isPending ? "Cadastrando..." : "Cadastrar Grupo de Pesquisa"}
+                {isPending ? 'Cadastrando...' : 'Cadastrar Grupo de Pesquisa'}
               </Button>
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 className="rounded-full py-2.5 px-8"
                 type="reset"
               >
