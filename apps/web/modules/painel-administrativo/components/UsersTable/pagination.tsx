@@ -8,11 +8,11 @@ import {
 } from "react-icons/fi";
 
 import { ELLIPSIS, useReactTablePaginationRange } from "./use-pagination";
-import { UserType } from "../../types/User";
 import { Button } from "@/components/ui/button";
+import { User } from "@/types/User";
 
 interface PaginationProps {
-  table: Table<UserType>;
+  table: Table<User>;
 }
 
 function Pagination({ table }: PaginationProps) {

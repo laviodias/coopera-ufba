@@ -20,9 +20,8 @@ import { ProjectFormData } from "./types/project-form-data";
 import Keywords from "@/components/keywords";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
-import { Project } from "@/components/ResearchGroupList/type";
 
-const EditarProjeto = ({ projeto }: { projeto: Project }) => {
+const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
 
   const {
@@ -65,10 +64,9 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
       return;
     }
 
-    const projectData: Project = {
+    const projectData: Partial<Project> = {
       researchGroupId: params.id,
       name: data.name,
-      description: data.description,
       link: data.link,
       keywords: selectedKeywords,
     };

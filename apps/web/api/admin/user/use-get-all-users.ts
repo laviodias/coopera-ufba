@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { UserType } from '@/modules/painel-administrativo/types/User';
+import { User } from '@/types/User';
 
-async function getAllUsers(): Promise<UserType[]> {
+async function getAllUsers(): Promise<User[]> {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || ''
 
-  const { data } = await api(apiURL, true).get<UserType[]>(`/admin/users`)
+  const { data } = await api(apiURL, true).get<User[]>(`/admin/users`)
 
   return data
 }

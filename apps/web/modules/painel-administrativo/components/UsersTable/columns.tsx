@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { UserType } from "../../types/User";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { EditModal } from "./edit-modal";
+import { User } from "@/types/User";
 
-const columns: ColumnDef<UserType>[] = [
+const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (

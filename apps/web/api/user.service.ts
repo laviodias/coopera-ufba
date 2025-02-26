@@ -1,5 +1,5 @@
-import { CreateUser } from "@/context/userRegisterContext";
 import httpService from "./http.service";
+import { User } from "@/types/User";
 
 class UserService {
 
@@ -17,7 +17,7 @@ class UserService {
         return await this.handleAuthResponse(response);
     }
 
-    async register(user: CreateUser) {
+    async register(user: User) {
         const response = await httpService.post('/users', {...user});
         return await this.handleAuthResponse(response);
     }
