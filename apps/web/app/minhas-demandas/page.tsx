@@ -1,35 +1,35 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { CustomIcon } from "@/modules/components/icon/customIcon";
-import MinhasDemandasFilter from "@/modules/minhas-demandas/components/filter/minhasDemandasFilter";
-import MinhasDemandasTable from "@/modules/minhas-demandas/components/table/minhasDemandasTable";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import useGetMyDemands from "@/api/demandas/use-get-my-demands";
-import { useRouter } from "next/navigation";
-import useDeleteDemand from "@/api/demandas/use-delete-demand";
-import { useToast } from "@/hooks/use-toast";
-import useGetMyFilterDemands from "@/api/demandas/use-get-my-filter-demands";
-import { useState } from "react";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
+'use client';
+import { Button } from '@/components/ui/button';
+import { CustomIcon } from '@/modules/components/icon/customIcon';
+import MinhasDemandasFilter from '@/modules/minhas-demandas/components/filter/minhasDemandasFilter';
+import MinhasDemandasTable from '@/modules/minhas-demandas/components/table/minhasDemandasTable';
+import { IoIosAddCircleOutline } from 'react-icons/io';
+import useGetMyDemands from '@/api/demandas/use-get-my-demands';
+import { useRouter } from 'next/navigation';
+import useDeleteDemand from '@/api/demandas/use-delete-demand';
+import { useToast } from '@/hooks/use-toast';
+import useGetMyFilterDemands from '@/api/demandas/use-get-my-filter-demands';
+import { useState } from 'react';
+import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
 
 const MinhasDemandas = () => {
   const { data: demands = [] } = useGetMyDemands();
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState<string>('');
   const [filteredDemands, setFilteredDemands] = useState<Demanda[]>();
   const router = useRouter();
   const { toast } = useToast();
 
   const deleteDemandaMutation = useDeleteDemand(
-    () => toast({ title: "Demanda removida com sucesso!", variant: "success" }),
+    () => toast({ title: 'Demanda removida com sucesso!', variant: 'success' }),
     () =>
       toast({
-        title: "Não foi possivel remover demanda.",
-        variant: "destructive",
-      })
+        title: 'Não foi possivel remover demanda.',
+        variant: 'destructive',
+      }),
   );
 
   const handleRedirect = () => {
-    router.push("/cadastro-demandas"); // Navigates to the "about" page
+    router.push('/cadastro-demandas'); // Navigates to the "about" page
   };
 
   const handleDelete = async (id: string) => {
@@ -43,9 +43,9 @@ const MinhasDemandas = () => {
   const filterDemands = useGetMyFilterDemands(
     (data) => {
       setFilteredDemands(data);
-      toast({ title: "Demandas buscadas com sucesso!" });
+      toast({ title: 'Demandas buscadas com sucesso!' });
     },
-    () => toast({ title: "Falha na Busca!" })
+    () => toast({ title: 'Falha na Busca!' }),
   );
 
   const handleFilter = () => {
@@ -69,7 +69,7 @@ const MinhasDemandas = () => {
           handleFilter={handleFilter}
         />
         <MinhasDemandasTable
-          data={filteredDemands && filter !== "" ? filteredDemands : demands}
+          data={filteredDemands && filter !== '' ? filteredDemands : demands}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />

@@ -1,35 +1,35 @@
-"use client";
+'use client';
 
-import { format } from "date-fns";
-import MinhasPropostasFilter from "./components/filter/minhasPropostasFilter";
-import MinhasPropostasTable from "./components/table/minhasPropostasTable";
-import { Proposta } from "./interfaces/proposta";
+import { format } from 'date-fns';
+import MinhasPropostasFilter from './components/filter/minhasPropostasFilter';
+import MinhasPropostasTable from './components/table/minhasPropostasTable';
+import { Proposta } from './interfaces/proposta';
 
 const MyProposalsPage = () => {
   const propostas: Proposta[] = [
     {
-      id: "1",
-      demand: "teste",
-      company: "teste",
-      researchGroup: "teste",
-      status: "teste",
-      createdAt: format(new Date(), "dd/MM/yyyy"),
+      id: '1',
+      demand: 'teste',
+      company: 'teste',
+      researchGroup: 'teste',
+      status: 'teste',
+      createdAt: format(new Date(), 'dd/MM/yyyy'),
     },
     {
-      id: "2",
-      demand: "teste",
-      company: "teste",
-      researchGroup: "teste",
-      status: "teste",
-      createdAt: format(new Date(), "dd/MM/yyyy"),
+      id: '2',
+      demand: 'teste',
+      company: 'teste',
+      researchGroup: 'teste',
+      status: 'teste',
+      createdAt: format(new Date(), 'dd/MM/yyyy'),
     },
     {
-      id: "3",
-      demand: "teste",
-      company: "teste",
-      researchGroup: "teste",
-      status: "teste",
-      createdAt: format(new Date(), "dd/MM/yyyy"),
+      id: '3',
+      demand: 'teste',
+      company: 'teste',
+      researchGroup: 'teste',
+      status: 'teste',
+      createdAt: format(new Date(), 'dd/MM/yyyy'),
     },
   ];
   return (

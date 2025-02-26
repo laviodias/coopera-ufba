@@ -1,8 +1,7 @@
-import { RESEARCHER, COMPANY, getUserFromData } from "../register.actions";
-import { CreateUser, ResearcherType, UserRole } from "../register.types";
+import { RESEARCHER, COMPANY, getUserFromData } from '../register.actions';
+import { CreateUser, ResearcherType, UserRole } from '../register.types';
 
 describe('getUserFromData function', () => {
-
   it('should create a CreateUser object with company details for user type EMPRESA', () => {
     const userData = {
       name: 'John Doe',
@@ -59,7 +58,9 @@ describe('getUserFromData function', () => {
 
     const actualUser = getUserFromData(userData);
 
-    expect(actualUser.researcher!.researcherType).toEqual(ResearcherType.STUDENT);
+    expect(actualUser.researcher!.researcherType).toEqual(
+      ResearcherType.STUDENT,
+    );
   });
 
   it('should handle invalid user types and set company and researcher to null', () => {
@@ -80,4 +81,4 @@ describe('getUserFromData function', () => {
 
     expect(actualUser).toEqual(expectedUser);
   });
-})
+});

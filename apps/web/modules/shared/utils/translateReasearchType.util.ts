@@ -1,5 +1,5 @@
-import { EResearcherType } from "@/modules/detalhe-grupo-pesquisa/types/researchgroup.type";
+import { EResearcherType } from '@/modules/detalhe-grupo-pesquisa/types/researchgroup.type';
 
 export function translateResearchType(researcherType: EResearcherType) {
-  return researcherType === "TEACHER" ? "Professor" : "Estudante";
+  return researcherType === 'TEACHER' ? 'Professor' : 'Estudante';
 }

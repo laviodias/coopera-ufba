@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import useAddProject from "@/api/projects/use-add-project";
+import useAddProject from '@/api/projects/use-add-project';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,19 +8,25 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
 
-import { useToast } from "@/hooks/use-toast";
-import { Project } from "@/types/Project";
-import { useParams, useRouter } from "next/navigation";
+import { useToast } from '@/hooks/use-toast';
+import { Project } from '@/types/Project';
+import { useParams, useRouter } from 'next/navigation';
 
-import { useForm } from "react-hook-form";
-import { ProjectFormData } from "./types/project-form-data";
-import Keywords from "@/components/keywords";
-import { useState } from "react";
-import useGetAllDemands from "@/api/demandas/use-get-all-demands";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useForm } from 'react-hook-form';
+import { ProjectFormData } from './types/project-form-data';
+import Keywords from '@/components/keywords';
+import { useState } from 'react';
+import useGetAllDemands from '@/api/demandas/use-get-all-demands';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const CadastrarProjeto = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
@@ -32,7 +38,7 @@ const CadastrarProjeto = () => {
     register,
     formState: { errors },
   } = useForm<ProjectFormData>();
-  
+
   const { toast } = useToast();
   const params = useParams<{ id: string }>();
   const router = useRouter();
@@ -40,19 +46,19 @@ const CadastrarProjeto = () => {
   const { mutate } = useAddProject(
     () => {
       toast({
-        variant: "success",
-        title: "Sucesso",
-        description: "O projeto foi cadastrado com sucesso.",
+        variant: 'success',
+        title: 'Sucesso',
+        description: 'O projeto foi cadastrado com sucesso.',
       });
       router.back();
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um error",
-        description: "Ocorreu um erro ao tentar criar novo projeto.",
+        variant: 'destructive',
+        title: 'Ocorreu um error',
+        description: 'Ocorreu um erro ao tentar criar novo projeto.',
       });
-    }
+    },
   );
 
   const [keywordRequired, setKeywordRequired] = useState<boolean>(false);
@@ -111,7 +117,7 @@ const CadastrarProjeto = () => {
             <label className="font-bold text-blue-strong mt-4">
               Título*
               <input
-                {...register("name", { required: true })}
+                {...register('name', { required: true })}
                 type="text"
                 placeholder="Título do projeto"
                 className="w-full py-3 px-4 text-base font-medium rounded-lg border mt-2"
@@ -136,15 +142,21 @@ const CadastrarProjeto = () => {
                 type="url"
                 placeholder="Informe link do projeto"
                 className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("link", { required: false, setValueAs: (value) => value || null })}
+                {...register('link', {
+                  required: false,
+                  setValueAs: (value) => value || null,
+                })}
               />
             </label>
 
             <label className="font-bold text-blue-strong mt-4">
               Vincular Demanda
-              <Select onValueChange={setSelectedDemand} {...register("demandId")}>
+              <Select
+                onValueChange={setSelectedDemand}
+                {...register('demandId')}
+              >
                 <SelectTrigger className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2">
-                  <SelectValue placeholder={"Selecione uma demanda"} />
+                  <SelectValue placeholder={'Selecione uma demanda'} />
                 </SelectTrigger>
                 <SelectContent>
                   {demands.map((demand) => (
@@ -161,7 +173,7 @@ const CadastrarProjeto = () => {
                 Cadastrar projeto
               </Button>
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 className="rounded-full py-2.5 px-8"
                 type="reset"
                 onClick={handleRedirect}

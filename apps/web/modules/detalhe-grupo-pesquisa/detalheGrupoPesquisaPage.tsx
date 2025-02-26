@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,26 +6,26 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { CustomIcon } from "../components/icon/customIcon";
-import MembersSection from "./components/membersSection";
-import { useParams, useRouter } from "next/navigation";
-import useGetResearchGroup from "@/api/grupos/use-get-research-group";
-import React from "react";
-import ProjectsSection from "./components/projectsSection";
-import { TbUserCircle } from "react-icons/tb";
-import { useUser } from "@/context/UserContext";
-import Link from "next/link";
-import { GerenciarMembrosModal } from "../gerenciar-membros/gerenciarMembrosModal";
-import { IoPersonCircleOutline } from "react-icons/io5";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { IoIosAddCircleOutline } from 'react-icons/io';
+import { CustomIcon } from '../components/icon/customIcon';
+import MembersSection from './components/membersSection';
+import { useParams, useRouter } from 'next/navigation';
+import useGetResearchGroup from '@/api/grupos/use-get-research-group';
+import React from 'react';
+import ProjectsSection from './components/projectsSection';
+import { TbUserCircle } from 'react-icons/tb';
+import { useUser } from '@/context/UserContext';
+import Link from 'next/link';
+import { GerenciarMembrosModal } from '../gerenciar-membros/gerenciarMembrosModal';
+import { IoPersonCircleOutline } from 'react-icons/io5';
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL || "";
+const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
 enum ETabs {
-  MEMBERS = "membros",
-  PROJECTS = "projetos",
+  MEMBERS = 'membros',
+  PROJECTS = 'projetos',
 }
 export default function DetalheGrupoPesquisaPage() {
   const params = useParams();
@@ -49,10 +49,10 @@ export default function DetalheGrupoPesquisaPage() {
 
   const openAddMemberModal = () => {
     setShowAddMemberModal(true);
-  }
+  };
 
   if (isError) {
-    router.push("/404");
+    router.push('/404');
   }
   if (isLoading) {
     return (
@@ -63,7 +63,7 @@ export default function DetalheGrupoPesquisaPage() {
   }
 
   const imageComponent =
-    !!researchGroup?.img && researchGroup.img.includes("/uploads") ? (
+    !!researchGroup?.img && researchGroup.img.includes('/uploads') ? (
       <img
         src={`${apiURL}${researchGroup?.img}`}
         alt="Grupo de Pesquisa"
@@ -82,9 +82,9 @@ export default function DetalheGrupoPesquisaPage() {
                 <BreadcrumbLink
                   className="hover:text-blue-strong"
                   href={
-                    user?.utype === "RESEARCHER"
-                      ? "/meus-grupos-pesquisa"
-                      : "/encontrar-grupo-pesquisa"
+                    user?.utype === 'RESEARCHER'
+                      ? '/meus-grupos-pesquisa'
+                      : '/encontrar-grupo-pesquisa'
                   }
                 >
                   Grupos de Pesquisa
@@ -104,21 +104,30 @@ export default function DetalheGrupoPesquisaPage() {
               {researchGroup?.name}
             </h1>
 
-            {user && (user.utype === "RESEARCHER" || user.role === "ADMIN") && (
-              selectedTab === ETabs.PROJECTS ? (
+            {user &&
+              (user.utype === 'RESEARCHER' || user.role === 'ADMIN') &&
+              (selectedTab === ETabs.PROJECTS ? (
                 <Link href={`/cadastro-projetos/${groupId}`}>
                   <Button className="rounded-full">
-                      <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{" "}
-                      Novo Projeto
+                    <CustomIcon
+                      icon={IoIosAddCircleOutline}
+                      className="!size-5"
+                    />{' '}
+                    Novo Projeto
                   </Button>
                 </Link>
               ) : (
-                <Button className="ml-1 rounded-full" onClick={() => openAddMemberModal()}>
-                    <CustomIcon icon={IoPersonCircleOutline} className="!size-5" />{" "}
-                    Gerenciar Membros
+                <Button
+                  className="ml-1 rounded-full"
+                  onClick={() => openAddMemberModal()}
+                >
+                  <CustomIcon
+                    icon={IoPersonCircleOutline}
+                    className="!size-5"
+                  />{' '}
+                  Gerenciar Membros
                 </Button>
-              )
-            )}
+              ))}
           </div>
         </div>
 
@@ -129,10 +138,10 @@ export default function DetalheGrupoPesquisaPage() {
             <h1 className="font-size-lg text-2xl">{researchGroup?.name}</h1>
 
             <p>{researchGroup?.description}</p>
-            {user?.utype === "COMPANY" && (
+            {user?.utype === 'COMPANY' && (
               <Button
                 asChild
-                variant={"outline"}
+                variant={'outline'}
                 className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
               >
                 <Link
@@ -153,7 +162,9 @@ export default function DetalheGrupoPesquisaPage() {
             <div className="flex gap-5">
               <Button
                 className="rounded-full"
-                variant={selectedTab === ETabs.PROJECTS ? "default" : "secondary"}
+                variant={
+                  selectedTab === ETabs.PROJECTS ? 'default' : 'secondary'
+                }
                 onClick={() => {
                   handleTabChange(ETabs.PROJECTS);
                 }}
@@ -163,7 +174,9 @@ export default function DetalheGrupoPesquisaPage() {
 
               <Button
                 className="rounded-full"
-                variant={selectedTab === ETabs.MEMBERS ? "default" : "secondary"}
+                variant={
+                  selectedTab === ETabs.MEMBERS ? 'default' : 'secondary'
+                }
                 onClick={() => {
                   handleTabChange(ETabs.MEMBERS);
                 }}
@@ -173,9 +186,15 @@ export default function DetalheGrupoPesquisaPage() {
             </div>
             {researchGroup ? (
               selectedTab == ETabs.MEMBERS ? (
-                <MembersSection members={researchGroup?.members} leaderId={researchGroup?.leader.userId} />
+                <MembersSection
+                  members={researchGroup?.members}
+                  leaderId={researchGroup?.leader.userId}
+                />
               ) : (
-                <ProjectsSection projects={researchGroup?.projects} leaderId={researchGroup?.leader.userId} />
+                <ProjectsSection
+                  projects={researchGroup?.projects}
+                  leaderId={researchGroup?.leader.userId}
+                />
               )
             ) : (
               <div>Carregando...</div>
@@ -184,7 +203,12 @@ export default function DetalheGrupoPesquisaPage() {
         </div>
       </section>
 
-      {showAddMemberModal && (<GerenciarMembrosModal groupId={groupId as string} onCloseModal={() => setShowAddMemberModal(false)}/>)}
+      {showAddMemberModal && (
+        <GerenciarMembrosModal
+          groupId={groupId as string}
+          onCloseModal={() => setShowAddMemberModal(false)}
+        />
+      )}
     </main>
   );
 }

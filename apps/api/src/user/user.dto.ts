@@ -5,7 +5,7 @@ import {
   IsOptional,
   Matches,
 } from 'class-validator';
-import { ResearcherType, User, UserRole, UserStatus } from '@prisma/client';
+import { ResearcherType, UserRole, UserStatus } from '@prisma/client';
 
 export class CreateCompanyDto {
   contactName?: string;

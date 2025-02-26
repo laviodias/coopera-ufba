@@ -1,7 +1,13 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -12,7 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import userService from '@/api/user.service';
 
 const formSchema = z.object({
-  email: z.string().email("Endereço de email inválido"),
+  email: z.string().email('Endereço de email inválido'),
 });
 
 export default function PasswordRecovery() {
@@ -22,7 +28,7 @@ export default function PasswordRecovery() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
@@ -32,17 +38,17 @@ export default function PasswordRecovery() {
     setIsLoading(false);
     if (response.status !== 201) {
       toast({
-        title: "Erro ao enviar email!",
-        description: "Verifique se o email está correto.",
-        variant: "destructive",
+        title: 'Erro ao enviar email!',
+        description: 'Verifique se o email está correto.',
+        variant: 'destructive',
       });
       return;
     }
 
     toast({
-      title: "Email enviado com sucesso!",
-      description: "Verifique sua caixa de entrada.",
-      variant: "success",
+      title: 'Email enviado com sucesso!',
+      description: 'Verifique sua caixa de entrada.',
+      variant: 'success',
     });
   };
 
@@ -71,7 +77,7 @@ export default function PasswordRecovery() {
                   id="email"
                   type="email"
                   placeholder="Digite seu e-mail"
-                  {...form.register("email")}
+                  {...form.register('email')}
                 />
                 {form.formState.errors.email && (
                   <p className="text-red-500 text-sm">

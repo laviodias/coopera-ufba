@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,13 +16,13 @@ const formSchema: z.ZodSchema = z
   .object({
     password: z
       .string()
-      .min(8, "A senha precisa ter pelo menos 8 caracteres")
-      .regex(/[A-Z]/, "A senha precisa ter pelo menos uma letra maiúscula")
-      .regex(/[a-z]/, "A senha precisa ter pelo menos uma letra minúscula")
-      .regex(/\d/, "A senha precisa ter pelo menos um número")
+      .min(8, 'A senha precisa ter pelo menos 8 caracteres')
+      .regex(/[A-Z]/, 'A senha precisa ter pelo menos uma letra maiúscula')
+      .regex(/[a-z]/, 'A senha precisa ter pelo menos uma letra minúscula')
+      .regex(/\d/, 'A senha precisa ter pelo menos um número')
       .regex(
         /[^a-zA-Z0-9]/,
-        "A senha precisa ter pelo menos um caractere especial"
+        'A senha precisa ter pelo menos um caractere especial',
       ),
 
     passwordConfirmation: z.string(),
@@ -31,8 +31,8 @@ const formSchema: z.ZodSchema = z
     if (passwordConfirmation !== password) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "As senhas não coincidem",
-        path: ["passwordConfirmation"],
+        message: 'As senhas não coincidem',
+        path: ['passwordConfirmation'],
       });
     }
   });
@@ -41,36 +41,36 @@ export default function PasswordRecovery() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams.get('token');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: "",
-      passwordConfirmation: "",
+      password: '',
+      passwordConfirmation: '',
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     const response = await userService.resetPassword(
-      token ?? "",
-      data.password
+      token ?? '',
+      data.password,
     );
     if (response.status !== 200) {
       toast({
-        title: "Erro ao alterar a senha",
+        title: 'Erro ao alterar a senha',
         description:
-          "Não foi possível alterar a senha, tente novamente mais tarde",
-        variant: "destructive",
+          'Não foi possível alterar a senha, tente novamente mais tarde',
+        variant: 'destructive',
       });
       setIsLoading(false);
       return;
     }
 
     toast({
-      title: "Senha alterada com sucesso",
-      variant: "success",
+      title: 'Senha alterada com sucesso',
+      variant: 'success',
     });
     setIsLoading(false);
   };
@@ -96,7 +96,7 @@ export default function PasswordRecovery() {
                   id="password"
                   type="password"
                   placeholder="Digite sua senha"
-                  {...form.register("password")}
+                  {...form.register('password')}
                 />
                 {form.formState.errors.password && (
                   <p className="text-red-500 text-sm">
@@ -110,7 +110,7 @@ export default function PasswordRecovery() {
                   id="passwordConfirmation"
                   type="password"
                   placeholder="Confirme sua senha"
-                  {...form.register("passwordConfirmation")}
+                  {...form.register('passwordConfirmation')}
                 />
                 {form.formState.errors.passwordConfirmation && (
                   <p className="text-red-500 text-sm">

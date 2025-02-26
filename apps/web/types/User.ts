@@ -34,4 +34,5 @@ export type User = {
   researcher?: Researcher;
   utype: UserTypeEnum;
   notifications?: Notification[];
+  access_token?: string;
 }

@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { ResearchGroupList } from "@/components/ResearchGroupList";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { FiSearch } from "react-icons/fi";
-import useGetAllResearchGroups from "@/api/research-group/use-get-all-research-group";
-import { useEffect, useState } from "react";
-import useGetAllKnowledgeAreas from "@/api/research-group/use-get-all-knowledgeAreas";
-import { ResearchGroup } from "@/types/ResearchGroup";
+import { ResearchGroupList } from '@/components/ResearchGroupList';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { FiSearch } from 'react-icons/fi';
+import useGetAllResearchGroups from '@/api/research-group/use-get-all-research-group';
+import { useEffect, useState } from 'react';
+import useGetAllKnowledgeAreas from '@/api/research-group/use-get-all-knowledgeAreas';
+import { ResearchGroup } from '@/types/ResearchGroup';
 
 function EncontrarGrupoPesquisa() {
   const { data } = useGetAllResearchGroups();
   const { data: knowledgeAreas } = useGetAllKnowledgeAreas();
   const [researchgroups, setResearchgroups] = useState(data || []);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [areas, setAreas] = useState<{ id: string; name: string }[]>([]);
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
@@ -30,29 +30,33 @@ function EncontrarGrupoPesquisa() {
   }, [selectedAreas, search]);
 
   function handleSearch() {
-    const searchValue = document.querySelector("input")?.value;
-    setSearch(searchValue || "");
+    const searchValue = document.querySelector('input')?.value;
+    setSearch(searchValue || '');
   }
 
   function filterByArea(currentValues: ResearchGroup[]) {
     const filtered = currentValues.filter((group) =>
-      selectedAreas.some((area) => group.knowledgeAreas.filter((a) => a.name === area).length > 0)
+      selectedAreas.some(
+        (area) =>
+          group.knowledgeAreas.filter((a) => a.name === area).length > 0,
+      ),
     );
-    
-    return filtered
+
+    return filtered;
   }
 
   function filterByNameAndDescription(currentValues: ResearchGroup[]) {
-    const filtered = currentValues.filter((group) =>
-      group.name.toLowerCase().includes(search.toLowerCase()) ||
-      group.description.toLowerCase().includes(search.toLowerCase())
+    const filtered = currentValues.filter(
+      (group) =>
+        group.name.toLowerCase().includes(search.toLowerCase()) ||
+        group.description.toLowerCase().includes(search.toLowerCase()),
     );
-      
-    return filtered
+
+    return filtered;
   }
 
   function handleFilters() {
-    if(!data) return
+    if (!data) return;
 
     let filteredResearchGroups = data;
     if (selectedAreas.length > 0) {
@@ -60,7 +64,9 @@ function EncontrarGrupoPesquisa() {
     }
 
     if (search) {
-      filteredResearchGroups = filterByNameAndDescription(filteredResearchGroups);
+      filteredResearchGroups = filterByNameAndDescription(
+        filteredResearchGroups,
+      );
     }
 
     setResearchgroups(filteredResearchGroups);
@@ -106,10 +112,10 @@ function EncontrarGrupoPesquisa() {
         <Input
           className="bg-white h-12 rounded-lg"
           placeholder="Buscar grupo de pesquisa"
-          onClear={() => setSearch("")}
+          onClear={() => setSearch('')}
           isSearching={search.length > 0}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === 'Enter') {
               handleSearch();
             }
           }}

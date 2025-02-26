@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { MyResearchGroupList } from "@/components/MyResearchGroupList";
-import MeusGruposPesquisaFilter from "@/modules/meus-grupos-pesquisa/components/filter/meusGruposPesquisaFilter";
-import { Button } from "@/components/ui/button";
-import { CustomIcon } from "@/modules/components/icon/customIcon";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import useGetMyResearchGroups from "@/api/research-group/use-get-my-research-group";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { MyResearchGroupList } from '@/components/MyResearchGroupList';
+import MeusGruposPesquisaFilter from '@/modules/meus-grupos-pesquisa/components/filter/meusGruposPesquisaFilter';
+import { Button } from '@/components/ui/button';
+import { CustomIcon } from '@/modules/components/icon/customIcon';
+import { IoIosAddCircleOutline } from 'react-icons/io';
+import useGetMyResearchGroups from '@/api/research-group/use-get-my-research-group';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function MeusGruposPesquisa() {
-  const [search, setSearch] = useState("");
-  const [order, setOrder] = useState<"asc" | "desc">("asc");
+  const [search, setSearch] = useState('');
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const { data: pesquisador } = useGetMyResearchGroups(search, order);
   const router = useRouter();
 
   function handleSearch() {
-    const searchValue = document.querySelector("input")?.value;
-    setSearch(searchValue ?? "");
+    const searchValue = document.querySelector('input')?.value;
+    setSearch(searchValue ?? '');
   }
 
   const handleAddResearchGroup = () => {

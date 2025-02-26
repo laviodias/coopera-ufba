@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { DemandList } from "@/components/DemandList";
-import { Button } from "@/components/ui/button";
+import { DemandList } from '@/components/DemandList';
+import { Button } from '@/components/ui/button';
 // import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 // import { Label } from "@/components/ui/label";
 // import {
 //   Select,
@@ -12,24 +12,24 @@ import { Input } from "@/components/ui/input";
 //   SelectTrigger,
 //   SelectValue,
 // } from "@/components/ui/select";
-import { FiSearch } from "react-icons/fi";
-import useGetAllDemands from "@/api/demandas/use-get-all-demands";
-import { useState } from "react";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
-import useGetFilterDemands from "@/api/demandas/use-get-filter-demands";
-import { toast } from "@/hooks/use-toast";
+import { FiSearch } from 'react-icons/fi';
+import useGetAllDemands from '@/api/demandas/use-get-all-demands';
+import { useState } from 'react';
+import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import useGetFilterDemands from '@/api/demandas/use-get-filter-demands';
+import { toast } from '@/hooks/use-toast';
 
 function EncontrarDemandas() {
   const { data: demands = [] } = useGetAllDemands();
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState<string>('');
   const [filteredDemands, setFilteredDemands] = useState<Demanda[]>();
 
   const filterDemands = useGetFilterDemands(
     (data) => {
       setFilteredDemands(data);
-      toast({ title: "Demandas buscadas com sucesso!" });
+      toast({ title: 'Demandas buscadas com sucesso!' });
     },
-    () => toast({ title: "Falha na Busca!" })
+    () => toast({ title: 'Falha na Busca!' }),
   );
 
   const handleFilter = () => {
@@ -117,7 +117,7 @@ function EncontrarDemandas() {
       </div>
 
       <DemandList
-        demands={filteredDemands && filter !== "" ? filteredDemands : demands}
+        demands={filteredDemands && filter !== '' ? filteredDemands : demands}
       />
     </main>
   );

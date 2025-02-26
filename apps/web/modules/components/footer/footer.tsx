@@ -4,7 +4,7 @@ const Footer = () => {
       <p className="text-white font-bold w-fit text-center">
         Copyright © 2024
         {new Date().getFullYear() === 2024
-          ? " "
+          ? ' '
           : ` - ${new Date().getFullYear()} `}
         Todos os direitos reservados
       </p>

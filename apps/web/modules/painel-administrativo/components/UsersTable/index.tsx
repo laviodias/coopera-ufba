@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 import {
   flexRender,
   getCoreRowModel,
@@ -9,7 +9,7 @@ import {
   getSortedRowModel,
   PaginationState,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -17,15 +17,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
 
-import { UserType } from "../../types/User";
-import { columns } from "./columns";
-import { Pagination } from "./pagination";
+import { columns } from './columns';
+import { Pagination } from './pagination';
+import { User } from '@/types/User';
 
 interface UsersTableProps {
-  data: UserType[];
+  data: User[];
 }
 
 function UsersTable({ data }: UsersTableProps) {
@@ -51,9 +51,9 @@ function UsersTable({ data }: UsersTableProps) {
     <div className="w-full">
       <Input
         placeholder="Buscar usuário"
-        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+        value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
         onChange={(event) =>
-          table.getColumn("name")?.setFilterValue(event.target.value)
+          table.getColumn('name')?.setFilterValue(event.target.value)
         }
         className="bg-white border-border mb-4 p-4"
       />
@@ -69,7 +69,7 @@ function UsersTable({ data }: UsersTableProps) {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -82,13 +82,13 @@ function UsersTable({ data }: UsersTableProps) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

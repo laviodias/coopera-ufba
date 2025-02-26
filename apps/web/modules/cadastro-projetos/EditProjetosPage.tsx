@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import useAddProject from "@/api/projects/use-add-project";
+import useAddProject from '@/api/projects/use-add-project';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,21 +8,20 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
 
-import { useToast } from "@/hooks/use-toast";
-import { Project } from "@/types/Project";
-import { useParams, useRouter } from "next/navigation";
+import { useToast } from '@/hooks/use-toast';
+import { Project } from '@/types/Project';
+import { useParams, useRouter } from 'next/navigation';
 
-import { useForm } from "react-hook-form";
-import { ProjectFormData } from "./types/project-form-data";
-import Keywords from "@/components/keywords";
-import { useState } from "react";
-import { useUser } from "@/context/UserContext";
-import { Project } from "@/components/ResearchGroupList/type";
+import { useForm } from 'react-hook-form';
+import { ProjectFormData } from './types/project-form-data';
+import Keywords from '@/components/keywords';
+import { useState } from 'react';
+import { useUser } from '@/context/UserContext';
 
-const EditarProjeto = ({ projeto }: { projeto: Project }) => {
+const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
 
   const {
@@ -37,25 +36,25 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
   const router = useRouter();
 
   if (!user) {
-    router.push("/login");
+    router.push('/login');
   }
 
   const { mutate } = useAddProject(
     () => {
       toast({
-        variant: "success",
-        title: "Sucesso",
-        description: "O projeto foi salvo com sucesso.",
+        variant: 'success',
+        title: 'Sucesso',
+        description: 'O projeto foi salvo com sucesso.',
       });
       router.back();
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um error",
-        description: "Ocorreu um erro ao tentar salvar este projeto.",
+        variant: 'destructive',
+        title: 'Ocorreu um error',
+        description: 'Ocorreu um erro ao tentar salvar este projeto.',
       });
-    }
+    },
   );
 
   const [keywordRequired, setKeywordRequired] = useState<boolean>(false);
@@ -65,10 +64,9 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
       return;
     }
 
-    const projectData: Project = {
+    const projectData: Partial<Project> = {
       researchGroupId: params.id,
       name: data.name,
-      description: data.description,
       link: data.link,
       keywords: selectedKeywords,
     };
@@ -114,7 +112,7 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
             <label className="font-bold text-blue-strong mt-4">
               Título*
               <input
-                {...register("name", { required: true })}
+                {...register('name', { required: true })}
                 type="text"
                 placeholder="Título do projeto"
                 className="w-full py-3 px-4 text-base font-medium rounded-lg border mt-2"
@@ -129,7 +127,7 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
             <label className="font-bold text-blue-strong mt-4">
               Descrição*
               <textarea
-                {...register("description", { required: true })}
+                {...register('description', { required: true })}
                 placeholder="Digite o texto..."
                 rows={4}
                 className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
@@ -151,7 +149,10 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
                 type="url"
                 placeholder="Informe link do projeto"
                 className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2"
-                {...register("link", { required: false, setValueAs: (value) => value || null })}
+                {...register('link', {
+                  required: false,
+                  setValueAs: (value) => value || null,
+                })}
               />
             </label>
 
@@ -160,7 +161,7 @@ const EditarProjeto = ({ projeto }: { projeto: Project }) => {
                 Salvar projeto
               </Button>
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 className="rounded-full py-2.5 px-8"
                 type="reset"
                 onClick={handleRedirect}

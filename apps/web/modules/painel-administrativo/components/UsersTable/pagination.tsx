@@ -1,18 +1,18 @@
-import { Table } from "@tanstack/react-table";
+import { Table } from '@tanstack/react-table';
 
 import {
   FiChevronLeft,
   FiChevronRight,
   FiChevronsLeft,
   FiChevronsRight,
-} from "react-icons/fi";
+} from 'react-icons/fi';
 
-import { ELLIPSIS, useReactTablePaginationRange } from "./use-pagination";
-import { UserType } from "../../types/User";
-import { Button } from "@/components/ui/button";
+import { ELLIPSIS, useReactTablePaginationRange } from './use-pagination';
+import { Button } from '@/components/ui/button';
+import { User } from '@/types/User';
 
 interface PaginationProps {
-  table: Table<UserType>;
+  table: Table<User>;
 }
 
 function Pagination({ table }: PaginationProps) {
@@ -45,9 +45,9 @@ function Pagination({ table }: PaginationProps) {
               <span>…</span>
             ) : (
               <Button
-                variant={isOnCurrentPage ? "default" : "outline"}
+                variant={isOnCurrentPage ? 'default' : 'outline'}
                 className={`border-none shadow-xl rounded-lg h-8 w-8 ${
-                  !isOnCurrentPage && "bg-white"
+                  !isOnCurrentPage && 'bg-white'
                 }`}
                 onClick={() => table.setPageIndex(page - 1)}
               >

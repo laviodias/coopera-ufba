@@ -27,7 +27,7 @@ export class NotificationsController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/send')
-  send(@Body() body: { message: string; userId: string, url?: string }) {
+  send(@Body() body: { message: string; userId: string; url?: string }) {
     return this.notificationsService.create(body);
   }
 

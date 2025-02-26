@@ -1,4 +1,4 @@
-import MyProposalsPage from "@/modules/minhas-propostas";
+import MyProposalsPage from '@/modules/minhas-propostas';
 
 const MinhasPropostas = () => {
   return <MyProposalsPage />;

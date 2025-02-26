@@ -1,7 +1,9 @@
-
 import React from 'react';
 import Link from 'next/link';
-import { loginFormSchema, LoginUserFormData } from '@/app/login/login.form.schema';
+import {
+  loginFormSchema,
+  LoginUserFormData,
+} from '@/app/login/login.form.schema';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,8 +28,8 @@ export default function LoginPage() {
     <main className="h-screen flex flex-col items-center justify-center">
       <section className="w-full max-w-sm bg-white px-8 py-8 rounded-lg shadow-lg">
         <Image
-          style={{ display: "block", margin: "0 auto" }}
-          src={"/header-logo.png"}
+          style={{ display: 'block', margin: '0 auto' }}
+          src={'/header-logo.png'}
           alt="Logo Nexus"
           width={233}
           height={90}
@@ -42,7 +44,7 @@ export default function LoginPage() {
               type="email"
               id="email"
               className="border border-zinc-200 shadow-sm rounded-lg p-2"
-              {...register("email")}
+              {...register('email')}
             />
             {errors.email && (
               <span className="text-red-600">{errors.email.message}</span>
@@ -55,7 +57,7 @@ export default function LoginPage() {
               type="password"
               id="password"
               className="border border-zinc-200 shadow-sm rounded-lg p-2"
-              {...register("password")}
+              {...register('password')}
             />
             {errors.password && (
               <span className="text-red-600">{errors.password.message}</span>
@@ -69,13 +71,13 @@ export default function LoginPage() {
             type="submit"
             className="rounded-full h-10 mt-8"
             style={{
-              backgroundColor: "#6D5BD0",
-              fontWeight: "bold",
-              color: "white",
+              backgroundColor: '#6D5BD0',
+              fontWeight: 'bold',
+              color: 'white',
             }}
             disabled={authStore.isLoading}
           >
-            {authStore.isLoading ? "Carregando..." : "Acessar"}
+            {authStore.isLoading ? 'Carregando...' : 'Acessar'}
           </button>
 
           {authStore.errorMessage && (
@@ -86,7 +88,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-xs text-center mt-12">
-          Ainda não possui uma conta?{" "}
+          Ainda não possui uma conta?{' '}
           <Link href="/user-register" className="text-center underline">
             Cadastre-se
           </Link>

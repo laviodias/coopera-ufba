@@ -1,9 +1,8 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import homeBanner from "@/public/home-banner.png";
-import Link from "next/link";
-import Image from "next/image";
-import { useUser } from "@/context/UserContext";
+'use client';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useUser } from '@/context/UserContext';
 
 export default function Home() {
   const { user } = useUser();
@@ -24,7 +23,7 @@ export default function Home() {
                 <Link href="/cadastro-demandas">Cadastre sua ideia</Link>
               </Button>
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 className="rounded-full text-base px-9 py-2.5"
                 asChild
               >
@@ -36,7 +35,9 @@ export default function Home() {
           )}
         </div>
         <Image
-          src={homeBanner}
+          src="/home-banner.png"
+          width="619"
+          height="485"
           alt="Banner da página inicial"
           className="relative xl:-right-8 max-lg:my-8 lg lg:max-xl:h-80"
         />
@@ -75,7 +76,7 @@ export default function Home() {
               Escolha o grupo de pesquisa que melhor atende às suas
               necessidades. Negocie os detalhes do projeto diretamente com o
               grupo escolhido e acompanhe o progresso conforme o trabalho é
-              desenvolvido.{" "}
+              desenvolvido.{' '}
             </p>
           </li>
         </ul>

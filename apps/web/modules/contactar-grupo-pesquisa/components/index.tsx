@@ -1,8 +1,8 @@
-"use client";
-import useGetMyDemands from "@/api/demandas/use-get-my-demands";
-import useGetResearchGroup from "@/api/grupos/use-get-research-group";
-import useSendNotification from "@/api/notifications/use-send-notifications";
-import useSendMail from "@/api/research-group/use-receive-email-from-company";
+'use client';
+import useGetMyDemands from '@/api/demandas/use-get-my-demands';
+import useGetResearchGroup from '@/api/grupos/use-get-research-group';
+import useSendNotification from '@/api/notifications/use-send-notifications';
+import useSendMail from '@/api/research-group/use-receive-email-from-company';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,21 +10,21 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/context/UserContext";
-import { useToast } from "@/hooks/use-toast";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useUser } from '@/context/UserContext';
+import { useToast } from '@/hooks/use-toast';
+import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface Props {
   query: any;
@@ -32,27 +32,27 @@ interface Props {
 
 const ContactResearchGroup = ({ query }: Props) => {
   const { data: demands = [] } = useGetMyDemands();
-  const [selectedDemand, setSelectedDemand] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const [selectedDemand, setSelectedDemand] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const router = useRouter();
 
   const { user } = useUser();
 
   if (!user) {
-    router.push("/login");
+    router.push('/login');
   }
 
   const { mutate: mutateNotification } = useSendNotification();
 
   function sendNotification() {
     const receiverId = researchGroup?.leader.userId;
-    if(!receiverId) return;
+    if (!receiverId) return;
 
-    const message = `Você recebeu uma proposta de ${user?.name} para a demanda "${selectedDemand}". Cheque seu e-mail para mais informações.`
+    const message = `Você recebeu uma proposta de ${user?.name} para a demanda "${selectedDemand}". Cheque seu e-mail para mais informações.`;
 
     mutateNotification({
       userId: receiverId,
-      message
+      message,
     });
   }
 
@@ -62,22 +62,22 @@ const ContactResearchGroup = ({ query }: Props) => {
     () => {
       console.log('sucesso');
       toast({
-        variant: "success",
-        title: "Sucesso",
-        description: "O email foi enviado com sucesso.",
+        variant: 'success',
+        title: 'Sucesso',
+        description: 'O email foi enviado com sucesso.',
       });
       sendNotification();
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um error",
-        description: "Ocorreu um erro ao tentar enviar o email.",
+        variant: 'destructive',
+        title: 'Ocorreu um error',
+        description: 'Ocorreu um erro ao tentar enviar o email.',
       });
-    }
-  ); 
+    },
+  );
 
-  if (user?.utype === "RESEARCHER") {
+  if (user?.utype === 'RESEARCHER') {
     router.back();
   }
 
@@ -85,10 +85,10 @@ const ContactResearchGroup = ({ query }: Props) => {
     data: researchGroup,
     isError,
     isLoading,
-  } = useGetResearchGroup(query.get("id") as string);
+  } = useGetResearchGroup(query.get('id') as string);
 
   if (isError) {
-    router.push("/404");
+    router.push('/404');
   }
 
   const handleSubmitSendMail = () => {
@@ -166,7 +166,7 @@ const ContactResearchGroup = ({ query }: Props) => {
           <hr className="my-4" />
           <section className="flex flex-col gap-4">
             <p className="text-xl">
-              <span className="font-semibold">Grupo de Pesquisa: </span>{" "}
+              <span className="font-semibold">Grupo de Pesquisa: </span>{' '}
               {researchGroup?.name}
             </p>
           </section>

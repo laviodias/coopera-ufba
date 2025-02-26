@@ -1,16 +1,16 @@
-import type { Table } from "@tanstack/react-table";
+import type { Table } from '@tanstack/react-table';
 
 const range = (start: number, end: number) => {
   const length = end - start + 1;
   return Array.from({ length }, (_, index) => index + start);
 };
 
-export const ELLIPSIS = "ellipsis";
+export const ELLIPSIS = 'ellipsis';
 
 export const useReactTablePaginationRange = <TData,>(
   table: Table<TData>,
   siblings = 1,
-  boundaries = 1
+  boundaries = 1,
 ) => {
   const total = table.getPageCount();
   const activePage = table.getState().pagination.pageIndex + 1;

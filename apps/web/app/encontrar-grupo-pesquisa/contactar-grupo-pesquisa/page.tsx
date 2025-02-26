@@ -1,6 +1,6 @@
-"use client";
-import ContactResearchGroup from "@/modules/contactar-grupo-pesquisa/components";
-import { useSearchParams } from "next/navigation";
+'use client';
+import ContactResearchGroup from '@/modules/contactar-grupo-pesquisa/components';
+import { useSearchParams } from 'next/navigation';
 
 const ContactarGrupoPesquisa = () => {
   const searchParams = useSearchParams();

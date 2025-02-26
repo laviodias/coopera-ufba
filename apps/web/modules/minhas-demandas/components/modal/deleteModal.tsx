@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { CustomIcon } from "@/modules/components/icon/customIcon";
+import { Button } from '@/components/ui/button';
+import { CustomIcon } from '@/modules/components/icon/customIcon';
 import {
   Dialog,
   DialogContent,
@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { useState } from "react";
-import { FaTrash } from "react-icons/fa";
+} from '@/components/ui/dialog';
+import { useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
 
 interface Props {
   onDelete: (id: string) => void;
@@ -25,7 +25,7 @@ export const DeleteModal = ({ onDelete, demandId }: Props) => {
   return (
     <Dialog open={isOpen}>
       <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button variant={"ghost"} size={"icon"} title="Deletar">
+        <Button variant={'ghost'} size={'icon'} title="Deletar">
           <CustomIcon icon={FaTrash} className="!size-5" />
         </Button>
       </DialogTrigger>

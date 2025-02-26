@@ -1,5 +1,5 @@
-import { Item } from "./Item";
-import { Demanda } from "@/modules/minhas-demandas/interfaces/demanda";
+import { Item } from './Item';
+import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
 
 type DemandListProps = {
   demands: Demanda[];

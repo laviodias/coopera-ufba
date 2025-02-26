@@ -1,11 +1,11 @@
 export type Keyword = { id: string; name: string };
 export type Project = { id: string; name: string };
 export enum Status {
-  CREATED = "Criada",
-  ACCEPTED = "Aceita",
-  FINISHED = "Finalizada",
-  DELETED = "Excluida",
-};
+  CREATED = 'Criada',
+  ACCEPTED = 'Aceita',
+  FINISHED = 'Finalizada',
+  DELETED = 'Excluida',
+}
 export interface Demanda {
   id: string;
   name: string;

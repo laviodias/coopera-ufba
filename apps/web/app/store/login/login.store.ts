@@ -1,19 +1,19 @@
-import { makeAutoObservable } from "mobx";
-import userService from "../../service/user.service";
+import { makeAutoObservable } from 'mobx';
+import userService from '../../service/user.service';
 import {
   persistUserToLocalStorage,
   deleteUserFromLocalStorage,
-} from "../../service/auth.storage";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { User } from "./login.types";
+} from '../../service/auth.storage';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { User } from './login.types';
 
 class LoginStore {
   isLoading: boolean = false;
   isAuthenticated: boolean = false;
-  errorMessage: string = "";
+  errorMessage: string = '';
   user: User | null = null;
 
-  whenLoginSuccessURL: string = "/";
+  whenLoginSuccessURL: string = '/';
 
   constructor() {
     makeAutoObservable(this);
@@ -21,7 +21,7 @@ class LoginStore {
 
   async login(email: string, password: string, router: AppRouterInstance) {
     this.isLoading = true;
-    this.errorMessage = "";
+    this.errorMessage = '';
 
     try {
       const user: User = await userService.login(email, password);
@@ -30,7 +30,7 @@ class LoginStore {
       this.isAuthenticated = true;
       router.push(this.whenLoginSuccessURL);
     } catch (error: any) {
-      this.errorMessage = error.message || "Login failed.";
+      this.errorMessage = error.message || 'Login failed.';
     } finally {
       this.isLoading = false;
     }
@@ -40,7 +40,7 @@ class LoginStore {
     this.user = null;
     this.isLoading = false;
     this.isAuthenticated = false;
-    this.errorMessage = "";
+    this.errorMessage = '';
   }
 
   logout() {

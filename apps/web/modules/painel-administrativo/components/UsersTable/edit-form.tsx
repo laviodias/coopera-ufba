@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { User, UserRoleEnum, UserStatusEnum } from "@/types/User";
-import useAdminUpdateUser from "@/api/admin/user/use-update-users";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { User, UserRoleEnum, UserStatusEnum } from '@/types/User';
+import useAdminUpdateUser from '@/api/admin/user/use-update-users';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 const FormSchema = z.object({
   name: z.string(),
@@ -37,9 +37,7 @@ interface EditFormProps {
   closeModal: () => void;
 }
 
-
 export function EditForm({ user, closeModal }: EditFormProps) {
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -52,28 +50,28 @@ export function EditForm({ user, closeModal }: EditFormProps) {
 
   const { toast } = useToast();
   const router = useRouter();
-  
-  const { mutate, isPending } = useAdminUpdateUser(user.id,
+
+  const { mutate, isPending } = useAdminUpdateUser(
+    user.id,
     () => {
       toast({
-        variant: "success",
-        title: "Sucesso",
-        description: "Permissões atualizadas com sucesso.",
+        variant: 'success',
+        title: 'Sucesso',
+        description: 'Permissões atualizadas com sucesso.',
       });
-      
+
       router.refresh();
     },
     () => {
       toast({
-        variant: "destructive",
-        title: "Ocorreu um problema",
-        description: "Não foi possível atualizar as permissões.",
+        variant: 'destructive',
+        title: 'Ocorreu um problema',
+        description: 'Não foi possível atualizar as permissões.',
       });
-    }
+    },
   );
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-
     closeModal();
 
     const userData = {
@@ -141,8 +139,12 @@ export function EditForm({ user, closeModal }: EditFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="RESEARCHER_STUDENT">Pesquisador Estudante</SelectItem>
-                  <SelectItem value="RESEARCHER_TEACHER">Pesquisador Professor</SelectItem>
+                  <SelectItem value="RESEARCHER_STUDENT">
+                    Pesquisador Estudante
+                  </SelectItem>
+                  <SelectItem value="RESEARCHER_TEACHER">
+                    Pesquisador Professor
+                  </SelectItem>
                   <SelectItem value="COMPANY">Empresa</SelectItem>
                   <SelectItem value="NONE">Nenhum</SelectItem>
                 </SelectContent>
@@ -183,7 +185,7 @@ export function EditForm({ user, closeModal }: EditFormProps) {
             Cancelar
           </Button>
           <Button type="submit" className="w-full">
-           { isPending ? "Salvando" : "Salvar" }
+            {isPending ? 'Salvando' : 'Salvar'}
           </Button>
         </div>
       </form>
