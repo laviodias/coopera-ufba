@@ -20,7 +20,6 @@ import { ResearchersService } from '@/researchers/researchers.service';
 import { JwtAuthGuard } from '@/auth/auth.guard';
 import { IsGroupLeaderGuard } from './guards/is-group-leader.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('researchgroup')
 export class ResearchGroupController {
   constructor(
@@ -28,6 +27,7 @@ export class ResearchGroupController {
     private readonly researcherService: ResearchersService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() researchGroup: CreateResearchGroupDto) {
     //TODO Verificar se um líder de projeto existe e se é um Pesquisador
@@ -55,6 +55,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(
     @Param('id') id: string,
@@ -73,7 +74,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.findOne(id);
   }
 
-  @UseGuards(IsGroupLeaderGuard)
+  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -83,7 +84,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.update(id, researchGroup);
   }
 
-  @UseGuards(IsGroupLeaderGuard)
+  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.researchGroupsService.delete(id);
@@ -99,23 +100,25 @@ export class ResearchGroupController {
     return this.researchGroupsService.findAllKnowledgeAreas();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:id/members')
   findMembers(@Param('id') id: string) {
     return this.researchGroupsService.findMembers(id);
   }
 
-  @UseGuards(IsGroupLeaderGuard)
+  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
   @Delete('/:id/members/:memberId')
   removeMember(@Param('id') id: string, @Param('memberId') memberId: string) {
     return this.researchGroupsService.removeMember(id, memberId);
   }
 
-  @UseGuards(IsGroupLeaderGuard)
+  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
   @Post('/:id/members/:userEmail')
   addMember(@Param('id') id: string, @Param('userEmail') userEmail: string) {
     return this.researchGroupsService.addMember(id, userEmail);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('/send-email')
   sendEmail(
     @Body()
