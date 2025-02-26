@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { ResearchGroupService } from '../research-group.service';
 
 @Injectable()
@@ -16,7 +21,9 @@ export class IsGroupLeaderGuard implements CanActivate {
     }
 
     if (group.researcherId !== userId) {
-      throw new ForbiddenException('Apenas o líder do grupo pode modificar seus membros.');
+      throw new ForbiddenException(
+        'Apenas o líder do grupo pode modificar seus membros.',
+      );
     }
 
     return true;

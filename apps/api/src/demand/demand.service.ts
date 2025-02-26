@@ -16,7 +16,14 @@ export class DemandService {
   ) {}
 
   async create(demand: CreateDemandDTO, companyId: string): Promise<Demand> {
-    const { name, description, link, keywords = [], projects = [], public: publicDemand } = demand;
+    const {
+      name,
+      description,
+      link,
+      keywords = [],
+      projects = [],
+      public: publicDemand,
+    } = demand;
     const keywordsIds = keywords.map((k) => ({ id: k }));
     const projectsIds = projects.map((p) => ({ id: p }));
 
@@ -102,7 +109,11 @@ export class DemandService {
 
     return this.prismaService.demand.update({
       where: { id },
-      data: { ...updated, keywords: { set: [], connect: keywordsIds }, projects: { set: [], connect: projectsIds } },
+      data: {
+        ...updated,
+        keywords: { set: [], connect: keywordsIds },
+        projects: { set: [], connect: projectsIds },
+      },
     });
   }
 
@@ -145,7 +156,7 @@ export class DemandService {
             researchGroup: {
               select: {
                 name: true,
-              }
+              },
             },
           },
         },

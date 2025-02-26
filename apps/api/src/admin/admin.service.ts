@@ -59,26 +59,26 @@ export class AdminService {
       data,
       include: {
         researcher: true,
-      }
+      },
     });
 
-    if(utype) {
-      if(response.researcher) {
+    if (utype) {
+      if (response.researcher) {
         return await this.prismaService.researcher.update({
           where: { userId },
           data: {
-            researcherType: utype.split('_')[1]
+            researcherType: utype.split('_')[1],
           },
-        })
+        });
       } else {
         return await this.prismaService.researcher.create({
           data: {
             userId,
-            researcherType: utype.split('_')[1]
-          }
-        })
+            researcherType: utype.split('_')[1],
+          },
+        });
       }
-    };
+    }
 
     return response;
   }

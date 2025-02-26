@@ -91,8 +91,8 @@ export class ProjectService {
             name: true,
             id: true,
           },
-        }
-      }
+        },
+      },
     });
     return projects;
   }

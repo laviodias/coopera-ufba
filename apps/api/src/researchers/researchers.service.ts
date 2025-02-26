@@ -89,7 +89,6 @@ export class ResearchersService {
                 },
                 img: true,
                 knowledgeAreas: true,
-
               },
               orderBy: {
                 createdAt: order || 'asc',

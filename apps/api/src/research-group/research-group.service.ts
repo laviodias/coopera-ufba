@@ -16,7 +16,7 @@ export class ResearchGroupService {
     return this.prismaService.researchGroup.findMany({
       include: {
         knowledgeAreas: true,
-      }
+      },
     });
   }
   constructor(
@@ -97,14 +97,14 @@ export class ResearchGroupService {
                 name: true,
               },
             },
-          }
+          },
         },
       },
     });
 
     if (!group) throw new NotFoundException('Grupo de pesquisa não encontrado');
 
-    return group.members;    
+    return group.members;
   }
 
   async removeMember(id: string, userId: string) {
@@ -116,7 +116,8 @@ export class ResearchGroupService {
 
     if (!group) throw new NotFoundException('Grupo de pesquisa não encontrado');
 
-    if (group.researcherId === userId) throw new ConflictException('Lider nao pode ser removido');
+    if (group.researcherId === userId)
+      throw new ConflictException('Lider nao pode ser removido');
 
     return this.prismaService.researchGroup.update({
       where: {
@@ -146,12 +147,13 @@ export class ResearchGroupService {
         email: userEmail,
       },
       include: {
-        researcher: true
-      }
+        researcher: true,
+      },
     });
 
     if (!user) throw new NotFoundException('Usuário nao encontrado');
-    if (!user.researcher) throw new NotFoundException('Usuário não é pesquisador');
+    if (!user.researcher)
+      throw new NotFoundException('Usuário não é pesquisador');
 
     this.prismaService.researchGroup.update({
       where: {
@@ -204,8 +206,8 @@ export class ResearchGroupService {
         projects: {
           include: {
             demand: true,
-          }
-        }
+          },
+        },
       },
     });
 
@@ -233,7 +235,7 @@ export class ResearchGroupService {
         projects: {
           include: {
             demand: true,
-          }
+          },
         },
         members: {
           include: {
