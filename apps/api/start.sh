@@ -1,6 +1,9 @@
 #!/bin/sh
-echo "Executando migrações do Prisma..."
-npx prisma db push
+echo "Esperando o banco de dados estar acessível..."
+until npx prisma migrate deploy; do
+  echo "Aguardando banco de dados..."
+  sleep 3
+done
 
 # Criando diretório para o arquivo de controle, se necessário
 mkdir -p $(dirname $HOME/.seeds-executed)

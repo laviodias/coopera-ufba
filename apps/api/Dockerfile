@@ -32,6 +32,7 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV production
+ENV DATABASE_URL=${DATABASE_URL}
 
 # Copiar apenas arquivos necessários
 COPY --from=builder /app/node_modules ./node_modules
@@ -42,7 +43,6 @@ COPY --from=builder /app/nest-cli.json ./nest-cli.json
 # Se você tiver outros arquivos de configuração, adicione-os aqui
 
 # Script para inicialização
-RUN echo '#!/bin/sh\necho "Executando migrações do Prisma..."\nnpx prisma db push\necho "Iniciando a aplicação..."\nnode dist/main.js' > start.sh
 RUN chmod +x start.sh
 
 EXPOSE 8080
