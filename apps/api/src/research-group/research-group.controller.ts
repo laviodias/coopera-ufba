@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import { ResearchGroupService } from './research-group.service';
@@ -16,8 +17,10 @@ import {
   UpdateResearchGroupDto,
 } from './research-group.dto';
 import { ResearchersService } from '@/researchers/researchers.service';
+import { JwtAuthGuard } from '@/auth/auth.guard';
+import { IsGroupLeaderGuard } from './guards/is-group-leader.guard';
 
-//TODO colocar os useGuard
+@UseGuards(JwtAuthGuard)
 @Controller('researchgroup')
 export class ResearchGroupController {
   constructor(
@@ -70,6 +73,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.findOne(id);
   }
 
+  @UseGuards(IsGroupLeaderGuard)
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -79,6 +83,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.update(id, researchGroup);
   }
 
+  @UseGuards(IsGroupLeaderGuard)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.researchGroupsService.delete(id);
@@ -99,11 +104,13 @@ export class ResearchGroupController {
     return this.researchGroupsService.findMembers(id);
   }
 
+  @UseGuards(IsGroupLeaderGuard)
   @Delete('/:id/members/:memberId')
   removeMember(@Param('id') id: string, @Param('memberId') memberId: string) {
     return this.researchGroupsService.removeMember(id, memberId);
   }
 
+  @UseGuards(IsGroupLeaderGuard)
   @Post('/:id/members/:userEmail')
   addMember(@Param('id') id: string, @Param('userEmail') userEmail: string) {
     return this.researchGroupsService.addMember(id, userEmail);

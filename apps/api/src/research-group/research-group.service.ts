@@ -116,6 +116,8 @@ export class ResearchGroupService {
 
     if (!group) throw new NotFoundException('Grupo de pesquisa não encontrado');
 
+    if (group.researcherId === userId) throw new ConflictException('Lider nao pode ser removido');
+
     return this.prismaService.researchGroup.update({
       where: {
         id,
@@ -151,7 +153,7 @@ export class ResearchGroupService {
     if (!user) throw new NotFoundException('Usuário nao encontrado');
     if (!user.researcher) throw new NotFoundException('Usuário não é pesquisador');
 
-    return this.prismaService.researchGroup.update({
+    this.prismaService.researchGroup.update({
       where: {
         id,
       },
@@ -163,6 +165,8 @@ export class ResearchGroupService {
         },
       },
     });
+
+    return user;
   }
 
   async findOneWithMembers(id: string) {

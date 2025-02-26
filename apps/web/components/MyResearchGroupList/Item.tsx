@@ -42,15 +42,14 @@ function Item({idPesquisador,researchgroup}:ItemProp) {
             }
         </ul>
 
-        <Button
-            variant={"outline"}
-            className="px-9 py-2.5 rounded-full mt-3"
-        >
-            <Link href={`/detalhe-grupo-pesquisa/${researchgroup.id}`}>
+        <Link href={`/detalhe-grupo-pesquisa/${researchgroup.id}`}>
+            <Button
+                variant={"outline"}
+                className="px-9 py-2.5 rounded-full mt-3"
+            >
                 ver mais
-            </Link>
-
-        </Button>
+            </Button>
+        </Link>
     </li>
 }
 

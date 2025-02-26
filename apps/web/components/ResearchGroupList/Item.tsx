@@ -39,15 +39,15 @@ function Item(researchgroup: ResearchGroup) {
       </ul>
 
 
-      <Button
-        asChild
-        variant={"outline"}
-        className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
-      >
-        <Link href={`/detalhe-grupo-pesquisa/${researchgroup.id}`}>
-          ver mais
+      <Link href={`/detalhe-grupo-pesquisa/${researchgroup.id}`}>
+        <Button
+          asChild
+          variant={"outline"}
+          className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
+        >
+            ver mais
+        </Button>
         </Link>
-      </Button>
     </li>
   );
 }
