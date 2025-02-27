@@ -26,17 +26,24 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.useGlobalFilters(new GlobalExceptionFilter());
-  app.enableCors({
-    origin: [
-      'https://front-production-c630.up.railway.app',
-      'http://localhost:3001',
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  });
-
-  app.setGlobalPrefix('api');
+  
+  if(process.env.NODE_ENV === 'production') {
+    app.enableCors({
+      origin: [
+        'https://front-production-c630.up.railway.app',
+        'http://localhost:3001',
+      ],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    });
+  
+    app.setGlobalPrefix('api');
+  } else {
+    app.enableCors({
+      origin: '*',
+    });
+  }
 
   const serverPort = process.env.SERVER_PORT || 8080;
   await app.listen(serverPort);
