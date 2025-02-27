@@ -8,7 +8,7 @@ mkdir -p $(dirname ./.seeds-executed)
 
 if [ ! -f ./.seeds-executed ]; then
   echo "Executando seeds do banco de dados..."
-  npm run seed-db
+  node dist/prisma/seed.js
   touch ./.seeds-executed
 else
   echo "Seeds já foram executados anteriormente."
