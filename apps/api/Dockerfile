@@ -26,8 +26,8 @@ ENV SERVER_PORT=${SERVER_PORT}
 ARG FRONT_END_ORIGIN
 ENV FRONT_END_ORIGIN=${FRONT_END_ORIGIN}
 
-RUN npx tsc prisma/seed.ts --outDir dist/prisma
 RUN npx prisma generate
+RUN npx tsc --project tsconfig.json
 RUN npm run build
 
 # Estágio de produção
