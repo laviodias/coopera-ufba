@@ -27,7 +27,13 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.enableCors({
-    origin: '*',
+    origin: [
+      'https://https://front-production-c630.up.railway.app/',
+      'http://localhost:3001',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   app.setGlobalPrefix('api');

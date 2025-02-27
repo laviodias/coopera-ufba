@@ -13,6 +13,7 @@ export const api = (apiUrl: string, auth = false) => {
   if (auth) {
     headers = {
       ...headers,
+      credentials: 'include',
       Authorization: `Bearer ${user.access_token}`,
     };
   }
