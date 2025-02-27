@@ -28,7 +28,7 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.enableCors({
     origin: [
-      'https://front-production-c630.up.railway.app/',
+      'https://front-production-c630.up.railway.app',
       'http://localhost:3001',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
