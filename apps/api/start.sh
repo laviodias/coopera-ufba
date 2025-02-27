@@ -2,7 +2,7 @@
 set -e
 
 echo "Esperando o banco de dados estar acessível..."
-# Loop para testar a conexão com o banco de dados
+
 until npx prisma db pull >/dev/null 2>&1; do
   echo "Banco de dados não está acessível, aguardando 3 segundos..."
   sleep 3
