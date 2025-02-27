@@ -26,7 +26,7 @@ ENV SERVER_PORT=${SERVER_PORT}
 ARG FRONT_END_ORIGIN
 ENV FRONT_END_ORIGIN=${FRONT_END_ORIGIN}
 
-RUN npx prisma generate --no-cache
+RUN npx prisma generate
 RUN npx tsc --project tsconfig.json --noEmit false --incremental false
 RUN npm run build --no-cache
 
