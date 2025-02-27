@@ -4,8 +4,8 @@ RUN apk add --no-cache openssl
 # Estágio de dependências
 FROM base AS deps
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install --legacy-peer-deps
+COPY package*.json ./
+RUN npm install --no-cache --legacy-peer-deps
 
 # Estágio de build
 FROM base AS builder
@@ -26,15 +26,16 @@ ENV SERVER_PORT=${SERVER_PORT}
 ARG FRONT_END_ORIGIN
 ENV FRONT_END_ORIGIN=${FRONT_END_ORIGIN}
 
-RUN npx prisma generate
-RUN npx tsc --project tsconfig.json
-RUN npm run build
+RUN npx prisma generate --no-cache
+RUN npx tsc --project tsconfig.json --noEmit false --incremental false
+RUN npm run build --no-cache
 
 # Estágio de produção
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV production
 ENV DATABASE_URL=${DATABASE_URL}
+RUN echo $DATABASE_URL
 
 # Copiar apenas arquivos necessários
 COPY --from=builder /app/node_modules ./node_modules
