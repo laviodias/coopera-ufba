@@ -1,15 +1,6 @@
 #!/bin/sh
 set -e
 
-echo "Esperando o banco de dados estar acessível..."
-
-until npx prisma db pull >/dev/null 2>&1; do
-  echo "Banco de dados não está acessível, aguardando 3 segundos..."
-  sleep 3
-done
-
-echo "Banco de dados disponível!"
-
 echo "Aplicando migrações do Prisma..."
 if ! npx prisma migrate deploy; then
   echo "Erro ao aplicar migrações. Abortando."
