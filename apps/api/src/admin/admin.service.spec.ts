@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminService } from './admin.service';
 import { PrismaService } from '../infra/database/prisma.service';
-import { UserRole, UserStatus } from '@prisma/client';
+import { DemandStatus, UserRole, UserStatus } from '@prisma/client';
 import * as UserTypes from '@/user/utils/user.types.util';
 
 describe('AdminService', () => {
@@ -106,7 +106,7 @@ describe('AdminService', () => {
         name: 'Demand 1',
         createdAt: new Date(),
         updatedAt: new Date(),
-        status: 'CREATED',
+        status: DemandStatus.CREATED,
         description: 'Description 1',
         link: 'www.ufba.br',
         public: true,
@@ -121,7 +121,7 @@ describe('AdminService', () => {
         name: 'Demand 2',
         createdAt: new Date(),
         updatedAt: new Date(),
-        status: 'CREATED',
+        status: DemandStatus.CREATED,
         description: 'Description 2',
         link: 'www.ufba.br',
         public: true,

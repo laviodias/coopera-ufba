@@ -27,7 +27,7 @@ export class UpdateUserDto {
   @IsEnum(UserRole)
   role: UserRole;
   status: UserStatus;
-  utype: any;
+  utype?: any;
 }
 
 export class CreateUserDto {

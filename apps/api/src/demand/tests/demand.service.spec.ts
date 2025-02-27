@@ -7,7 +7,7 @@ import { NotFoundException } from '@nestjs/common/exceptions';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { DemandService } from '@/demand/demand.service';
 import { UserService } from '@/user/user.service';
-import { User, UserRole, UserStatus } from '@prisma/client';
+import { DemandStatus, User, UserRole, UserStatus } from '@prisma/client';
 
 describe('DemandService', () => {
   let demandService: DemandService;
@@ -34,7 +34,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: true,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -53,7 +53,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: true,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
     });
@@ -86,7 +86,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: true,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -110,7 +110,7 @@ describe('DemandService', () => {
         description: 'teste description',
         link: 'https://example.com',
         public: true,
-        status: 'CREATED',
+        status: DemandStatus.CREATED,
         updatedAt: expect.any(Date),
         createdAt: expect.any(Date),
         keywords: {
@@ -141,7 +141,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: true,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -179,7 +179,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: false,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -218,7 +218,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: false,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -259,7 +259,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: false,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -295,7 +295,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: false,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -339,7 +339,7 @@ describe('DemandService', () => {
       description: 'teste description',
       link: 'https://example.com',
       public: false,
-      status: 'CREATED',
+      status: DemandStatus.CREATED,
       companyId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
       updatedAt: new Date(),
