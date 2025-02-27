@@ -1,31 +1,14 @@
-/*
-  Warnings:
-
-  - You are about to drop the `TbField` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `TbTags` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `TbUsers` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
 
 -- CreateEnum
-CREATE TYPE "ResearcherType" AS ENUM ('STUDENT', 'TEACHER');
+CREATE TYPE "UserStatus" AS ENUM ('APPROVED', 'BLOCK', 'PENDING');
 
 -- CreateEnum
-CREATE TYPE "NotificationStartedBy" AS ENUM ('RESEARCHGROUP', 'COMPANY');
+CREATE TYPE "DemandStatus" AS ENUM ('CREATED', 'ACCEPTED', 'FINISHED', 'DELETED');
 
--- DropTable
-DROP TABLE "TbField";
-
--- DropTable
-DROP TABLE "TbTags";
-
--- DropTable
-DROP TABLE "TbUsers";
-
--- DropEnum
-DROP TYPE "UsersRoles";
+-- CreateEnum
+CREATE TYPE "ResearcherType" AS ENUM ('STUDENT', 'TEACHER');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -35,6 +18,7 @@ CREATE TABLE "User" (
     "img" TEXT,
     "password" TEXT NOT NULL,
     "role" "UserRole" NOT NULL DEFAULT 'USER',
+    "status" "UserStatus" NOT NULL DEFAULT 'PENDING',
     "resetToken" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -103,8 +87,7 @@ CREATE TABLE "KnowledgeArea" (
 CREATE TABLE "Project" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "started_at" TIMESTAMP(3) NOT NULL,
-    "finished_at" TIMESTAMP(3),
+    "link" TEXT,
     "researchGroupId" TEXT NOT NULL,
     "demandId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -117,10 +100,11 @@ CREATE TABLE "Project" (
 CREATE TABLE "Demand" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "link" TEXT,
     "companyId" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'CREATED',
-    "public" BOOLEAN NOT NULL,
+    "description" TEXT NOT NULL,
+    "status" "DemandStatus" NOT NULL DEFAULT 'CREATED',
+    "public" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -131,10 +115,11 @@ CREATE TABLE "Demand" (
 CREATE TABLE "Notification" (
     "id" TEXT NOT NULL,
     "message" TEXT NOT NULL,
-    "demandId" TEXT NOT NULL,
-    "researchGroupId" TEXT NOT NULL,
-    "started_by" "NotificationStartedBy" NOT NULL,
+    "userId" TEXT NOT NULL,
+    "url" TEXT,
+    "read" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
 );
@@ -226,10 +211,7 @@ ALTER TABLE "Project" ADD CONSTRAINT "Project_demandId_fkey" FOREIGN KEY ("deman
 ALTER TABLE "Demand" ADD CONSTRAINT "Demand_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("userId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Notification" ADD CONSTRAINT "Notification_demandId_fkey" FOREIGN KEY ("demandId") REFERENCES "Demand"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Notification" ADD CONSTRAINT "Notification_researchGroupId_fkey" FOREIGN KEY ("researchGroupId") REFERENCES "ResearchGroup"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Attachment" ADD CONSTRAINT "Attachment_demandId_fkey" FOREIGN KEY ("demandId") REFERENCES "Demand"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
