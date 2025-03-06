@@ -32,8 +32,7 @@ async function bootstrap() {
       origin: 'https://front-production-c630.up.railway.app',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       credentials: true,
-      allowedHeaders: ['Content-Type', 'Authorization'],
-      exposedHeaders: ['Authorization'],
+      allowedHeaders: '*',
     });
   
     app.setGlobalPrefix('api');
