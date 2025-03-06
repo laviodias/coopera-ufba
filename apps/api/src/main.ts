@@ -29,13 +29,11 @@ async function bootstrap() {
   
   if(process.env.NODE_ENV === 'production') {
     app.enableCors({
-      origin: [
-        'https://front-production-c630.up.railway.app',
-        'http://localhost:3001',
-      ],
+      origin: 'https://front-production-c630.up.railway.app',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       credentials: true,
       allowedHeaders: ['Content-Type', 'Authorization'],
+      exposedHeaders: ['Authorization'],
     });
   
     app.setGlobalPrefix('api');
