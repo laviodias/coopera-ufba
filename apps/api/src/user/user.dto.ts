@@ -36,7 +36,7 @@ export class UpdateUserDto {
   status: UserStatus;
 
   @IsOptional()
-  utype?: "RESEARCHER_STUDENT" | "RESEARCHER_TEACHER";
+  utype?: 'RESEARCHER_STUDENT' | 'RESEARCHER_TEACHER';
 }
 
 export class CreateUserDto {

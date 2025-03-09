@@ -10,11 +10,13 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    transform: true,
-    forbidNonWhitelisted: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Marketplace UFBA')
@@ -26,15 +28,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.useGlobalFilters(new GlobalExceptionFilter());
-  
-  if(process.env.NODE_ENV === 'production') {
+
+  if (process.env.NODE_ENV === 'production') {
     app.enableCors({
       origin: 'https://front-production-c630.up.railway.app',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       credentials: true,
       allowedHeaders: '*',
     });
-  
+
     app.setGlobalPrefix('api');
   } else {
     app.enableCors({

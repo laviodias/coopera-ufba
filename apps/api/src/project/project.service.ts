@@ -62,7 +62,7 @@ export class ProjectService {
       where: { id },
       include: {
         keywords: true,
-      }
+      },
     });
 
     if (!project) throw new NotFoundException('Projeto não encontrado');
@@ -110,7 +110,7 @@ export class ProjectService {
         id: id,
       },
       include: {
-        keywords: true
+        keywords: true,
       },
       data: {
         name: project.name,
@@ -118,7 +118,7 @@ export class ProjectService {
         demandId: project.demandId,
         keywords: {
           connect: keywordsIds,
-        }
+        },
       },
     });
 

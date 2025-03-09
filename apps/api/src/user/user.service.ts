@@ -22,7 +22,8 @@ export class UserService {
     });
     if (userAlreadyExists) throw new ConflictException('Usuário já cadastrado');
 
-    if (user.password !== user.passwordConfirmation) throw new ForbiddenException('As senhas nao conferem');
+    if (user.password !== user.passwordConfirmation)
+      throw new ForbiddenException('As senhas nao conferem');
 
     const hashedPassword = await hashPassword(user.password);
 
