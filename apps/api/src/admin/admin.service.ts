@@ -2,7 +2,7 @@ import { getUserType } from '@/user/utils/user.types.util';
 import { PrismaService } from '../infra/database/prisma.service';
 import { UpdateUserDto } from '../user/user.dto';
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { ResearcherType, User } from '@prisma/client';
 
 @Injectable()
 export class AdminService {
@@ -16,11 +16,6 @@ export class AdminService {
         email: true,
         role: true,
         status: true,
-        img: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-        resetToken: true,
         company: true,
         researcher: true,
       },
@@ -37,11 +32,6 @@ export class AdminService {
       email: user.email,
       role: user.role,
       status: user.status,
-      img: user.img,
-      password: user.password,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-      resetToken: user.resetToken,
       utype: getUserType(user),
     }));
   }
@@ -62,19 +52,19 @@ export class AdminService {
       },
     });
 
-    if (utype) {
+    if (utype && role != 'ADMIN') {
       if (response.researcher) {
         return await this.prismaService.researcher.update({
           where: { userId },
           data: {
-            researcherType: utype.split('_')[1],
+            researcherType: utype.split('_')[1] as ResearcherType,
           },
         });
       } else {
         return await this.prismaService.researcher.create({
           data: {
             userId,
-            researcherType: utype.split('_')[1],
+            researcherType: utype.split('_')[1] as ResearcherType,
           },
         });
       }

@@ -7,6 +7,11 @@ import {
 } from 'class-validator';
 import { ResearcherType, UserRole, UserStatus } from '@prisma/client';
 
+enum UserType {
+  RESEARCHER = 'RESEARCHER',
+  COMPANY = 'COMPANY',
+}
+
 export class CreateCompanyDto {
   contactName?: string;
 
@@ -26,15 +31,17 @@ export class CreateResearcherDto {
 export class UpdateUserDto {
   @IsEnum(UserRole)
   role: UserRole;
+
+  @IsEnum(UserStatus)
   status: UserStatus;
-  utype?: any;
+
+  @IsOptional()
+  utype?: "RESEARCHER_STUDENT" | "RESEARCHER_TEACHER";
 }
 
 export class CreateUserDto {
   @IsNotEmpty()
   name: string;
-
-  img?: string;
 
   @IsEmail()
   email: string;
@@ -43,8 +50,11 @@ export class CreateUserDto {
   // 8 or more characters, at least one uppercase letter, one lowercase letter, one number and one special character
   password: string;
 
-  @IsEnum(UserRole)
-  role: UserRole;
+  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
+  passwordConfirmation: string;
+
+  @IsEnum(UserType)
+  utype: UserType;
 
   @IsOptional()
   company?: CreateCompanyDto;

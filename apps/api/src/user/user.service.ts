@@ -8,6 +8,7 @@ import {
 import { CreateUserDto } from './user.dto';
 import { hashPassword, comparePassword } from './utils/hashPassword.util';
 import { UserWithCompany, UserWithProfiles } from '@/types';
+import { UserRole } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -21,14 +22,15 @@ export class UserService {
     });
     if (userAlreadyExists) throw new ConflictException('Usuário já cadastrado');
 
+    if (user.password !== user.passwordConfirmation) throw new ForbiddenException('As senhas nao conferem');
+
     const hashedPassword = await hashPassword(user.password);
 
     const userData: any = {
       name: user.name,
-      img: user.img,
       email: user.email,
       password: hashedPassword,
-      role: user.role,
+      role: UserRole.USER,
     };
 
     if (user.company) {
@@ -118,10 +120,8 @@ export class UserService {
       },
       data: {
         name: user.name,
-        img: user.img,
         email: user.email,
         password: user.password,
-        role: user.role,
       },
     });
 

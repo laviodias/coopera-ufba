@@ -28,7 +28,6 @@ export function getUserFromData(userData: {
 
   const createUser: Partial<User> = {
     ...userData,
-    role: UserRoleEnum.USER,
     company: company as Company,
     researcher: researcher as Researcher,
   };
