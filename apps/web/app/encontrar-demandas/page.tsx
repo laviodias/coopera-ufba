@@ -21,6 +21,7 @@ import { Demand } from '@/types/Demand';
 import { CustomIcon } from '@/modules/components/icon/customIcon';
 import { HiOutlineAdjustmentsVertical } from 'react-icons/hi2';
 import useGetKeywords from '@/api/keywords/use-get-keywords';
+import useGetCompanies from '@/api/company/use-get-company-names';
 
 function EncontrarDemandas() {
   const { data: demands = [] } = useGetAllDemands();
@@ -29,8 +30,10 @@ function EncontrarDemandas() {
   const [openFilters, setOpenFilters] = useState<boolean>(false);
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
   const [publishedAtFilter, setPublishedAtFilter] = useState<string>('');
+  const [companyFilter, setCompanyFilter] = useState<string>('');
   
   const { data: keywords } = useGetKeywords();
+  const { data: companies } = useGetCompanies();
 
   const { mutate } = useGetFilterDemands(
     (data) => {
@@ -41,7 +44,7 @@ function EncontrarDemandas() {
   );
 
   const handleFilter = () => {
-    mutate({query: filter, keywords: selectedKeywords.join(','), date: publishedAtFilter});
+    mutate({query: filter, keywords: selectedKeywords.join(','), date: publishedAtFilter, company: companyFilter});
   };
 
   const handleKeywordSelection = (id: string) => {
@@ -56,6 +59,7 @@ function EncontrarDemandas() {
     setFilter('');
     setSelectedKeywords([]);
     setPublishedAtFilter('');
+    setCompanyFilter('');
     setOpenFilters(false);
     setFilteredDemands(demands);
   }
@@ -109,6 +113,22 @@ function EncontrarDemandas() {
                 <SelectItem value="THIS_WEEK">Esta semana</SelectItem>
                 <SelectItem value="LAST_TWO_WEEKS">Últimas 2 semanas</SelectItem>
                 <SelectItem value="THIS_MONTH">Este mês</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="company" className="font-semibold">
+              Empresa
+            </Label>
+            <Select value={companyFilter} onValueChange={setCompanyFilter}>
+              <SelectTrigger id="company" className="bg-white h-auto mt-2">
+                <SelectValue placeholder="Selecione a empresa" />
+              </SelectTrigger>
+              <SelectContent>
+                {companies?.map((company) => (
+                  <SelectItem key={company.id} value={company.id}>{company.name}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

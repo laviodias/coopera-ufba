@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { JwtAuthGuard } from '@/auth/auth.guard';
 
@@ -21,5 +21,17 @@ export class CompanyController {
       body.research_group,
       body.companyId,
     );
+  }
+
+  @Get('/names')
+  getAllNames() {
+    return this.companyService.getAllNames().then((companies) => {
+      return companies.map((company) => {
+        return {
+          id: company.user.id,
+          name: company.user.name,
+        };
+      });
+    })
   }
 }

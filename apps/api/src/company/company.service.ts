@@ -31,4 +31,17 @@ export class CompanyService {
 
     return 'Email sent';
   }
+
+  async getAllNames() {
+    return await this.prismaService.company.findMany({
+      select: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
+      }
+    }) || [];
+  }
 }

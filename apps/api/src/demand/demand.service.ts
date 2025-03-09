@@ -7,6 +7,7 @@ import {
 import { CreateDemandDTO, UpdateDemandDTO } from './demand.dto';
 import { Demand, UserStatus } from '@prisma/client';
 import { UserService } from '@/user/user.service';
+import { filter } from 'rxjs';
 
 @Injectable()
 export class DemandService {
@@ -187,7 +188,8 @@ export class DemandService {
   async suggest(
     query: string,
     keywords: string,
-    date: string
+    date: string,
+    company: string
   ): Promise<{ id: string; name: string; description: string }[]> {
     const filters: Record<string, unknown> = {};
 
@@ -234,6 +236,10 @@ export class DemandService {
           };
           break;
       }
+    }
+
+    if (company && company.length > 0) {
+      filters.companyId = company;
     }
 
     return this.prismaService.demand.findMany({

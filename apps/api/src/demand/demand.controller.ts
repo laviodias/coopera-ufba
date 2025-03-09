@@ -42,9 +42,10 @@ export class DemandController {
   async suggest(
     @Query('query') query: string, 
     @Query('keywords') keywords?: string, 
-    @Query('date') date?: string
+    @Query('date') date?: string,
+    @Query('company') company?: string
   ): Promise<SuggestDemandDTO[]> {
-    return this.demandService.suggest(query, keywords || '', date || '');
+    return this.demandService.suggest(query, keywords || '', date || '', company || '');
   }
 
   @UseGuards(JwtAuthGuard)
