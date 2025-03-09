@@ -81,7 +81,6 @@ describe.skip('Integration test with database - findOne', () => {
   let savedResearchGroupId: string;
 
   beforeAll(async () => {
-    console.log('before all');
     const module: TestingModule = await Test.createTestingModule({
       providers: [ResearchGroupService, PrismaService],
     }).compile();

@@ -11,7 +11,7 @@ interface ItemProp {
 }
 
 function Item({ idPesquisador, researchGroup }: ItemProp) {
-  console.log(researchGroup);
+  (researchGroup);
   const hasImage =
     !!researchGroup.img && researchGroup.img?.includes('/uploads/');
   const imageComponent = (

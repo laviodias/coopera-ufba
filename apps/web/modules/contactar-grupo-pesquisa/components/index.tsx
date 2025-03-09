@@ -60,7 +60,6 @@ const ContactResearchGroup = ({ query }: Props) => {
 
   const { mutate } = useSendMail(
     () => {
-      console.log('sucesso');
       toast({
         variant: 'success',
         title: 'Sucesso',

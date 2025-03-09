@@ -1,6 +1,5 @@
 'use client';
 
-import useAddProject from '@/api/projects/use-add-project';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -51,11 +50,9 @@ const EditarProjeto = () => {
 
   const { data: project } = useGetProject(params.id);
 
-  console.log('aq', project)
-
-  /* if (!user) {
+  if (!user) {
     router.push('/login');
-  } */
+  }
 
   useEffect(() => {
     if (project) {

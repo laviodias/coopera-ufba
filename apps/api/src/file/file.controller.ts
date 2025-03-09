@@ -34,7 +34,6 @@ export class FileController {
         file: { mimetype: string },
         callback: (arg0: null, arg1: boolean) => void,
       ) => {
-        console.log({ file });
         if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
           return callback(
             // @ts-expect-error should be null

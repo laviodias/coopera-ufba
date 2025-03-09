@@ -9,7 +9,6 @@ import { useUser } from '@/context/UserContext';
 import { Demand, DemandStatusEnum } from '@/types/Demand';
 
 function Item(demand: Demand) {
-  console.log(demand)
   const pathname = usePathname();
   const { user } = useUser();
 

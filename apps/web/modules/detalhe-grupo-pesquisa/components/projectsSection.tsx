@@ -18,7 +18,6 @@ type TProps = {
 };
 export default function ProjectsSection(props: TProps) {
   const { user } = useUser();
-  console.log(props.projects);
 
   const onClickDelete = (id: string) => {};
 
