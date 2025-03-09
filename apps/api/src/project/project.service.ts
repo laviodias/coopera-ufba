@@ -60,6 +60,9 @@ export class ProjectService {
   async findOne(id: string) {
     const project = await this.prismaService.project.findUnique({
       where: { id },
+      include: {
+        keywords: true,
+      }
     });
 
     if (!project) throw new NotFoundException('Projeto não encontrado');
@@ -70,6 +73,7 @@ export class ProjectService {
       link: project.link,
       researchGroupId: project.researchGroupId,
       demandId: project.demandId,
+      keywords: project.keywords,
     };
   }
 
@@ -98,17 +102,36 @@ export class ProjectService {
   }
 
   async update(id: string, project: UpdateProjectDto) {
+    const { keywords = [] } = project;
+    const keywordsIds = keywords.map((k) => ({ id: k }));
+
     const updatedProject = await this.prismaService.project.update({
       where: {
         id: id,
       },
+      include: {
+        keywords: true
+      },
       data: {
         name: project.name,
         link: project.link,
-        researchGroupId: project.researchGroupId,
         demandId: project.demandId,
+        keywords: {
+          connect: keywordsIds,
+        }
       },
     });
+
+    if (updatedProject.demandId) {
+      await this.prismaService.demand.update({
+        where: {
+          id: updatedProject.demandId,
+        },
+        data: {
+          status: 'ACCEPTED',
+        },
+      });
+    }
 
     return {
       id: updatedProject.id,
@@ -116,6 +139,7 @@ export class ProjectService {
       link: updatedProject.link,
       researchGroupId: updatedProject.researchGroupId,
       demandId: updatedProject.demandId,
+      keywords: updatedProject.keywords,
     };
   }
 

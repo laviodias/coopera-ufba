@@ -18,16 +18,30 @@ import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { ProjectFormData } from './types/project-form-data';
 import Keywords from '@/components/keywords';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@/context/UserContext';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import useGetAllDemands from '@/api/demandas/use-get-all-demands';
+import { Keyword } from '@/types/Keyword';
+import useGetProject from '@/api/projects/use-get-project';
+import useUpdateProject from '@/api/projects/use-update-project';
 
-const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
+const EditarProjeto = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
+    const [selectedDemand, setSelectedDemand] = useState<string>("");
+    const { data: demands = [] } = useGetAllDemands();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<ProjectFormData>();
   const { user } = useUser();
 
@@ -35,11 +49,30 @@ const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
   const params = useParams<{ id: string }>();
   const router = useRouter();
 
-  if (!user) {
-    router.push('/login');
-  }
+  const { data: project } = useGetProject(params.id);
 
-  const { mutate } = useAddProject(
+  console.log('aq', project)
+
+  /* if (!user) {
+    router.push('/login');
+  } */
+
+  useEffect(() => {
+    if (project) {
+      if(project.keywords)
+        setSelectedKeywords(project.keywords.map((keyword) => (keyword as Keyword).id));
+
+      if(project.demandId)
+        setSelectedDemand(project.demandId);
+
+      setValue('name', project.name);
+      setValue('link', project.link);
+      setValue('demandId', project.demandId);
+    }
+  }, [project]);
+
+  const { mutate } = useUpdateProject(
+    project?.id as string,
     () => {
       toast({
         variant: 'success',
@@ -65,11 +98,13 @@ const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
     }
 
     const projectData: Partial<Project> = {
-      researchGroupId: params.id,
       name: data.name,
       link: data.link,
       keywords: selectedKeywords,
     };
+
+    if(selectedDemand?.length > 0)
+      projectData.demandId = selectedDemand
 
     mutate(projectData);
   };
@@ -124,18 +159,6 @@ const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
               )}
             </label>
 
-            <label className="font-bold text-blue-strong mt-4">
-              Descrição*
-              <textarea
-                {...register('description', { required: true })}
-                placeholder="Digite o texto..."
-                rows={4}
-                className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
-              />
-            </label>
-
-            {errors.description && <span>Este Campo é obrigatório</span>}
-
             <Keywords
               onChange={setSelectedKeywords}
               defaultValue={selectedKeywords}
@@ -154,6 +177,26 @@ const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
                   setValueAs: (value) => value || null,
                 })}
               />
+            </label>
+
+            <label className="font-bold text-blue-strong mt-4">
+              Vincular Demanda
+              <Select
+                onValueChange={setSelectedDemand}
+                value={selectedDemand}
+                {...register('demandId')}
+              >
+                <SelectTrigger className="w-full py-3 px-4 text-base font-normal rounded-lg border mt-2">
+                  <SelectValue placeholder={'Selecione uma demanda'} />
+                </SelectTrigger>
+                <SelectContent>
+                  {demands.map((demand) => (
+                    <SelectItem key={demand.id} value={demand.id}>
+                      {demand.company.user.name} - {demand.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </label>
 
             <div className="flex flex-row gap-4 justify-center mt-10">
@@ -177,3 +220,4 @@ const EditarProjeto = ({ projeto }: { projeto?: Project }) => {
 };
 
 export default EditarProjeto;
+

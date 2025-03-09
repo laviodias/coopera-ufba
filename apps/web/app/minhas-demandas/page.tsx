@@ -10,12 +10,12 @@ import useDeleteDemand from '@/api/demandas/use-delete-demand';
 import { useToast } from '@/hooks/use-toast';
 import useGetMyFilterDemands from '@/api/demandas/use-get-my-filter-demands';
 import { useState } from 'react';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import { Demand } from '@/types/Demand';
 
 const MinhasDemandas = () => {
   const { data: demands = [] } = useGetMyDemands();
   const [filter, setFilter] = useState<string>('');
-  const [filteredDemands, setFilteredDemands] = useState<Demanda[]>();
+  const [filteredDemands, setFilteredDemands] = useState<Demand[]>();
   const router = useRouter();
   const { toast } = useToast();
 

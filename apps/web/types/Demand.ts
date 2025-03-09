@@ -16,9 +16,10 @@ export type Demand = {
   description: string;
   link?: string;
   public: boolean;
-  keywords?: Keyword[] | string[];
+  keywords: Keyword[] | string[];
   company: Company;
   status: DemandStatusEnum;
   attachments: Attachment[];
   projects: Project[] | string[];
+  createdAt: Date;
 }

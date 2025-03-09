@@ -23,6 +23,7 @@ export class ProjectDto {
   @IsUrl()
   link?: string;
 
+  @IsOptional()
   keywords?: string[];
 }
 
@@ -33,15 +34,12 @@ export class UpdateProjectDto {
 
   @IsOptional()
   @IsUUID()
-  researchGroupId?: string;
-
-  @IsOptional()
-  @IsUUID()
   demandId?: string;
 
   @IsOptional()
   @IsUrl()
   link?: string;
 
+  @IsOptional()
   keywords?: string[];
 }

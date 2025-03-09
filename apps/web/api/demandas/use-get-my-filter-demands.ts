@@ -1,11 +1,11 @@
 import { api } from '@/lib/axios';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import { Demand } from '@/types/Demand';
 import { useMutation } from '@tanstack/react-query';
 
-async function getMyFilterDemands(query: string): Promise<Demanda[]> {
+async function getMyFilterDemands(query: string): Promise<Demand[]> {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
-  const { data } = await api(apiURL, true).get<Demanda[]>(
+  const { data } = await api(apiURL, true).get<Demand[]>(
     `/demand/suggest-filter?query=${query}`,
   );
 
@@ -13,7 +13,7 @@ async function getMyFilterDemands(query: string): Promise<Demanda[]> {
 }
 
 export default function useGetMyFilterDemands(
-  onSuccess: (data: Demanda[]) => void,
+  onSuccess: (data: Demand[]) => void,
   onError: () => void,
 ) {
   return useMutation({

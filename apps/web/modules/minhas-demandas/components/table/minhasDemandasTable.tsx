@@ -16,18 +16,18 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { IoMdCreate } from 'react-icons/io';
-import { Demanda, Status } from '../../interfaces/demanda';
 import { CustomIcon } from '@/modules/components/icon/customIcon';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { format } from 'date-fns';
 import { DeleteModal } from '../modal/deleteModal';
+import { Demand, DemandStatusEnum } from '@/types/Demand';
 interface Params {
-  data: Demanda[];
+  data: Demand[];
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
 }
 const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
-  const columns: ColumnDef<Demanda>[] = [
+  const columns: ColumnDef<Demand>[] = [
     {
       accessorKey: 'name',
       header: 'Título',
@@ -40,7 +40,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
     {
       accessorKey: 'status',
       header: 'Status',
-      cell: ({ row }) => Status[row.getValue('status') as keyof typeof Status],
+      cell: ({ row }) => DemandStatusEnum[row.getValue('status') as keyof typeof DemandStatusEnum],
     },
     {
       accessorKey: 'projects',

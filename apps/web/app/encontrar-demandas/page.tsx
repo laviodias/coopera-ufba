@@ -15,14 +15,14 @@ import { Input } from '@/components/ui/input';
 import { FiSearch } from 'react-icons/fi';
 import useGetAllDemands from '@/api/demandas/use-get-all-demands';
 import { useState } from 'react';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
 import useGetFilterDemands from '@/api/demandas/use-get-filter-demands';
 import { toast } from '@/hooks/use-toast';
+import { Demand } from '@/types/Demand';
 
 function EncontrarDemandas() {
   const { data: demands = [] } = useGetAllDemands();
   const [filter, setFilter] = useState<string>('');
-  const [filteredDemands, setFilteredDemands] = useState<Demanda[]>();
+  const [filteredDemands, setFilteredDemands] = useState<Demand[]>();
 
   const filterDemands = useGetFilterDemands(
     (data) => {

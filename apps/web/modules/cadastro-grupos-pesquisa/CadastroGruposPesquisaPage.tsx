@@ -21,7 +21,7 @@ import { useForm } from 'react-hook-form';
 import { useUser } from '@/context/UserContext';
 import useAddResearchGroup from '@/api/research-group/use-add-research-group';
 import useGetAllKnowledgeAreas from '@/api/research-group/use-get-all-knowledgeAreas';
-import { CreateResearchGroup } from '@/types/ResearchGroup';
+import { ResearchGroup } from '@/types/ResearchGroup';
 import { useToast } from '@/hooks/use-toast';
 import { handleFileUpload } from '@/api/research-group/use-upload-file';
 
@@ -31,7 +31,7 @@ const CadastrarGruposPesquisa = () => {
     register,
     setValue,
     formState: { errors },
-  } = useForm<CreateResearchGroup>();
+  } = useForm<Partial<ResearchGroup>>();
   const { user, setUser } = useUser();
   const [knowledgeArea, setKnowledgeArea] = useState('');
   const { data: knowledgeAreas } = useGetAllKnowledgeAreas();
@@ -44,7 +44,7 @@ const CadastrarGruposPesquisa = () => {
   };
 
   useEffect(() => {
-    setValue('knowledgeArea', knowledgeArea);
+    setValue('knowledgeAreas', knowledgeAreas);
   }, [knowledgeArea, setValue]);
 
   useEffect(() => {
@@ -67,16 +67,15 @@ const CadastrarGruposPesquisa = () => {
     },
   );
 
-  const onSubmit = async (data: CreateResearchGroup) => {
+  const onSubmit = async (data: Partial<ResearchGroup>) => {
     let filename = null;
     if (file) {
       filename = await handleFileUpload(file);
     }
-    const researchGroupData: CreateResearchGroup = {
+    const researchGroupData: Partial<ResearchGroup> = {
       name: data.name,
       description: data.description,
-      knowledgeArea: data.knowledgeArea,
-      knowledgeAreas: [data.knowledgeArea],
+      knowledgeAreas: [data.knowledgeAreas],
       researcherId: user ? user?.id : '',
       members: [user ? user?.id : ''],
       urlCNPQ: data?.urlCNPQ,
@@ -149,7 +148,7 @@ const CadastrarGruposPesquisa = () => {
               Área de Pesquisa*
               <Select
                 onValueChange={setKnowledgeArea}
-                {...register('knowledgeArea', { required: true })}
+                {...register('knowledgeAreas', { required: true })}
               >
                 <SelectTrigger className="w-full py-6 px-4 text-base font-medium rounded-lg border mt-2 data-[placeholder]:text-muted-foreground">
                   <SelectValue placeholder="Selecione..." />
@@ -162,7 +161,7 @@ const CadastrarGruposPesquisa = () => {
                   ))}
                 </SelectContent>
               </Select>
-              {errors.knowledgeArea && (
+              {errors.knowledgeAreas && (
                 <span className="text-red font-normal text-sm">
                   Área de Pesquisa é obrigatória
                 </span>

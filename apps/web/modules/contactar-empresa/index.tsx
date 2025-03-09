@@ -21,7 +21,6 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import useGetOneDemand from '@/api/demandas/use-get-one-demand';
 import { useEffect, useState } from 'react';
-import { Demanda } from '../minhas-demandas/interfaces/demanda';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import useSendMail from '@/api/demandas/use-send-email';
@@ -31,12 +30,13 @@ import { MyResearchGroup } from '../meus-grupos-pesquisa/interfaces/pesquisador-
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/navigation';
 import useSendNotification from '@/api/notifications/use-send-notifications';
+import { Demand } from '@/types/Demand';
 
 interface Props {
   query: any;
 }
 const ContactCompany = ({ query }: Props) => {
-  const [demanda, setDemanda] = useState<Demanda>();
+  const [demanda, setDemanda] = useState<Demand>();
   const [message, setMessage] = useState<string>('');
   const [myResearchGroups, setMyResearchGroups] = useState<MyResearchGroup[]>(
     [],

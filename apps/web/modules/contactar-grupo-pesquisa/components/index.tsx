@@ -22,7 +22,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useUser } from '@/context/UserContext';
 import { useToast } from '@/hooks/use-toast';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import { Demand } from '@/types/Demand';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -182,7 +182,7 @@ const ContactResearchGroup = ({ query }: Props) => {
               </SelectTrigger>
               <SelectContent>
                 {demands &&
-                  demands.map((demand: Demanda) => (
+                  demands.map((demand: Demand) => (
                     <SelectItem key={demand.id} value={demand.name}>
                       {demand.name}
                     </SelectItem>

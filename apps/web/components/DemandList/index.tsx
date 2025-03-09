@@ -1,8 +1,8 @@
+import { Demand } from '@/types/Demand';
 import { Item } from './Item';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
 
 type DemandListProps = {
-  demands: Demanda[];
+  demands: Demand[];
 };
 
 function DemandList({ demands }: DemandListProps) {

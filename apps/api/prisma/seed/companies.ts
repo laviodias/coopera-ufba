@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, DemandStatus } from '@prisma/client';
 
 export async function SeedCompanies(prisma: PrismaClient) {
   const companies = [
@@ -13,6 +13,7 @@ export async function SeedCompanies(prisma: PrismaClient) {
             id: '7405974c-6ef1-4d0c-9be0-962b7d97c8d9',
             name: 'Gestão de consumo elétrico de dispositivo de IoT.',
             public: true,
+            status: DemandStatus.ACCEPTED,
             description:
               'Otimização do consumo energético de dispositivos IoT através de monitoramento e controle em tempo real, promovendo a sustentabilidade e reduzindo custos.',
           },

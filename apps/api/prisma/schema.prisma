@@ -36,19 +36,26 @@ enum ResearcherType {
   TEACHER
 }
 
+enum ProposalStatus {
+  CREATED
+  ACCEPTED
+  REJECTED
+}
+
 model User {
-  id         String      @id @default(uuid())
-  email      String      @unique
-  name       String
-  img        String?
-  password   String
-  role       UserRole    @default(USER)
-  status     UserStatus  @default(PENDING)
-  resetToken String?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  company    Company?
-  researcher Researcher?
+  id            String         @id @default(uuid())
+  email         String         @unique
+  name          String
+  img           String?
+  password      String
+  role          UserRole       @default(USER)
+  status        UserStatus     @default(PENDING)
+  resetToken    String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  company       Company?
+  researcher    Researcher?
+  proposals     Proposal[]
   notifications Notification[]
 }
 
@@ -94,6 +101,7 @@ model ResearchGroup {
   knowledgeAreas KnowledgeArea[]
   members        Researcher[]    @relation("ResearchGroupMembers")
   projects       Project[]
+  proposals      Proposal[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 }
@@ -120,30 +128,31 @@ model Project {
 }
 
 model Demand {
-  id            String         @id @default(uuid())
-  name          String
-  link          String?
-  company       Company        @relation(fields: [companyId], references: [userId])
-  companyId     String
-  description   String
-  status        DemandStatus   @default(CREATED)
-  public        Boolean        @default(true)
-  projects      Project[]
-  keywords      Keyword[]
-  attachments   Attachment[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id          String       @id @default(uuid())
+  name        String
+  link        String?
+  company     Company      @relation(fields: [companyId], references: [userId])
+  companyId   String
+  description String
+  status      DemandStatus @default(CREATED)
+  public      Boolean      @default(true)
+  projects    Project[]
+  keywords    Keyword[]
+  attachments Attachment[]
+  proposals   Proposal[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Notification {
-  id              String   @id @default(uuid())
-  message         String
-  userId          String
-  user            User     @relation(fields: [userId], references: [id])
-  url             String?
-  read            Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id        String   @id @default(uuid())
+  message   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  url       String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Attachment {
@@ -153,4 +162,18 @@ model Attachment {
   demandId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Proposal {
+  id              String         @id @default(uuid())
+  demand          Demand         @relation(fields: [demandId], references: [id])
+  demandId        String
+  researchGroup   ResearchGroup  @relation(fields: [researchGroupId], references: [id])
+  researchGroupId String
+  sender          User           @relation(fields: [senderId], references: [id])
+  senderId        String
+  message         String
+  status          ProposalStatus
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 }

@@ -5,17 +5,19 @@ import Link from 'next/link';
 import { TbUserCircle } from 'react-icons/tb';
 import { Button } from '../ui/button';
 import { Address } from './types';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
 import { usePathname } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
+import { Demand, DemandStatusEnum } from '@/types/Demand';
+import { Keyword } from '@/types/Keyword';
 
-function addressToString(address?: Address) {
+/* function addressToString(address?: Address) {
   if (!address) return;
 
   return `${address.city}, ${address.state} - ${address.country}`;
-}
+} */
 
-function Item(demand: Demanda) {
+function Item(demand: Demand) {
+  console.log(demand)
   const pathname = usePathname();
   const { user } = useUser();
 
@@ -47,15 +49,15 @@ function Item(demand: Demanda) {
       )}
 
       <div className="grid grid-cols-[auto_1fr] grid-rows-3 gap-x-1.5">
-        {demand.company.image ? (
+        {/* {demand.company.image ? (
           <img
             src=""
             alt="Logo da Empresa"
             className="row-span-2 col-start-1 row-start-1 size-16"
           />
-        ) : (
+        ) : ( */}
           <TbUserCircle className="text-primary font-normal size-16 row-span-2 col-start-1" />
-        )}
+        {/* )} */}
 
         <p className="self-end font-semibold text-lg leading-none self-center">
           {demand.company.user.name}
@@ -68,12 +70,12 @@ function Item(demand: Demanda) {
             {demand.company.contactPhone}
           </span>
         </div>
-        <p className="self-start text-blue-light text-sm">
+        {/* <p className="self-start text-blue-light text-sm">
           {addressToString(demand.company.address)}
-        </p>
+        </p> */}
       </div>
 
-      {user?.utype !== 'COMPANY' && (
+      {user?.utype !== 'COMPANY' && demand.status == DemandStatusEnum.CREATED && (
         <Button
           asChild
           variant={'outline'}

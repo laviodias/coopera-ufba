@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
+import { KnowledgeArea } from '@/types/KnowledgeArea';
 
-async function getAllKnowledgeAreas(): Promise<{ id: string; name: string }[]> {
+async function getAllKnowledgeAreas(): Promise<KnowledgeArea[]> {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
-  const { data } = await api(apiURL, true).get<{ id: string; name: string }[]>(
+  const { data } = await api(apiURL, true).get<KnowledgeArea[]>(
     `/researchgroup/knowledgearea/all`,
   );
 

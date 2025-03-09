@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
-import { Demanda } from '@/modules/minhas-demandas/interfaces/demanda';
+import { Demand } from '@/types/Demand';
 
-async function getMyDemands(): Promise<Demanda[]> {
+async function getMyDemands(): Promise<Demand[]> {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
-  const { data } = await api(apiURL, true).get<Demanda[]>(`/demand/my`);
+  const { data } = await api(apiURL, true).get<Demand[]>(`/demand/my`);
 
   return data;
 }
