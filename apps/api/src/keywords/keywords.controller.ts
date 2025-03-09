@@ -13,11 +13,11 @@ import { CreateKeywordDto } from './dto/create-keyword.dto';
 import { UpdateKeywordDto } from './dto/update-keyword.dto';
 import { JwtAuthGuard } from '@/auth/auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('keywords')
 export class KeywordsController {
   constructor(private readonly keywordsService: KeywordsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createKeywordDto: CreateKeywordDto) {
     return this.keywordsService.create(createKeywordDto);
@@ -33,11 +33,13 @@ export class KeywordsController {
     return this.keywordsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateKeywordDto: UpdateKeywordDto) {
     return this.keywordsService.update(id, updateKeywordDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.keywordsService.remove(id);

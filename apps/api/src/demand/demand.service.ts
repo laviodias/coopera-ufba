@@ -186,7 +186,56 @@ export class DemandService {
 
   async suggest(
     query: string,
+    keywords: string,
+    date: string
   ): Promise<{ id: string; name: string; description: string }[]> {
+    const filters: Record<string, unknown> = {};
+
+    if (keywords && keywords.length > 0) {
+      filters.keywords = {
+        some: {
+          id: {
+            in: keywords.split(','),
+          },
+        },
+      };
+    }
+
+    if (date && date.length > 0) {
+      const today = new Date();
+      const todayBegin = new Date(today.setHours(0, 0, 0, 0));
+      const todayEnd = new Date(today.setHours(23, 59, 59, 999));
+      switch (date) {
+        case 'TODAY':
+          filters.createdAt = {
+            gte: new Date(todayBegin),
+            lte: new Date(todayEnd),
+          };
+          break;
+        case 'THIS_WEEK':
+          const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+          filters.createdAt = {
+            gte: new Date(firstDayOfWeek.setHours(0, 0, 0, 0)),
+            lte: new Date(todayEnd),
+          };
+          break;
+        case 'LAST_TWO_WEEKS':
+          const twoWeeksAgo = new Date(today.setDate(today.getDate() - 14));
+          filters.createdAt = {
+            gte: new Date(twoWeeksAgo.setHours(0, 0, 0, 0)),
+            lte: new Date(todayEnd),
+          };
+          break;
+        case 'THIS_MONTH':
+          const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+          filters.createdAt = {
+            gte: new Date(firstDayOfMonth.setHours(0, 0, 0, 0)),
+            lte: new Date(todayEnd),
+          };
+          break;
+      }
+    }
+
     return this.prismaService.demand.findMany({
       where: {
         OR: [
@@ -198,9 +247,10 @@ export class DemandService {
             },
           },
         ],
+        ...filters
       },
       orderBy: {
-        createdAt: 'desc', // Ordena pelas demandas mais recentes
+        createdAt: 'desc',
       },
       include: {
         company: {
@@ -210,7 +260,6 @@ export class DemandService {
         },
         keywords: true,
       },
-      take: 10, // Limita os resultados a 10 sugestões
     });
   }
 
@@ -232,7 +281,7 @@ export class DemandService {
         ],
       },
       orderBy: {
-        createdAt: 'desc', // Ordena pelas demandas mais recentes
+        createdAt: 'desc',
       },
       include: {
         company: {
@@ -242,7 +291,6 @@ export class DemandService {
         },
         keywords: true,
       },
-      take: 10, // Limita os resultados a 10 sugestões
     });
   }
 }

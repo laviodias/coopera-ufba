@@ -39,11 +39,12 @@ export class DemandController {
   }
 
   @Get('/suggest')
-  async suggest(@Query('query') query: string): Promise<SuggestDemandDTO[]> {
-    if (!query || query.length < 3) {
-      return [];
-    }
-    return this.demandService.suggest(query);
+  async suggest(
+    @Query('query') query: string, 
+    @Query('keywords') keywords?: string, 
+    @Query('date') date?: string
+  ): Promise<SuggestDemandDTO[]> {
+    return this.demandService.suggest(query, keywords || '', date || '');
   }
 
   @UseGuards(JwtAuthGuard)

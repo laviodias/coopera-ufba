@@ -9,8 +9,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { ProjectDto } from './project.dto';
-import { UpdateProjectDto } from './project.dto';
+import { ProjectDto, UpdateProjectDto } from './project.dto';
 import { ResearchGroupService } from '@/research-group/research-group.service';
 
 //TODO colocar os useGuard
