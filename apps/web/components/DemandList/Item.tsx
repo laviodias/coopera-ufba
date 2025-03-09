@@ -4,17 +4,9 @@ import { ptBR } from 'date-fns/locale';
 import Link from 'next/link';
 import { TbUserCircle } from 'react-icons/tb';
 import { Button } from '../ui/button';
-import { Address } from './types';
 import { usePathname } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
 import { Demand, DemandStatusEnum } from '@/types/Demand';
-import { Keyword } from '@/types/Keyword';
-
-/* function addressToString(address?: Address) {
-  if (!address) return;
-
-  return `${address.city}, ${address.state} - ${address.country}`;
-} */
 
 function Item(demand: Demand) {
   console.log(demand)
