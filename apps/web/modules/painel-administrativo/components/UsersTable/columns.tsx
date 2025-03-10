@@ -20,6 +20,20 @@ const columns: ColumnDef<User>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
   },
   {
+    accessorKey: 'email',
+    header: ({ column }) => (
+      <Button
+        className="font-bold text-xl"
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Email
+        <ArrowUpDown />
+      </Button>
+    ),
+    cell: ({ row }) => <div>{row.getValue('email')}</div>,
+  },
+  {
     accessorKey: 'role',
     header: ({ column }) => {
       return (

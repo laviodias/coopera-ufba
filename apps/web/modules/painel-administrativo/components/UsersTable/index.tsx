@@ -100,7 +100,7 @@ function UsersTable({ data }: UsersTableProps) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Nenhum usuário cadastrado.
+                  Nenhum usuário encontrado.
                 </TableCell>
               </TableRow>
             )}
