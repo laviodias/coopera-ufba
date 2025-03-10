@@ -36,12 +36,32 @@ export async function SeedResearchGroups(prisma: PrismaClient) {
       connect: [{ id: '581a9d3a-e512-47e4-8a9b-3c3a672f9f75' }],
     },
   };
+  const reseachGroups3 = {
+    id: '6d78e1e5-5917-4a81-bce6-65610e79d4f1',
+    name: 'Grupo de Pesquisa 3',
+    description: 'Grupo de pesquisa 3',
+    urlCNPQ: 'https://wiser.ufba.br/gallery.html',
+    researcherId: '6d78e1e5-5917-4a81-bce6-65610e79d4f1',
+    members: {
+      connect: [
+        { userId: '6d78e1e5-5917-4a81-bce6-65610e79d4f1' },
+        { userId: '789e4567-e89b-12d3-a456-426614174000' },
+      ],
+    },
+    knowledgeAreas: {
+      connect: [{ id: '581a9d3a-e512-47e4-8a9b-3c3a672f9f75' }],
+    },
+  };
+
   try {
     await prisma.researchGroup.create({
       data: reseachGroups1,
     });
     await prisma.researchGroup.create({
       data: reseachGroups2,
+    });
+    await prisma.researchGroup.create({
+      data: reseachGroups3,
     });
     console.log('Tabela de Grupo de Pesquisa preenchida com sucesso.');
   } catch (error) {

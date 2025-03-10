@@ -1,35 +1,47 @@
-/* import {
+import {
   Controller,
   Get,
   Post,
   Body,
   Param,
   Delete,
-  Put,
-  NotFoundException,
   Patch,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ProposalService } from './proposal.service';
 import { ProposalDto } from './proposal.dto';
-import { ResearchGroupService } from '@/research-group/research-group.service';
+import { JwtAuthGuard } from '@/auth/auth.guard';
 
-//TODO colocar os useGuard
+@UseGuards(JwtAuthGuard)
 @Controller('proposal')
 export class ProposalController {
   constructor(
     private readonly proposalService: ProposalService,
-    private readonly researchGroupService: ResearchGroupService,
   ) {}
 
+  @Post()
+  create(@Body() proposal: ProposalDto, @Request() req: { user: { userId: string } }) {
+    return this.proposalService.create(proposal, req.user.userId);
+  }
 
   @Get('/my')
-  findOne() {
-    return this.proposalService.findAllMy();
+  findAllMine(@Request() req: { user: { userId: string } }) {
+    return this.proposalService.findAllMine(req.user.userId);
   }
 
-  @Patch(':id/cancel')
-  patch(@Param('id') id: string) {
-    return this.proposalService.refuse(id);
+  @Patch(':id/refuse')
+  patch(@Param('id') id: string, @Request() req: { user: { userId: string } }) {
+    return this.proposalService.refuse(id, req.user.userId);
+  }
+
+  @Patch(':id/accept')
+  accept(@Param('id') id: string, @Request() req: { user: { userId: string } }) {
+    return this.proposalService.accept(id, req.user.userId);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string, @Request() req: { user: { userId: string } }) {
+    return this.proposalService.delete(id, req.user.userId);
   }
 }
- */

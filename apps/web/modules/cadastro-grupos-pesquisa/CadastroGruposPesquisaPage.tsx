@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { useUser } from '@/context/UserContext';
@@ -29,27 +29,17 @@ const CadastrarGruposPesquisa = () => {
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
   } = useForm<Partial<ResearchGroup>>();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const [knowledgeArea, setKnowledgeArea] = useState('');
   const { data: knowledgeAreas } = useGetAllKnowledgeAreas();
-  const [areas, setAreas] = useState<{ id: string; name: string }[]>([]);
   const { toast } = useToast();
   const [file, setFile] = useState(null);
 
   const handleFileChange = async (event: any) => {
     setFile(event.target.files[0]);
   };
-
-  useEffect(() => {
-    setValue('knowledgeAreas', knowledgeAreas);
-  }, [knowledgeArea, setValue]);
-
-  useEffect(() => {
-    setAreas(knowledgeAreas || []);
-  }, [knowledgeAreas]);
 
   const { mutate, isPending } = useAddResearchGroup(
     () => {
@@ -75,13 +65,11 @@ const CadastrarGruposPesquisa = () => {
     const researchGroupData: Partial<ResearchGroup> = {
       name: data.name,
       description: data.description,
-      knowledgeAreas: [data.knowledgeAreas],
-      researcherId: user ? user?.id : '',
+      knowledgeAreas: knowledgeArea.length > 0 ? [knowledgeArea] : undefined,
       members: [user ? user?.id : ''],
       urlCNPQ: data?.urlCNPQ,
       img: filename,
     };
-
     mutate(researchGroupData);
   };
 
@@ -145,16 +133,15 @@ const CadastrarGruposPesquisa = () => {
               )}
             </label>
             <label className="font-bold text-blue-strong mt-4">
-              Área de Pesquisa*
+              Área de Pesquisa
               <Select
                 onValueChange={setKnowledgeArea}
-                {...register('knowledgeAreas', { required: true })}
               >
                 <SelectTrigger className="w-full py-6 px-4 text-base font-medium rounded-lg border mt-2 data-[placeholder]:text-muted-foreground">
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {areas.map((area) => (
+                  {knowledgeAreas?.map((area) => (
                     <SelectItem value={area.id} key={area.id}>
                       {area.name}
                     </SelectItem>

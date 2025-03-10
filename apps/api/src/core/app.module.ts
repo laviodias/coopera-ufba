@@ -17,6 +17,7 @@ import { KeywordsModule } from '@/keywords/keywords.module';
 import { CompanyModule } from '@/company/company.module';
 import { FileModule } from '@/file/file.module';
 import { NotificationsModule } from '@/notifications/notifications.module';
+import { ProposalModule } from '@/proposal/proposal.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { NotificationsModule } from '@/notifications/notifications.module';
     CompanyModule,
     FileModule,
     NotificationsModule,
+    ProposalModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, PrismaService, JwtService],

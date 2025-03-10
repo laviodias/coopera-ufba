@@ -43,20 +43,21 @@ enum ProposalStatus {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique
-  name          String
-  img           String?
-  password      String
-  role          UserRole       @default(USER)
-  status        UserStatus     @default(PENDING)
-  resetToken    String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  company       Company?
-  researcher    Researcher?
-  proposals     Proposal[]
-  notifications Notification[]
+  id                String         @id @default(uuid())
+  email             String         @unique
+  name              String
+  img               String?
+  password          String
+  role              UserRole       @default(USER)
+  status            UserStatus     @default(PENDING)
+  resetToken        String?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  company           Company?
+  researcher        Researcher?
+  proposalsSent     Proposal[]     @relation("ProposalSender")
+  proposalsReceived Proposal[]     @relation("ProposalReceiver")
+  notifications     Notification[]
 }
 
 model Keyword {
@@ -170,8 +171,10 @@ model Proposal {
   demandId        String
   researchGroup   ResearchGroup  @relation(fields: [researchGroupId], references: [id])
   researchGroupId String
-  sender          User           @relation(fields: [senderId], references: [id])
+  sender          User           @relation(fields: [senderId], references: [id], name: "ProposalSender")
   senderId        String
+  receiver        User           @relation(fields: [receiverId], references: [id], name: "ProposalReceiver")
+  receiverId      String
   message         String
   status          ProposalStatus
   createdAt       DateTime       @default(now())

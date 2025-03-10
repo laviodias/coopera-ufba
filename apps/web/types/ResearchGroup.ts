@@ -9,7 +9,7 @@ export type ResearchGroup = {
   urlCNPQ?: string;
   img?: string;
   leader: Researcher;
-  knowledgeAreas: KnowledgeArea[];
-  members: Researcher[];
+  knowledgeAreas: KnowledgeArea[] | string[];
+  members: Researcher[] | string[];
   projects: Project[];
 }

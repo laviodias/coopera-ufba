@@ -24,7 +24,7 @@ export class ResearchGroupService {
     private readonly prismaService: PrismaService,
   ) {}
 
-  async create(group: CreateResearchGroupDto) {
+  async create(group: CreateResearchGroupDto, researcherId: string) {
     const groupAlreadyExists =
       await this.prismaService.researchGroup.findUnique({
         where: {
@@ -33,6 +33,7 @@ export class ResearchGroupService {
       });
     if (groupAlreadyExists)
       throw new ConflictException('Grupo de pesquisa já cadastrado');
+
     const memberId = group.members?.map((m) => ({ userId: m }));
     const knowledgeAreasId = group.knowledgeAreas?.map((k) => ({ id: k }));
     const createdGroup = await this.prismaService.researchGroup.create({
@@ -41,7 +42,7 @@ export class ResearchGroupService {
         description: group.description,
         urlCNPQ: group.urlCNPQ,
         img: group.img,
-        researcherId: group.researcherId,
+        researcherId,
         members: {
           connect: memberId,
         },

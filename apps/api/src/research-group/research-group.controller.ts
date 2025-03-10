@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 
@@ -29,7 +30,7 @@ export class ResearchGroupController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() researchGroup: CreateResearchGroupDto) {
+  async create(@Body() researchGroup: CreateResearchGroupDto, @Request() req: { user: { userId: string } }) {
     //TODO Verificar se um líder de projeto existe e se é um Pesquisador
 
     if (researchGroup.img) {
@@ -37,17 +38,16 @@ export class ResearchGroupController {
     }
 
     const researcher = await this.researcherService.findOne(
-      researchGroup.researcherId,
+      req.user.userId,
       false,
     );
 
     if (!researcher) {
-      // eslint-disable-next-line
-      throw new NotFoundException('Pesquisador não encontrado.');
+      throw new NotFoundException('Apenas pesquisadores podem criar umm grupo de pesquisa.');
     }
 
     researchGroup.researcherId = researcher.id;
-    return this.researchGroupsService.create(researchGroup);
+    return this.researchGroupsService.create(researchGroup, req.user.userId);
   }
 
   @Get('/all')
