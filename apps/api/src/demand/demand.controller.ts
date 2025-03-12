@@ -77,7 +77,7 @@ export class DemandController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
-    @Body() demand: CreateDemandDTO,
+    @Body() demand: any,
     @Request() req: { user: { userId: string } },
   ) {
     const user = await this.userService.findOneWithCompany(req.user.userId);

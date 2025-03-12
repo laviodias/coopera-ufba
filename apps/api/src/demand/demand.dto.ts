@@ -30,6 +30,8 @@ export class UpdateDemandDTO {
 
   keywords?: string[];
   projects?: string[];
+
+  public: boolean;
 }
 
 export class SuggestDemandDTO {
