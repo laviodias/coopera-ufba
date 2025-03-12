@@ -81,7 +81,7 @@ export const GerenciarMembrosModal = ({ groupId, onCloseModal }: Props) => {
             <TableBody>
               {currentMembers?.map((member) => {
                 return (
-                  <TableRow key={member.user.id}>
+                  <TableRow key={member.user?.id}>
                     <TableCell className="text-blue-light py-6 flex gap-2 items-center">
                       {member.user.name}
                     </TableCell>

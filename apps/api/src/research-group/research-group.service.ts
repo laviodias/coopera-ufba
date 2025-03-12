@@ -156,7 +156,7 @@ export class ResearchGroupService {
     if (!user.researcher)
       throw new NotFoundException('Usuário não é pesquisador');
 
-    this.prismaService.researchGroup.update({
+    return this.prismaService.researchGroup.update({
       where: {
         id,
       },
@@ -168,8 +168,6 @@ export class ResearchGroupService {
         },
       },
     });
-
-    return user;
   }
 
   async findOneWithMembers(id: string) {
