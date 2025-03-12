@@ -66,7 +66,7 @@ export async function SeedDemands(prisma: PrismaClient) {
       },
     },
     {
-      id: 'ad574c8c-1810-4d01-8ff4-d45095ec5028\n',
+      id: 'ad574c8c-1810-4d01-8ff4-d45095ec5028',
       companyId: '09e1f3d8-6ff2-4187-8e99-55de3fb97040',
       description:
         'Desenvolvimento de técnicas para reduzir o consumo energético e o impacto ambiental na geração de modelos para Engenharia de Software, promovendo a sustentabilidade no desenvolvimento de software.',
