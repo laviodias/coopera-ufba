@@ -252,7 +252,7 @@ const EditarDemanda = () => {
               />
             )}
 
-            <label className="font-bold text-blue-strong mt-4">
+            {/* <label className="font-bold text-blue-strong mt-4">
               Vincular Projetos
               <MultiSelect
                 options={projectOptions}
@@ -261,7 +261,7 @@ const EditarDemanda = () => {
                 onValueChange={setSelectedProjects}
                 defaultValue={selectedProjects}
               />
-            </label>
+            </label> */}
 
             {errors.description && <span>Este campo é obrigatório</span>}
 

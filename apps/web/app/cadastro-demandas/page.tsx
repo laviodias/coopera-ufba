@@ -188,7 +188,7 @@ const CadastrarDemanda = () => {
 
             {errors.description && <span>Este campo é obrigatório</span>}
 
-            <label className="font-bold text-blue-strong mt-4">
+            {/* <label className="font-bold text-blue-strong mt-4">
               Vincular Projetos
               <MultiSelect
                 options={projectOptions}
@@ -197,7 +197,7 @@ const CadastrarDemanda = () => {
                 value={selectedProjects}
                 onValueChange={setSelectedProjects}
               />
-            </label>
+            </label> */}
 
             <div className="flex flex-row gap-4 justify-center mt-10">
               <Button
