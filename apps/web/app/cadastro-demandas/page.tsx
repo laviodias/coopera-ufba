@@ -25,7 +25,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { FiInfo } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import Keywords from '@/components/keywords';
-/* import { MultiSelect } from '@/components/ui/multi-select'; */
+import { MultiSelect } from '@/components/ui/multi-select';
 import useGetAvailableProjects from '@/api/projects/use-get-available-projects';
 
 const CadastrarDemanda = () => {
@@ -188,7 +188,7 @@ const CadastrarDemanda = () => {
 
             {errors.description && <span>Este campo é obrigatório</span>}
 
-            {/* <label className="font-bold text-blue-strong mt-4">
+            <label className="font-bold text-blue-strong mt-4">
               Vincular Projetos
               <MultiSelect
                 options={projectOptions}
@@ -197,7 +197,7 @@ const CadastrarDemanda = () => {
                 value={selectedProjects}
                 onValueChange={setSelectedProjects}
               />
-            </label> */}
+            </label>
 
             <div className="flex flex-row gap-4 justify-center mt-10">
               <Button

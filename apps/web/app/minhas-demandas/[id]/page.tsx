@@ -25,7 +25,7 @@ import Keywords from '@/components/keywords';
 import { useParams } from 'next/navigation';
 import useEditDemand from '@/api/demandas/use-edit-demand';
 import useGetOnePrivateDemand from '@/api/demandas/use-get-one-private-demand';
-/* import { MultiSelect } from '@/components/ui/multi-select'; */
+import { MultiSelect } from '@/components/ui/multi-select';
 import useGetAvailableProjects from '@/api/projects/use-get-available-projects';
 import { Keyword } from '@/types/Keyword';
 import { Project } from '@/types/Project';
@@ -252,7 +252,7 @@ const EditarDemanda = () => {
               />
             )}
 
-            {/* <label className="font-bold text-blue-strong mt-4">
+            <label className="font-bold text-blue-strong mt-4">
               Vincular Projetos
               <MultiSelect
                 options={projectOptions}
@@ -261,7 +261,7 @@ const EditarDemanda = () => {
                 onValueChange={setSelectedProjects}
                 defaultValue={selectedProjects}
               />
-            </label> */}
+            </label>
 
             {errors.description && <span>Este campo é obrigatório</span>}
 
