@@ -74,7 +74,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.findOne(id);
   }
 
-  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsGroupLeaderGuard)
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -84,7 +84,7 @@ export class ResearchGroupController {
     return this.researchGroupsService.update(id, researchGroup);
   }
 
-  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsGroupLeaderGuard)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.researchGroupsService.delete(id);
@@ -106,13 +106,13 @@ export class ResearchGroupController {
     return this.researchGroupsService.findMembers(id);
   }
 
-  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsGroupLeaderGuard)
   @Delete('/:id/members/:memberId')
   removeMember(@Param('id') id: string, @Param('memberId') memberId: string) {
     return this.researchGroupsService.removeMember(id, memberId);
   }
 
-  @UseGuards(IsGroupLeaderGuard, JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsGroupLeaderGuard)
   @Post('/:id/members/:userEmail')
   addMember(@Param('id') id: string, @Param('userEmail') userEmail: string) {
     return this.researchGroupsService.addMember(id, userEmail);
