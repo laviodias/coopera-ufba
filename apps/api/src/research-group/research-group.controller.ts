@@ -43,7 +43,7 @@ export class ResearchGroupController {
     );
 
     if (!researcher) {
-      throw new NotFoundException('Apenas pesquisadores podem criar umm grupo de pesquisa.');
+      throw new NotFoundException('Apenas pesquisadores podem criar um grupo de pesquisa.');
     }
 
     return this.researchGroupsService.create(researchGroup, researcher.id);

@@ -25,6 +25,7 @@ export class ResearchGroupService {
   ) {}
 
   async create(group: CreateResearchGroupDto, researcherId: string) {
+    console.log('aq', researcherId);
     const groupAlreadyExists =
       await this.prismaService.researchGroup.findUnique({
         where: {

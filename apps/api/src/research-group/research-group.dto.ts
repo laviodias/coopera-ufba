@@ -24,9 +24,9 @@ export class CreateResearchGroupDto {
   @IsString()
   img?: string;
 
-  @IsNotEmpty()
+  /* @IsNotEmpty()
   @IsUUID()
-  researcherId: string;
+  researcherId: string; */
 
   @IsOptional()
   @IsArray()
