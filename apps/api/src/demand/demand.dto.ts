@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsUrl } from 'class-validator';
 
-export class CreateDemandDTO {
+/* export class CreateDemandDTO {
   @IsNotEmpty()
   name: string;
 
@@ -15,7 +15,7 @@ export class CreateDemandDTO {
 
   keywords?: string[];
   projects?: string[];
-}
+} */
 
 export class UpdateDemandDTO {
   @IsNotEmpty()

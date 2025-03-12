@@ -12,7 +12,7 @@ import {
   Query,
 } from '@nestjs/common';
 import {
-  CreateDemandDTO,
+  /* CreateDemandDTO, */
   UpdateDemandDTO,
   SuggestDemandDTO,
 } from './demand.dto';
@@ -40,12 +40,17 @@ export class DemandController {
 
   @Get('/suggest')
   async suggest(
-    @Query('query') query: string, 
-    @Query('keywords') keywords?: string, 
+    @Query('query') query: string,
+    @Query('keywords') keywords?: string,
     @Query('date') date?: string,
-    @Query('company') company?: string
+    @Query('company') company?: string,
   ): Promise<SuggestDemandDTO[]> {
-    return this.demandService.suggest(query, keywords || '', date || '', company || '');
+    return this.demandService.suggest(
+      query,
+      keywords || '',
+      date || '',
+      company || '',
+    );
   }
 
   @UseGuards(JwtAuthGuard)

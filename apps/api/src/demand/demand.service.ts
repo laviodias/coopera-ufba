@@ -4,10 +4,9 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateDemandDTO, UpdateDemandDTO } from './demand.dto';
+import { /* CreateDemandDTO, */ UpdateDemandDTO } from './demand.dto';
 import { Demand, UserStatus } from '@prisma/client';
 import { UserService } from '@/user/user.service';
-import { filter } from 'rxjs';
 
 @Injectable()
 export class DemandService {
@@ -189,7 +188,7 @@ export class DemandService {
     query: string,
     keywords: string,
     date: string,
-    company: string
+    company: string,
   ): Promise<{ id: string; name: string; description: string }[]> {
     const filters: Record<string, unknown> = {};
 
@@ -215,7 +214,9 @@ export class DemandService {
           };
           break;
         case 'THIS_WEEK':
-          const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+          const firstDayOfWeek = new Date(
+            today.setDate(today.getDate() - today.getDay()),
+          );
           filters.createdAt = {
             gte: new Date(firstDayOfWeek.setHours(0, 0, 0, 0)),
             lte: new Date(todayEnd),
@@ -229,7 +230,11 @@ export class DemandService {
           };
           break;
         case 'THIS_MONTH':
-          const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+          const firstDayOfMonth = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            1,
+          );
           filters.createdAt = {
             gte: new Date(firstDayOfMonth.setHours(0, 0, 0, 0)),
             lte: new Date(todayEnd),
@@ -253,7 +258,7 @@ export class DemandService {
             },
           },
         ],
-        ...filters
+        ...filters,
       },
       orderBy: {
         createdAt: 'desc',
