@@ -25,7 +25,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { FiInfo } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import Keywords from '@/components/keywords';
-import { MultiSelect } from '@/components/ui/multi-select';
+/* import { MultiSelect } from '@/components/ui/multi-select'; */
 import useGetAvailableProjects from '@/api/projects/use-get-available-projects';
 
 const CadastrarDemanda = () => {

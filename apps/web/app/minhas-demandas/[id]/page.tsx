@@ -25,7 +25,7 @@ import Keywords from '@/components/keywords';
 import { useParams } from 'next/navigation';
 import useEditDemand from '@/api/demandas/use-edit-demand';
 import useGetOnePrivateDemand from '@/api/demandas/use-get-one-private-demand';
-import { MultiSelect } from '@/components/ui/multi-select';
+/* import { MultiSelect } from '@/components/ui/multi-select'; */
 import useGetAvailableProjects from '@/api/projects/use-get-available-projects';
 import { Keyword } from '@/types/Keyword';
 import { Project } from '@/types/Project';
