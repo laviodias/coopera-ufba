@@ -46,8 +46,7 @@ export class ResearchGroupController {
       throw new NotFoundException('Apenas pesquisadores podem criar umm grupo de pesquisa.');
     }
 
-    researchGroup.researcherId = researcher.id;
-    return this.researchGroupsService.create(researchGroup, req.user.userId);
+    return this.researchGroupsService.create(researchGroup, researcher.id);
   }
 
   @Get('/all')
