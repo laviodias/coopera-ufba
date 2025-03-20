@@ -134,9 +134,7 @@ const CadastrarGruposPesquisa = () => {
             </label>
             <label className="font-bold text-blue-strong mt-4">
               Área de Pesquisa
-              <Select
-                onValueChange={setKnowledgeArea}
-              >
+              <Select onValueChange={setKnowledgeArea}>
                 <SelectTrigger className="w-full py-6 px-4 text-base font-medium rounded-lg border mt-2 data-[placeholder]:text-muted-foreground">
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>

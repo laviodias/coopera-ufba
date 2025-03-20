@@ -2,16 +2,16 @@
 
 import { DemandList } from '@/components/DemandList';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { Label } from "@/components/ui/label";
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import { FiSearch } from 'react-icons/fi';
 import useGetAllDemands from '@/api/demandas/use-get-all-demands';
 import { useState } from 'react';
@@ -31,7 +31,7 @@ function EncontrarDemandas() {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
   const [publishedAtFilter, setPublishedAtFilter] = useState<string>('');
   const [companyFilter, setCompanyFilter] = useState<string>('');
-  
+
   const { data: keywords } = useGetKeywords();
   const { data: companies } = useGetCompanies();
 
@@ -44,7 +44,12 @@ function EncontrarDemandas() {
   );
 
   const handleFilter = () => {
-    mutate({query: filter, keywords: selectedKeywords.join(','), date: publishedAtFilter, company: companyFilter});
+    mutate({
+      query: filter,
+      keywords: selectedKeywords.join(','),
+      date: publishedAtFilter,
+      company: companyFilter,
+    });
   };
 
   const handleKeywordSelection = (id: string) => {
@@ -53,7 +58,7 @@ function EncontrarDemandas() {
     } else {
       setSelectedKeywords([...selectedKeywords, id]);
     }
-  }
+  };
 
   const clearFilters = () => {
     setFilter('');
@@ -62,7 +67,7 @@ function EncontrarDemandas() {
     setCompanyFilter('');
     setOpenFilters(false);
     setFilteredDemands(demands);
-  }
+  };
 
   return (
     <main className="max-w-screen-xl w-full px-8 pb-8 mx-auto mb-auto grid md:grid-rows-[auto_auto_fr] gap-2 md:gap-3">
@@ -80,7 +85,11 @@ function EncontrarDemandas() {
           <FiSearch />
         </Button>
 
-        <Button variant={'tertiary'} className="size-12" onClick={() => setOpenFilters((prev) => !prev)}>
+        <Button
+          variant={'tertiary'}
+          className="size-12"
+          onClick={() => setOpenFilters((prev) => !prev)}
+        >
           <CustomIcon icon={HiOutlineAdjustmentsVertical} className="!size-6" />
         </Button>
       </div>
@@ -93,7 +102,11 @@ function EncontrarDemandas() {
             <ul className="pr-4 grid grid-cols-3 gap-2 mt-2">
               {keywords?.map((keyword) => (
                 <li key={keyword.id} className="flex items-center gap-1">
-                  <Checkbox id={keyword.name} checked={selectedKeywords.includes(keyword.id)} onCheckedChange={() => handleKeywordSelection(keyword.id)}/>
+                  <Checkbox
+                    id={keyword.name}
+                    checked={selectedKeywords.includes(keyword.id)}
+                    onCheckedChange={() => handleKeywordSelection(keyword.id)}
+                  />
                   <Label htmlFor={keyword.name}>{keyword.name}</Label>
                 </li>
               ))}
@@ -104,14 +117,22 @@ function EncontrarDemandas() {
             <Label htmlFor="publishedDate" className="font-semibold">
               Data de publicação
             </Label>
-            <Select value={publishedAtFilter} onValueChange={setPublishedAtFilter}>
-              <SelectTrigger id="publishedDate" className="bg-white h-auto mt-2">
+            <Select
+              value={publishedAtFilter}
+              onValueChange={setPublishedAtFilter}
+            >
+              <SelectTrigger
+                id="publishedDate"
+                className="bg-white h-auto mt-2"
+              >
                 <SelectValue placeholder="Selecione o período" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="TODAY">Hoje</SelectItem>
                 <SelectItem value="THIS_WEEK">Esta semana</SelectItem>
-                <SelectItem value="LAST_TWO_WEEKS">Últimas 2 semanas</SelectItem>
+                <SelectItem value="LAST_TWO_WEEKS">
+                  Últimas 2 semanas
+                </SelectItem>
                 <SelectItem value="THIS_MONTH">Este mês</SelectItem>
               </SelectContent>
             </Select>
@@ -127,22 +148,24 @@ function EncontrarDemandas() {
               </SelectTrigger>
               <SelectContent>
                 {companies?.map((company) => (
-                  <SelectItem key={company.id} value={company.id}>{company.name}</SelectItem>
+                  <SelectItem key={company.id} value={company.id}>
+                    {company.name}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
-          <div className='flex gap-2 justify-end'>
-            <Button variant={'outline'} onClick={clearFilters}>Limpar filtros</Button>
+          <div className="flex gap-2 justify-end">
+            <Button variant={'outline'} onClick={clearFilters}>
+              Limpar filtros
+            </Button>
             <Button onClick={handleFilter}>Filtrar</Button>
           </div>
         </aside>
       )}
 
-      <DemandList
-        demands={filteredDemands ? filteredDemands : demands}
-      />
+      <DemandList demands={filteredDemands ? filteredDemands : demands} />
     </main>
   );
 }

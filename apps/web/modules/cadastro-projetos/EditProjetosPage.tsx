@@ -33,8 +33,8 @@ import useUpdateProject from '@/api/projects/use-update-project';
 
 const EditarProjeto = () => {
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
-    const [selectedDemand, setSelectedDemand] = useState<string>("");
-    const { data: demands = [] } = useGetAllDemands();
+  const [selectedDemand, setSelectedDemand] = useState<string>('');
+  const { data: demands = [] } = useGetAllDemands();
 
   const {
     handleSubmit,
@@ -56,11 +56,12 @@ const EditarProjeto = () => {
 
   useEffect(() => {
     if (project) {
-      if(project.keywords)
-        setSelectedKeywords(project.keywords.map((keyword) => (keyword as Keyword).id));
+      if (project.keywords)
+        setSelectedKeywords(
+          project.keywords.map((keyword) => (keyword as Keyword).id),
+        );
 
-      if(project.demandId)
-        setSelectedDemand(project.demandId);
+      if (project.demandId) setSelectedDemand(project.demandId);
 
       setValue('name', project.name);
       setValue('link', project.link);
@@ -100,8 +101,7 @@ const EditarProjeto = () => {
       keywords: selectedKeywords,
     };
 
-    if(selectedDemand?.length > 0)
-      projectData.demandId = selectedDemand
+    if (selectedDemand?.length > 0) projectData.demandId = selectedDemand;
 
     mutate(projectData);
   };
@@ -217,4 +217,3 @@ const EditarProjeto = () => {
 };
 
 export default EditarProjeto;
-

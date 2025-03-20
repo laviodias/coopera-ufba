@@ -40,7 +40,10 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
     {
       accessorKey: 'status',
       header: 'Status',
-      cell: ({ row }) => DemandStatusEnum[row.getValue('status') as keyof typeof DemandStatusEnum],
+      cell: ({ row }) =>
+        DemandStatusEnum[
+          row.getValue('status') as keyof typeof DemandStatusEnum
+        ],
     },
     {
       accessorKey: 'projects',

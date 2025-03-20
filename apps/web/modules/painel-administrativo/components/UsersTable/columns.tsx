@@ -69,12 +69,11 @@ const columns: ColumnDef<User>[] = [
     },
     cell: ({ row }) => {
       const utype = row.getValue('utype') as string;
-      const label =
-        utype.includes('RESEARCHER')
-          ? 'Pesquisador'
-          : utype === 'COMPANY'
-            ? 'Empresa'
-            : 'Nenhum';
+      const label = utype.includes('RESEARCHER')
+        ? 'Pesquisador'
+        : utype === 'COMPANY'
+          ? 'Empresa'
+          : 'Nenhum';
 
       return <div className="capitalize">{label}</div>;
     },

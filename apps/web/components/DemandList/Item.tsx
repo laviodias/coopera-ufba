@@ -47,7 +47,7 @@ function Item(demand: Demand) {
             className="row-span-2 col-start-1 row-start-1 size-16"
           />
         ) : ( */}
-          <TbUserCircle className="text-primary font-normal size-16 row-span-2 col-start-1" />
+        <TbUserCircle className="text-primary font-normal size-16 row-span-2 col-start-1" />
         {/* )} */}
 
         <p className="self-end font-semibold text-lg leading-none self-center">
@@ -66,26 +66,27 @@ function Item(demand: Demand) {
         </p> */}
       </div>
 
-      {user?.utype !== 'COMPANY' && demand.status == DemandStatusEnum.CREATED && (
-        <Button
-          asChild
-          variant={'outline'}
-          className="px-9 py-2.5 rounded-full xs:mt-0"
-        >
-          <Link
-            href={{
-              pathname: `${pathname}/contactar-empresa`,
-              query: {
-                idDemanda: demand.id,
-                nomeContato: demand.company.contactName,
-                emailContato: demand.company.contactEmail,
-              },
-            }}
+      {user?.utype !== 'COMPANY' &&
+        demand.status == DemandStatusEnum.CREATED && (
+          <Button
+            asChild
+            variant={'outline'}
+            className="px-9 py-2.5 rounded-full xs:mt-0"
           >
-            Entrar em contato
-          </Link>
-        </Button>
-      )}
+            <Link
+              href={{
+                pathname: `${pathname}/contactar-empresa`,
+                query: {
+                  idDemanda: demand.id,
+                  nomeContato: demand.company.contactName,
+                  emailContato: demand.company.contactEmail,
+                },
+              }}
+            >
+              Entrar em contato
+            </Link>
+          </Button>
+        )}
     </li>
   );
 }

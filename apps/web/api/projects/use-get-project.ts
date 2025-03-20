@@ -16,4 +16,3 @@ export default function useGetProject(id: string) {
     queryFn: () => getProject(id),
   });
 }
-
