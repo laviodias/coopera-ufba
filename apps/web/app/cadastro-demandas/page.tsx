@@ -79,7 +79,7 @@ const CadastrarDemanda = () => {
     const demandData: Partial<Demand> = {
       name: data.name,
       description: data.description,
-      link: data.link,
+      link: data?.link?.length ? data.link : undefined,
       public: data.public.toString() == 'on',
       keywords: selectedKeywords,
       projects: selectedProjects,
@@ -194,8 +194,9 @@ const CadastrarDemanda = () => {
                 options={projectOptions}
                 placeholder="Selecione o(s) projeto(s)"
                 variant="inverted"
-                value={selectedProjects}
+                defaultValue={selectedProjects}
                 onValueChange={setSelectedProjects}
+                maxCount={3}
               />
             </label>
 

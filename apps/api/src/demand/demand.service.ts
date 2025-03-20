@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { /* CreateDemandDTO, */ UpdateDemandDTO } from './demand.dto';
+import { CreateDemandDTO, UpdateDemandDTO } from './demand.dto';
 import { Demand, UserStatus } from '@prisma/client';
 import { UserService } from '@/user/user.service';
 
@@ -15,7 +15,7 @@ export class DemandService {
     private readonly userService: UserService,
   ) {}
 
-  async create(demand: any, companyId: string): Promise<Demand> {
+  async create(demand: CreateDemandDTO, companyId: string): Promise<Demand> {
     const {
       name,
       description,

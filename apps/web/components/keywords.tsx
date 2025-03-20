@@ -52,7 +52,6 @@ function Keywords({
           defaultValue={defaultValue}
           placeholder="Selecione palavras-chave"
           variant="inverted"
-          maxCount={3}
           empty={(search) => (
             <div className={'px-10'}>
               <Button onClick={() => handleKeyword(search)}>

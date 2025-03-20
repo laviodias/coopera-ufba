@@ -12,7 +12,7 @@ import {
   Query,
 } from '@nestjs/common';
 import {
-  /* CreateDemandDTO, */
+  CreateDemandDTO,
   UpdateDemandDTO,
   SuggestDemandDTO,
 } from './demand.dto';
@@ -82,7 +82,7 @@ export class DemandController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
-    @Body() demand: any,
+    @Body() demand: CreateDemandDTO,
     @Request() req: { user: { userId: string } },
   ) {
     const user = await this.userService.findOneWithCompany(req.user.userId);
