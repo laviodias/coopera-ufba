@@ -32,7 +32,8 @@ export class KnowledgeAreaService {
       },
     });
 
-    if (!knowledgeArea) throw new NotFoundException('KnowledgeArea não encontrada');
+    if (!knowledgeArea)
+      throw new NotFoundException('KnowledgeArea não encontrada');
 
     return {
       id: knowledgeArea.id,

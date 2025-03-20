@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { KnowledgeAreaService } from './knowledge-area.service';
 import { CreateKnowledgeAreaDto } from './knowledge-area.dto';
 import { JwtAuthGuard } from '@/auth/auth.guard';

@@ -1,4 +1,4 @@
-import { ResearcherType } from "@prisma/client";
+import { ResearcherType } from '@prisma/client';
 
 export const COMPANY = 'COMPANY';
 export const RESEARCHER = 'RESEARCHER';
