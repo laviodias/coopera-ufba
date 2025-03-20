@@ -299,9 +299,6 @@ export const MultiSelect = React.forwardRef<
               onValueChange={setSearch}
             />
             <CommandList>
-              <CommandEmpty>
-                {empty ? empty(search) : 'No results found.'}
-              </CommandEmpty>
               <CommandGroup>
                 <CommandItem
                   key="all"
@@ -372,6 +369,9 @@ export const MultiSelect = React.forwardRef<
                 </div>
               </CommandGroup>
             </CommandList>
+            <div className="p-2 mx-auto">
+              {search && empty && empty(search)}
+            </div>
           </Command>
         </PopoverContent>
         {animation > 0 && selectedValues.length > 0 && (

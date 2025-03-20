@@ -68,9 +68,9 @@ const columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-      const utype = row.getValue('utype');
+      const utype = row.getValue('utype') as string;
       const label =
-        utype === 'RESEARCHER'
+        utype.includes('RESEARCHER')
           ? 'Pesquisador'
           : utype === 'COMPANY'
             ? 'Empresa'

@@ -121,7 +121,7 @@ function PerfilPage() {
             )}
           />
 
-          {user?.utype === 'RESEARCHER' ? (
+          {user?.utype.includes('RESEARCHER') ? (
             <>
               <FormField
                 control={form.control}

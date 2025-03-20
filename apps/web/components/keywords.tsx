@@ -20,9 +20,8 @@ function Keywords({
     value: id,
   }));
 
-  async function handleKeyword(name: string) {
+  function handleKeyword(name: string) {
     keywordMutate(name);
-    await refetch();
   }
 
   const { mutate: keywordMutate } = useAddKeyword(
@@ -32,6 +31,7 @@ function Keywords({
         title: 'Sucesso',
         description: 'A palavra-chave foi cadastrada com sucesso.',
       });
+      refetch();
     },
     () => {
       toast({
@@ -44,13 +44,13 @@ function Keywords({
 
   return (
     <div className="font-bold text-base text-blue-strong">
-      <label>Palavra-chave{optional ? '' : '*'}</label>
+      <label>Palavras-chave{optional ? '' : '*'}</label>
       <div className="flex items-center mt-2">
         <MultiSelect
           options={mappedKeywords}
           onValueChange={onChange}
           defaultValue={defaultValue}
-          placeholder="Selecione palavras-chave"
+          placeholder="Selecione palavras-chave ou digite uma nova para criá-la"
           variant="inverted"
           empty={(search) => (
             <div className={'px-10'}>

@@ -17,7 +17,11 @@ export class AdminService {
         role: true,
         status: true,
         company: true,
-        researcher: true,
+        researcher: {
+          select: {
+            researcherType: true,
+          },
+        },
       },
       orderBy: [
         {

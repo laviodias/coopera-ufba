@@ -90,7 +90,7 @@ function EncontrarDemandas() {
           <div>
             <Label className="font-semibold">Palavras-chave</Label>
 
-            <ul className="pr-4 flex gap-2 flex-col mt-2">
+            <ul className="pr-4 grid grid-cols-3 gap-2 mt-2">
               {keywords?.map((keyword) => (
                 <li key={keyword.id} className="flex items-center gap-1">
                   <Checkbox id={keyword.name} checked={selectedKeywords.includes(keyword.id)} onCheckedChange={() => handleKeywordSelection(keyword.id)}/>

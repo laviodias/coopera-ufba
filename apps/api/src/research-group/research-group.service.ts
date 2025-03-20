@@ -339,10 +339,6 @@ export class ResearchGroupService {
     });
   }
 
-  async findAllKnowledgeAreas() {
-    return await this.prismaService.knowledgeArea.findMany();
-  }
-
   async sendEmail(
     message: string,
     demandName: string,

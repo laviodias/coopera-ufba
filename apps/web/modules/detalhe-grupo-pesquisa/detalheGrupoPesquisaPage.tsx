@@ -82,7 +82,7 @@ export default function DetalheGrupoPesquisaPage() {
                 <BreadcrumbLink
                   className="hover:text-blue-strong"
                   href={
-                    user?.utype === 'RESEARCHER'
+                    user?.utype.includes('RESEARCHER')
                       ? '/meus-grupos-pesquisa'
                       : '/encontrar-grupo-pesquisa'
                   }
@@ -105,7 +105,7 @@ export default function DetalheGrupoPesquisaPage() {
             </h1>
 
             {user &&
-              (user.utype === 'RESEARCHER' || user.role === 'ADMIN') &&
+              (user.utype.includes('RESEARCHER') || user.role === 'ADMIN') &&
               (selectedTab === ETabs.PROJECTS ? (
                 <Link href={`/cadastro-projetos/${groupId}`}>
                   <Button className="rounded-full">

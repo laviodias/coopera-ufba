@@ -76,7 +76,7 @@ const ContactResearchGroup = ({ query }: Props) => {
     },
   );
 
-  if (user?.utype === 'RESEARCHER') {
+  if (user?.utype.includes('RESEARCHER')) {
     router.back();
   }
 

@@ -62,7 +62,7 @@ model User {
 
 model Keyword {
   id        String    @id @default(uuid())
-  name      String
+  name      String    @unique
   projects  Project[]
   demands   Demand[]
   createdAt DateTime  @default(now())
@@ -109,7 +109,7 @@ model ResearchGroup {
 
 model KnowledgeArea {
   id                   String          @id @default(uuid())
-  name                 String
+  name                 String          @unique
   researchGroupsOfArea ResearchGroup[]
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt

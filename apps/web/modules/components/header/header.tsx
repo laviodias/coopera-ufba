@@ -49,7 +49,21 @@ const headerLinks = {
       path: '/minhas-demandas',
     },
   ],
-  RESEARCHER: [
+  RESEARCHER_TEACHER: [
+    {
+      label: 'Encontrar demandas',
+      path: '/encontrar-demandas',
+    },
+    // {
+    //   label: "Minhas Propostas",
+    //   path: "/minhas-propostas",
+    // },
+    {
+      label: 'Meus Grupos de pesquisa',
+      path: '/meus-grupos-pesquisa',
+    },
+  ],
+  RESEARCHER_STUDENT: [
     {
       label: 'Encontrar demandas',
       path: '/encontrar-demandas',

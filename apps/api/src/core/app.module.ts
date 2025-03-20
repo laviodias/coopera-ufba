@@ -18,6 +18,7 @@ import { CompanyModule } from '@/company/company.module';
 import { FileModule } from '@/file/file.module';
 import { NotificationsModule } from '@/notifications/notifications.module';
 import { ProposalModule } from '@/proposal/proposal.module';
+import { KnowledgeAreasModule } from '@/knowledge-area/knowledge-area.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ProposalModule } from '@/proposal/proposal.module';
     FileModule,
     NotificationsModule,
     ProposalModule,
+    KnowledgeAreasModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, PrismaService, JwtService],

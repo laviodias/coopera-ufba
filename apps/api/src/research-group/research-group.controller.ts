@@ -99,11 +99,6 @@ export class ResearchGroupController {
     return this.researchGroupsService.search(query);
   }
 
-  @Get('/knowledgearea/all')
-  findAllKnowledgeAreas() {
-    return this.researchGroupsService.findAllKnowledgeAreas();
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get('/:id/members')
   findMembers(@Param('id') id: string) {
