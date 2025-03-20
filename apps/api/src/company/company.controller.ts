@@ -32,6 +32,6 @@ export class CompanyController {
           name: company.user.name,
         };
       });
-    })
+    });
   }
 }

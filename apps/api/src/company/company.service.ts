@@ -33,15 +33,17 @@ export class CompanyService {
   }
 
   async getAllNames() {
-    return await this.prismaService.company.findMany({
-      select: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-          }
-        }
-      }
-    }) || [];
+    return (
+      (await this.prismaService.company.findMany({
+        select: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      })) || []
+    );
   }
 }

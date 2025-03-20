@@ -1,26 +1,26 @@
 'use client';
 
-import { format } from 'date-fns';
+/* import { format } from 'date-fns'; */
 import MinhasPropostasFilter from './components/filter/minhasPropostasFilter';
-import MinhasPropostasTable from './components/table/minhasPropostasTable';
-import { Proposta } from './interfaces/proposta';
+/* import MinhasPropostasTable from './components/table/minhasPropostasTable';
+import { Proposal, ProposalStatusEnum } from '@/types/Proposal'; */
 
 const MyProposalsPage = () => {
-  const propostas: Proposta[] = [
+  /* const propostas: Proposal[] = [
     {
       id: '1',
       demand: 'teste',
       company: 'teste',
       researchGroup: 'teste',
-      status: 'teste',
+      status: ProposalStatusEnum.PENDING,
       createdAt: format(new Date(), 'dd/MM/yyyy'),
     },
     {
       id: '2',
       demand: 'teste',
       company: 'teste',
-      researchGroup: 'teste',
-      status: 'teste',
+       researchGroup: 'teste',
+      status: ProposalStatusEnum.PENDING,
       createdAt: format(new Date(), 'dd/MM/yyyy'),
     },
     {
@@ -28,10 +28,10 @@ const MyProposalsPage = () => {
       demand: 'teste',
       company: 'teste',
       researchGroup: 'teste',
-      status: 'teste',
+      status: ProposalStatusEnum.PENDING,
       createdAt: format(new Date(), 'dd/MM/yyyy'),
     },
-  ];
+  ]; */
   return (
     <main className="flex flex-col flex-grow h-full w-full p-3 items-center">
       <section className="max-w-7xl w-full flex flex-col gap-4">
@@ -39,7 +39,7 @@ const MyProposalsPage = () => {
           Minhas Propostas
         </h2>
         <MinhasPropostasFilter />
-        <MinhasPropostasTable data={propostas} />
+        {/* <MinhasPropostasTable data={propostas} /> */}
       </section>
     </main>
   );

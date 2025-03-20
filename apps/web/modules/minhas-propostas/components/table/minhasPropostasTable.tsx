@@ -5,7 +5,6 @@ import {
   getPaginationRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { Proposta } from '../../interfaces/proposta';
 import {
   Table,
   TableBody,
@@ -16,12 +15,13 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
+import { Proposal } from '@/types/Proposal';
 
 interface Params {
-  data: Proposta[];
+  data: Proposal[];
 }
 const MinhasPropostasTable = ({ data }: Params) => {
-  const columns: ColumnDef<Proposta>[] = [
+  const columns: ColumnDef<Proposal>[] = [
     {
       accessorKey: 'demand',
       header: 'Demanda',

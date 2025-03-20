@@ -16,12 +16,13 @@ import { JwtAuthGuard } from '@/auth/auth.guard';
 @UseGuards(JwtAuthGuard)
 @Controller('proposal')
 export class ProposalController {
-  constructor(
-    private readonly proposalService: ProposalService,
-  ) {}
+  constructor(private readonly proposalService: ProposalService) {}
 
   @Post()
-  create(@Body() proposal: ProposalDto, @Request() req: { user: { userId: string } }) {
+  create(
+    @Body() proposal: ProposalDto,
+    @Request() req: { user: { userId: string } },
+  ) {
     return this.proposalService.create(proposal, req.user.userId);
   }
 
@@ -36,12 +37,18 @@ export class ProposalController {
   }
 
   @Patch(':id/accept')
-  accept(@Param('id') id: string, @Request() req: { user: { userId: string } }) {
+  accept(
+    @Param('id') id: string,
+    @Request() req: { user: { userId: string } },
+  ) {
     return this.proposalService.accept(id, req.user.userId);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string, @Request() req: { user: { userId: string } }) {
+  delete(
+    @Param('id') id: string,
+    @Request() req: { user: { userId: string } },
+  ) {
     return this.proposalService.delete(id, req.user.userId);
   }
 }

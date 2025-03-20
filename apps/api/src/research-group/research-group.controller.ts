@@ -30,7 +30,10 @@ export class ResearchGroupController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() researchGroup: CreateResearchGroupDto, @Request() req: { user: { userId: string } }) {
+  async create(
+    @Body() researchGroup: CreateResearchGroupDto,
+    @Request() req: { user: { userId: string } },
+  ) {
     //TODO Verificar se um líder de projeto existe e se é um Pesquisador
 
     if (researchGroup.img) {
@@ -43,7 +46,9 @@ export class ResearchGroupController {
     );
 
     if (!researcher) {
-      throw new NotFoundException('Apenas pesquisadores podem criar um grupo de pesquisa.');
+      throw new NotFoundException(
+        'Apenas pesquisadores podem criar um grupo de pesquisa.',
+      );
     }
 
     return this.researchGroupsService.create(researchGroup, researcher.id);
