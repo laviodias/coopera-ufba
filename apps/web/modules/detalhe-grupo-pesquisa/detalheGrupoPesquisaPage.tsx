@@ -20,6 +20,7 @@ import { useUser } from '@/context/UserContext';
 import Link from 'next/link';
 import { GerenciarMembrosModal } from '../gerenciar-membros/gerenciarMembrosModal';
 import { IoPersonCircleOutline } from 'react-icons/io5';
+import { Researcher } from '@/types/Researcher';
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
@@ -187,7 +188,7 @@ export default function DetalheGrupoPesquisaPage() {
             {researchGroup ? (
               selectedTab == ETabs.MEMBERS ? (
                 <MembersSection
-                  members={researchGroup?.members}
+                  members={researchGroup?.members as Researcher[]}
                   leaderId={researchGroup?.leader.userId}
                 />
               ) : (

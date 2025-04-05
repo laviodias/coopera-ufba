@@ -29,6 +29,7 @@ export class ProjectService {
         researchGroupId: project.researchGroupId,
         link: project.link,
         demandId: project.demandId,
+        description: project.description,
         keywords: {
           connect: keywordsIds,
         },
@@ -52,6 +53,7 @@ export class ProjectService {
       link: createdProject.link,
       researchGroupId: createdProject.researchGroupId,
       demandId: createdProject.demandId,
+      description: createdProject.description,
       createdAt: createdProject.createdAt,
       updatedAt: createdProject.updatedAt,
     };
@@ -71,6 +73,7 @@ export class ProjectService {
       id: project.id,
       name: project.name,
       link: project.link,
+      description: project.description,
       researchGroupId: project.researchGroupId,
       demandId: project.demandId,
       keywords: project.keywords,
@@ -115,6 +118,7 @@ export class ProjectService {
       data: {
         name: project.name,
         link: project.link,
+        description: project.description,
         demandId: project.demandId,
         keywords: {
           connect: keywordsIds,
@@ -137,6 +141,7 @@ export class ProjectService {
       id: updatedProject.id,
       name: updatedProject.name,
       link: updatedProject.link,
+      description: updatedProject.description,
       researchGroupId: updatedProject.researchGroupId,
       demandId: updatedProject.demandId,
       keywords: updatedProject.keywords,
@@ -152,6 +157,7 @@ export class ProjectService {
       id: project.id,
       name: project.name,
       link: project.link,
+      description: project.description,
       researchGroupId: project.researchGroupId,
       demandId: project.demandId,
     };

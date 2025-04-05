@@ -6,6 +6,7 @@ export type Project = {
   id: string;
   name: string;
   link?: string;
+  description: string;
   researchGroup: ResearchGroup;
   researchGroupId: string;
   demand: Demand;

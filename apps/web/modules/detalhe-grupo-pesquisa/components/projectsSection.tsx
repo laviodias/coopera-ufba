@@ -39,6 +39,7 @@ export default function ProjectsSection(props: TProps) {
             <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
               Demanda
             </TableHead>
+
             {isCurrentUserLeader() && (
               <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
                 Ações

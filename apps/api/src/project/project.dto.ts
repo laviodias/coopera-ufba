@@ -15,6 +15,9 @@ export class ProjectDto {
   @IsUUID()
   researchGroupId: string;
 
+  @IsNotEmpty()
+  description: string;
+
   @IsOptional()
   @IsUUID()
   demandId: string;
@@ -39,6 +42,9 @@ export class UpdateProjectDto {
   @IsOptional()
   @IsUrl()
   link?: string;
+
+  @IsNotEmpty()
+  description: string;
 
   @IsOptional()
   keywords?: string[];

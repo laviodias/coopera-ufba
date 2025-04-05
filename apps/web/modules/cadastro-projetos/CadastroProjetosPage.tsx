@@ -72,6 +72,7 @@ const CadastrarProjeto = () => {
       researchGroupId: params.id,
       name: data.name,
       link: data.link,
+      description: data.description,
       keywords: selectedKeywords,
       demandId: selectedDemand,
     };
@@ -135,6 +136,16 @@ const CadastrarProjeto = () => {
             />
 
             {keywordRequired && <span>Este Campo é obrigatório</span>}
+
+            <label className="font-bold text-blue-strong mt-4">
+              Descrição*
+              <textarea
+                {...register('description', { required: true })}
+                placeholder="Digite o texto..."
+                rows={4}
+                className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
+              />
+            </label>
 
             <label className="font-bold text-blue-strong mt-4">
               Link

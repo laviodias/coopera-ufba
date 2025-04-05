@@ -66,6 +66,7 @@ const EditarProjeto = () => {
       setValue('name', project.name);
       setValue('link', project.link);
       setValue('demandId', project.demandId);
+      setValue('description', project.description);
     }
   }, [project]);
 
@@ -99,6 +100,7 @@ const EditarProjeto = () => {
       name: data.name,
       link: data.link,
       keywords: selectedKeywords,
+      description: data.description,
     };
 
     if (selectedDemand?.length > 0) projectData.demandId = selectedDemand;
@@ -162,6 +164,16 @@ const EditarProjeto = () => {
             />
 
             {keywordRequired && <span>Este Campo é obrigatório</span>}
+
+            <label className="font-bold text-blue-strong mt-4">
+              Descrição*
+              <textarea
+                {...register('description', { required: true })}
+                placeholder="Digite o texto..."
+                rows={4}
+                className="w-full py-3 px-4 text-base font-normal border rounded-lg mt-2"
+              />
+            </label>
 
             <label className="font-bold text-blue-strong mt-4">
               Link

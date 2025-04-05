@@ -18,6 +18,7 @@ export async function SeedResearchGroups(prisma: PrismaClient) {
       create: [
         {
           name: 'Recommending Stores for Shopping Mall Customers with RecStore',
+          description: 'RecStore é um sistema de recomendação que sugere lojas para clientes de shopping centers com base em seu histórico de compras e preferências.',
         },
       ],
     },

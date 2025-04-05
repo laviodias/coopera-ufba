@@ -36,6 +36,7 @@ describe('Integration test - ProjectService - FindOne', () => {
       id: '123e4567-e89b-12d3-a456-426614174000',
       name: 'Project 1',
       link: 'https://example.com',
+      description: 'Project description',
       researchGroupId: '123e4567-e89b-12d3-a456-426614174000',
       demandId: '123e4567-e89b-12d3-a456-426614174000',
       createdAt: new Date(),
@@ -54,6 +55,7 @@ describe('Integration test - ProjectService - FindOne', () => {
       link: mockProject.link,
       researchGroupId: mockProject.researchGroupId,
       demandId: mockProject.demandId,
+      description: mockProject.description,
       //createdAt: mockProject.createdAt,
       //updatedAt: mockProject.updatedAt,
     });
@@ -83,6 +85,7 @@ describe.skip('Integration test with database - findOne', () => {
       data: {
         name: 'Project 1',
         link: 'https://example.com',
+        description: 'Project description',
         researchGroupId: '123e4567-e89b-12d3-a456-426614174000',
         demandId: '123e4567-e89b-12d3-a456-426614174000',
       },
