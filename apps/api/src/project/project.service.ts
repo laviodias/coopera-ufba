@@ -6,10 +6,15 @@ import {
 } from '@nestjs/common';
 import { ProjectDto, UpdateProjectDto } from './project.dto';
 import { Project } from '@prisma/client';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService, 
+    @InjectQueue('similarity') private similarityQueue: Queue,
+  ) {}
 
   async create(project: ProjectDto): Promise<Project> {
     const projectAlreadyExists = await this.prismaService.project.findFirst({
@@ -46,6 +51,10 @@ export class ProjectService {
         },
       });
     }
+
+    await this.similarityQueue.add('project', {
+      projectId: createdProject.id,
+    });
 
     return {
       id: createdProject.id,
@@ -136,6 +145,10 @@ export class ProjectService {
         },
       });
     }
+
+    await this.similarityQueue.add('project', {
+      projectId: updatedProject.id,
+    });
 
     return {
       id: updatedProject.id,

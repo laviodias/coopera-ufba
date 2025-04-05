@@ -8,6 +8,14 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis_marketplace
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
   node:
     image: "node:22-alpine3.20"
     user: "node"
@@ -16,6 +24,7 @@ services:
       - ./apps/api:/home/node/app
     depends_on:
       - db
+      - redis
     expose:
       - "8080"
     ports: 
@@ -49,3 +58,6 @@ services:
     ports: 
       - "5555:5555"
     entrypoint: sh -c 'npx prisma studio'
+
+volumes:
+  redis-data:

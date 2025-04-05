@@ -19,6 +19,7 @@ import { FileModule } from '@/file/file.module';
 import { NotificationsModule } from '@/notifications/notifications.module';
 import { ProposalModule } from '@/proposal/proposal.module';
 import { KnowledgeAreasModule } from '@/knowledge-area/knowledge-area.module';
+import { SimilarityModule } from '@/similarity/similarity.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { KnowledgeAreasModule } from '@/knowledge-area/knowledge-area.module';
     NotificationsModule,
     ProposalModule,
     KnowledgeAreasModule,
+    SimilarityModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, PrismaService, JwtService],

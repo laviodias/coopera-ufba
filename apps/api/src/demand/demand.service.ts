@@ -7,12 +7,16 @@ import {
 import { CreateDemandDTO, UpdateDemandDTO } from './demand.dto';
 import { Demand, UserStatus } from '@prisma/client';
 import { UserService } from '@/user/user.service';
+import { SimilarityService } from '@/similarity/similarity.service';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 
 @Injectable()
 export class DemandService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly userService: UserService,
+    @InjectQueue('similarity') private similarityQueue: Queue,
   ) {}
 
   async create(demand: CreateDemandDTO, companyId: string): Promise<Demand> {
@@ -27,7 +31,7 @@ export class DemandService {
     const keywordsIds = keywords.map((k: any) => ({ id: k }));
     const projectsIds = projects.map((p: any) => ({ id: p }));
 
-    return this.prismaService.demand.create({
+    const createdDemand = await this.prismaService.demand.create({
       data: {
         companyId: companyId,
         description: description,
@@ -42,6 +46,12 @@ export class DemandService {
         },
       },
     });
+
+    await this.similarityQueue.add('demand', {
+      demandId: createdDemand.id,
+    });
+
+    return createdDemand;
   }
 
   async all(): Promise<Demand[]> {
@@ -107,7 +117,7 @@ export class DemandService {
 
     const updated = { ...savedDemand, ...demand };
 
-    return this.prismaService.demand.update({
+    const demandUpdated = await this.prismaService.demand.update({
       where: { id },
       data: {
         ...updated,
@@ -115,6 +125,12 @@ export class DemandService {
         projects: { set: [], connect: projectsIds },
       },
     });
+
+    await this.similarityQueue.add('demand', {
+      demandId: demandUpdated.id,
+    });
+
+    return demandUpdated;
   }
 
   async findOne(id: string): Promise<Demand> {
