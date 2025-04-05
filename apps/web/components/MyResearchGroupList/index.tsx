@@ -1,6 +1,8 @@
-import { MyResearchGroup } from '@/modules/meus-grupos-pesquisa/interfaces/pesquisador-grupo';
+import {
+  MyResearchGroup,
+  PesquisadorGrupo,
+} from '@/modules/meus-grupos-pesquisa/interfaces/pesquisador-grupo';
 import { Item } from './Item';
-import { PesquisadorGrupo } from './type';
 import { ResearchGroup } from '@/types/ResearchGroup';
 
 interface MyResearchGroupListProps {
