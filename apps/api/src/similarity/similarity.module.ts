@@ -6,16 +6,13 @@ import { DemandModule } from '../demand/demand.module';
 import { forwardRef, Module } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { SimilarityController } from './similarity.controller';
+import { getRedisConnection } from '@/config/redis.config';
 
 @Module({
   imports: [
     BullModule.registerQueue({
       name: 'similarity',
-      connection: {
-        host: process.env.REDISHOST || 'redis_marketplace',
-        port: parseInt(process.env.REDISPORT || '6379'),
-        password: process.env.REDISPASSWORD || undefined
-      },
+      connection: getRedisConnection(),
     }),
     forwardRef(() => ProjectModule),
     forwardRef(() => DemandModule),

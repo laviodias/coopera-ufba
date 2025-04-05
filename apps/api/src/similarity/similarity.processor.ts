@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { Worker } from 'bullmq';
 import { SimilarityService } from './similarity.service';
+import { getRedisConnection } from '@/config/redis.config';
 
 @Injectable()
 export class SimilarityProcessor implements OnModuleInit, OnModuleDestroy {
@@ -33,11 +34,7 @@ export class SimilarityProcessor implements OnModuleInit, OnModuleDestroy {
         }
       },
       {
-        connection: {
-          host: process.env.REDIS_HOST || 'redis_marketplace',
-          port: parseInt(process.env.REDIS_PORT || '6379'),
-          password: process.env.REDIS_PASSWORD || undefined,
-        },
+        connection: getRedisConnection(),
       },
     );
 
