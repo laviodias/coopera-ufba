@@ -38,6 +38,12 @@ export class ProjectController {
     return this.projectService.findMyProjects(req.user.userId);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/group/:id')
+  findByGroup(@Param('id') id: string) {
+    return this.projectService.findByGroup(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.projectService.findOne(id);

@@ -91,6 +91,15 @@ export class ProjectService {
     };
   }
 
+  async findByGroup(id: string) {
+    const projects = await this.prismaService.project.findMany({
+      where: {
+        researchGroupId: id,
+      },
+    });
+    return projects;
+  }
+
   async findAll() {
     const projects = await this.prismaService.project.findMany();
     return projects;

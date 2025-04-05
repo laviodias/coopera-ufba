@@ -64,12 +64,12 @@ export default function MeusMatchesProjetos() {
                     </TableCell>
 
                     <TableCell className="text-blue-light text-center">
-                      <Link href={`/projetos/${match.targetId}`}>
+                      <Link href={`/enviar-proposta/empresa/${match.targetId}`}>
                         <Button
                           variant="outline"
                           className="px-8 py-2.5 rounded-full"
                         >
-                          Entrar em contato
+                          Fazer proposta
                         </Button>
                       </Link>
                     </TableCell>

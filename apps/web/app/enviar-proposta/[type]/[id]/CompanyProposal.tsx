@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { PiArrowBendDoubleUpLeft } from 'react-icons/pi';
-import Link from 'next/link';
 import {
   Select,
   SelectContent,
@@ -24,6 +23,7 @@ import { Project } from '@/types/Project';
 import { Keyword } from '@/types/Keyword';
 import { ResearchGroup } from '@/types/ResearchGroup';
 import { CustomIcon } from '@/modules/components/icon/customIcon';
+import { useRouter } from 'next/navigation';
 
 const ContactCompany = (id: string) => {
   const { data: demand } = useGetDemand(id);
@@ -31,6 +31,8 @@ const ContactCompany = (id: string) => {
   const [myResearchGroups, setMyResearchGroups] = useState<ResearchGroup[]>([]);
   const { user } = useUser();
   const [selectedGroup, setSelectedGroup] = useState<string>('');
+
+  const router = useRouter();
 
   const { mutate: mutateNotification } = useSendNotification();
   function sendNotification() {
@@ -91,11 +93,9 @@ const ContactCompany = (id: string) => {
           <h2 className="text-3xl sm:text-4xl font-semibold text-blue-strong">
             Contactar Empresa
           </h2>
-          <Button asChild className="rounded-full w-fit">
-            <Link href={'/encontrar-demandas'}>
-              <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
-              Voltar ao menu de demandas
-            </Link>
+          <Button asChild className="rounded-full w-fit" onClick={() => router.back()}>
+            <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
+            Voltar
           </Button>
         </div>
       </section>

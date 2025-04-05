@@ -145,11 +145,9 @@ const ContactCompany = ({ query }: Props) => {
           <h2 className="text-3xl sm:text-4xl font-semibold text-blue-strong">
             Contactar Empresa
           </h2>
-          <Button asChild className="rounded-full w-fit">
-            <Link href={'/encontrar-demandas'}>
-              <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
-              Voltar ao menu de demandas
-            </Link>
+          <Button asChild className="rounded-full w-fit" onClick={() => router.back()}>
+            <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
+            Voltar
           </Button>
         </div>
       </section>
