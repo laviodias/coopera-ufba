@@ -7,7 +7,6 @@ import {
 import { CreateDemandDTO, UpdateDemandDTO } from './demand.dto';
 import { Demand, UserStatus } from '@prisma/client';
 import { UserService } from '@/user/user.service';
-import { SimilarityService } from '@/similarity/similarity.service';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 

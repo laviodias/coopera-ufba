@@ -4,6 +4,8 @@ import { SimilarityProcessor } from './similarity.processor';
 import { ProjectModule } from '../project/project.module';
 import { DemandModule } from '../demand/demand.module';
 import { forwardRef, Module } from '@nestjs/common';
+import { PrismaService } from '@/infra/database/prisma.service';
+import { SimilarityController } from './similarity.controller';
 
 @Module({
   imports: [
@@ -17,8 +19,8 @@ import { forwardRef, Module } from '@nestjs/common';
     forwardRef(() => ProjectModule),
     forwardRef(() => DemandModule),
   ],
-  providers: [SimilarityService, SimilarityProcessor],
+  providers: [SimilarityService, SimilarityProcessor, PrismaService],
+  controllers: [SimilarityController],
   exports: [BullModule],
 })
 export class SimilarityModule {}
-

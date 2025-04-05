@@ -12,7 +12,7 @@ import { Queue } from 'bullmq';
 @Injectable()
 export class ProjectService {
   constructor(
-    private readonly prismaService: PrismaService, 
+    private readonly prismaService: PrismaService,
     @InjectQueue('similarity') private similarityQueue: Queue,
   ) {}
 
@@ -73,6 +73,7 @@ export class ProjectService {
       where: { id },
       include: {
         keywords: true,
+        researchGroup: true,
       },
     });
 
@@ -84,6 +85,7 @@ export class ProjectService {
       link: project.link,
       description: project.description,
       researchGroupId: project.researchGroupId,
+      researchGroup: project.researchGroup,
       demandId: project.demandId,
       keywords: project.keywords,
     };
@@ -110,6 +112,27 @@ export class ProjectService {
         },
       },
     });
+    return projects;
+  }
+
+  async findMyProjects(researcherId: string) {
+    const projects = await this.prismaService.project.findMany({
+      where: {
+        researchGroup: {
+          leader: {
+            userId: researcherId,
+          },
+        },
+      },
+      include: {
+        researchGroup: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
     return projects;
   }
 

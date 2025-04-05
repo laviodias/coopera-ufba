@@ -42,6 +42,11 @@ enum ProposalStatus {
   REJECTED
 }
 
+enum SimilarityMatchType {
+  PROJECT
+  DEMAND
+}
+
 model User {
   id                String         @id @default(uuid())
   email             String         @unique
@@ -180,4 +185,16 @@ model Proposal {
   status          ProposalStatus
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
+}
+
+model SimilarityMatch {
+  id          String   @id @default(uuid())
+  sourceType  SimilarityMatchType
+  sourceId    String
+  targetType  SimilarityMatchType
+  targetId    String
+  score       Float
+  createdAt   DateTime @default(now())
+
+  @@index([sourceType, sourceId])
 }

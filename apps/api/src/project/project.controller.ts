@@ -7,12 +7,14 @@ import {
   Delete,
   Put,
   NotFoundException,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { ProjectDto, UpdateProjectDto } from './project.dto';
 import { ResearchGroupService } from '@/research-group/research-group.service';
+import { JwtAuthGuard } from '@/auth/auth.guard';
 
-//TODO colocar os useGuard
 @Controller('project')
 export class ProjectController {
   constructor(
@@ -30,16 +32,24 @@ export class ProjectController {
     return this.projectService.findAvailable();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/my')
+  findMyProjects(@Request() req: { user: { userId: string } }) {
+    return this.projectService.findMyProjects(req.user.userId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.projectService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.projectService.delete(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() project: ProjectDto) {
     const researchGroup = await this.researchGroupService.findOne(
@@ -53,6 +63,7 @@ export class ProjectController {
     return this.projectService.create(project);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   update(@Param('id') id: string, @Body() project: UpdateProjectDto) {
     return this.projectService.update(id, project);

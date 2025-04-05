@@ -11,15 +11,25 @@ export class SimilarityProcessor implements OnModuleInit, OnModuleDestroy {
   onModuleInit() {
     this.worker = new Worker(
       'similarity',
-      async job => {
+      async (job) => {
         if (job.name === 'project') {
           const { projectId } = job.data;
-          const result = await this.similarityService.compareProjectWithAllDemands(projectId);
-          console.log(`Resultado da similaridade do projeto ${projectId}`, result);
+          const result =
+            await this.similarityService.compareProjectWithAllDemands(
+              projectId,
+            );
+          console.log(
+            `Resultado da similaridade do projeto ${projectId}`,
+            result,
+          );
         } else if (job.name === 'demand') {
           const { demandId } = job.data;
-          const result = await this.similarityService.compareDemandWithAllProjects(demandId);
-          console.log(`Resultado da similaridade da demanda ${demandId}`, result);
+          const result =
+            await this.similarityService.compareDemandWithAllProjects(demandId);
+          console.log(
+            `Resultado da similaridade da demanda ${demandId}`,
+            result,
+          );
         }
       },
       {
@@ -31,12 +41,12 @@ export class SimilarityProcessor implements OnModuleInit, OnModuleDestroy {
     );
 
     this.worker.on('failed', (job, err) => {
-      if(!job) return;
+      if (!job) return;
 
       console.error(`Job ${job.name} failed:`, err);
     });
 
-    this.worker.on('completed', job => {
+    this.worker.on('completed', (job) => {
       console.log(`Job ${job.name} completed successfully.`);
     });
   }
