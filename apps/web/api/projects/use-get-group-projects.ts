@@ -5,7 +5,9 @@ import { Project } from '@/types/Project';
 async function getGroupProjects(groupId: string): Promise<Project[]> {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
-  const { data } = await api(apiURL, true).get<Project[]>(`/project/group/${groupId}`);
+  const { data } = await api(apiURL, true).get<Project[]>(
+    `/project/group/${groupId}`,
+  );
 
   return data;
 }

@@ -64,7 +64,9 @@ export default function MeusMatchesProjetos() {
                     </TableCell>
 
                     <TableCell className="text-blue-light text-center">
-                      <Link href={`/enviar-proposta/grupo/${(match.target as Project).researchGroup.id}`}>
+                      <Link
+                        href={`/enviar-proposta/grupo/${(match.target as Project).researchGroup.id}`}
+                      >
                         <Button
                           variant="outline"
                           className="px-8 py-2.5 rounded-full"
