@@ -45,8 +45,8 @@ export class SimilarityService {
 
     const matches = demands.map((demand) => {
       const similarity = stringSimilarity.compareTwoStrings(
-        project.description,
-        demand.description,
+        project.description as string,
+        demand.description as string,
       );
       return {
         id: demand.id,
@@ -72,8 +72,8 @@ export class SimilarityService {
 
     const matches = projects.map((project) => {
       const similarity = stringSimilarity.compareTwoStrings(
-        demand.description,
-        project.description,
+        demand.description as string,
+        project.description as string,
       );
       return {
         id: project.id,
