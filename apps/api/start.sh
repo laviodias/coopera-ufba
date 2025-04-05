@@ -8,7 +8,7 @@ if ! npx prisma migrate deploy; then
 fi
 
 # Criar diretório para o arquivo de controle se necessário
-mkdir -p $(dirname ./.seeds-executed)
+mkdir -p $(dirname ./.seeds-executed-v2)
 
 if [ ! -f ./.seeds-executed ]; then
   echo "Executando seeds do banco de dados..."
@@ -16,7 +16,7 @@ if [ ! -f ./.seeds-executed ]; then
     echo "Erro ao executar seeds. Abortando."
     exit 1
   fi
-  touch ./.seeds-executed
+  touch ./.seeds-executed-v2
 else
   echo "Seeds já foram executados anteriormente."
 fi
