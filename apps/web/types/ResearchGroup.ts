@@ -12,4 +12,5 @@ export type ResearchGroup = {
   knowledgeAreas: KnowledgeArea[] | string[];
   members: Researcher[] | string[];
   projects: Project[];
+  createdAt: Date;
 }

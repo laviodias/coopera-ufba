@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { ResearchGroup } from '@/types/ResearchGroup';
+import { KnowledgeArea } from '@/types/KnowledgeArea';
 
 function truncate(str: string, n: number, useWordBoundary: boolean) {
   if (str.length <= n) {
@@ -16,7 +17,7 @@ function truncate(str: string, n: number, useWordBoundary: boolean) {
 
 function Item(researchgroup: ResearchGroup) {
   return (
-    <li className="px-8 py-6 bg-white border rounded-2xl">
+    <li className="px-8 py-6 bg-white border rounded-2xl flex flex-col justify-around">
       <div className="flex xs:items-center justify-between mb-4 flex-col xs:flex-row">
         <h2 className="text-2xl font-semibold">{researchgroup.name}</h2>
       </div>
@@ -25,20 +26,21 @@ function Item(researchgroup: ResearchGroup) {
         {truncate(researchgroup.description, 200, true)}
       </p>
 
-      <ul className="mb-8 flex gap-2">
-        {researchgroup.knowledgeAreas.map((area) => (
-          <li
-            key={area.id}
-            className="px-3 py-2 text-center bg-border rounded-full text-xs"
-          >
-            {area.name}
-          </li>
-        ))}
-      </ul>
+      {researchgroup.knowledgeAreas.length > 0 && (
+        <ul className="mb-8 flex gap-2">
+          {researchgroup.knowledgeAreas.map((area) => (
+            <li
+              key={(area as KnowledgeArea).id}
+              className="px-3 py-2 text-center bg-border rounded-full text-xs"
+            >
+              {(area as KnowledgeArea).name}
+            </li>
+          ))}
+        </ul>
+      )}
 
       <Link href={`/detalhe-grupo-pesquisa/${researchgroup.id}`}>
         <Button
-          asChild
           variant={'outline'}
           className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
         >

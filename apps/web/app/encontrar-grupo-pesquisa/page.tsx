@@ -10,6 +10,7 @@ import useGetAllResearchGroups from '@/api/research-group/use-get-all-research-g
 import { useEffect, useState } from 'react';
 import useGetAllKnowledgeAreas from '@/api/research-group/use-get-all-knowledgeAreas';
 import { ResearchGroup } from '@/types/ResearchGroup';
+import { KnowledgeArea } from '@/types/KnowledgeArea';
 
 function EncontrarGrupoPesquisa() {
   const { data } = useGetAllResearchGroups();
@@ -27,7 +28,7 @@ function EncontrarGrupoPesquisa() {
 
   useEffect(() => {
     handleFilters();
-  }, [selectedAreas, search]);
+  }, [selectedAreas, search, handleFilters]);
 
   function handleSearch() {
     const searchValue = document.querySelector('input')?.value;
@@ -38,7 +39,8 @@ function EncontrarGrupoPesquisa() {
     const filtered = currentValues.filter((group) =>
       selectedAreas.some(
         (area) =>
-          group.knowledgeAreas.filter((a) => a.name === area).length > 0,
+          group.knowledgeAreas.filter((a) => (a as KnowledgeArea).name === area)
+            .length > 0,
       ),
     );
 

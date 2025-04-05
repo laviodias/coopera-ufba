@@ -139,20 +139,13 @@ export default function DetalheGrupoPesquisaPage() {
             <h1 className="font-size-lg text-2xl">{researchGroup?.name}</h1>
 
             <p>{researchGroup?.description}</p>
-            {user?.utype === 'COMPANY' && (
+            {user?.utype == 'COMPANY' && (
               <Button
                 asChild
                 variant={'outline'}
                 className="px-9 py-2.5 rounded-full mt-3 xs:mt-0"
               >
-                <Link
-                  href={{
-                    pathname: `/encontrar-grupo-pesquisa/contactar-grupo-pesquisa`,
-                    query: {
-                      id: groupId,
-                    },
-                  }}
-                >
+                <Link href={`/enviar-proposta/grupo/${groupId}`}>
                   Entrar em contato
                 </Link>
               </Button>

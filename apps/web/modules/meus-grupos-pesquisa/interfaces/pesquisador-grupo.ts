@@ -1,3 +1,5 @@
+import { ResearchGroup } from '@/types/ResearchGroup';
+
 export type MyResearchGroup = {
   id: string;
   name: string;
@@ -9,6 +11,6 @@ export type MyResearchGroup = {
 
 export type PesquisadorGrupo = {
   id: string;
-  groupsAsMember: MyResearchGroup[];
-  groupsAsLeader: MyResearchGroup[];
+  groupsAsMember: ResearchGroup[];
+  groupsAsLeader: ResearchGroup[];
 };

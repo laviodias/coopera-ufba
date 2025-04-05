@@ -4,12 +4,10 @@ import { ptBR } from 'date-fns/locale';
 import Link from 'next/link';
 import { TbUserCircle } from 'react-icons/tb';
 import { Button } from '../ui/button';
-import { usePathname } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
 import { Demand, DemandStatusEnum } from '@/types/Demand';
 
 function Item(demand: Demand) {
-  const pathname = usePathname();
   const { user } = useUser();
 
   return (
@@ -40,16 +38,7 @@ function Item(demand: Demand) {
       )}
 
       <div className="grid grid-cols-[auto_1fr] grid-rows-3 gap-x-1.5">
-        {/* {demand.company.image ? (
-          <img
-            src=""
-            alt="Logo da Empresa"
-            className="row-span-2 col-start-1 row-start-1 size-16"
-          />
-        ) : ( */}
         <TbUserCircle className="text-primary font-normal size-16 row-span-2 col-start-1" />
-        {/* )} */}
-
         <p className="self-end font-semibold text-lg leading-none self-center">
           {demand.company.user.name}
         </p>
@@ -61,9 +50,6 @@ function Item(demand: Demand) {
             {demand.company.contactPhone}
           </span>
         </div>
-        {/* <p className="self-start text-blue-light text-sm">
-          {addressToString(demand.company.address)}
-        </p> */}
       </div>
 
       {user?.utype !== 'COMPANY' &&
@@ -73,16 +59,7 @@ function Item(demand: Demand) {
             variant={'outline'}
             className="px-9 py-2.5 rounded-full xs:mt-0"
           >
-            <Link
-              href={{
-                pathname: `${pathname}/contactar-empresa`,
-                query: {
-                  idDemanda: demand.id,
-                  nomeContato: demand.company.contactName,
-                  emailContato: demand.company.contactEmail,
-                },
-              }}
-            >
+            <Link href={`/enviar-proposta/empresa/${demand.id}`}>
               Entrar em contato
             </Link>
           </Button>

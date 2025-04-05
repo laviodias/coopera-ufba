@@ -64,7 +64,7 @@ const EditarDemanda = () => {
     const idDemanda = params.id;
 
     if (idDemanda) getDemand.mutate(idDemanda);
-  }, [params.id]);
+  }, [params.id, getDemand]);
 
   const {
     handleSubmit,
