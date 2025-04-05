@@ -12,8 +12,9 @@ import { SimilarityController } from './similarity.controller';
     BullModule.registerQueue({
       name: 'similarity',
       connection: {
-        host: 'redis_marketplace',
-        port: 6379,
+        host: process.env.REDISHOST || 'redis_marketplace',
+        port: parseInt(process.env.REDISPORT || '6379'),
+        password: process.env.REDISPASSWORD || undefined
       },
     }),
     forwardRef(() => ProjectModule),
