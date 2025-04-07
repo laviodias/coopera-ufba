@@ -38,7 +38,8 @@ export class UpdateDemandDTO {
   @IsOptional()
   projects?: string[];
 
-  public: boolean;
+  @IsOptional()
+  public?: boolean;
 }
 
 export class SuggestDemandDTO {

@@ -36,7 +36,6 @@ const EditarDemanda = () => {
   const { data: availableProjects } = useGetAvailableProjects();
 
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>([]);
-  const [demanda, setDemanda] = useState<Demand>();
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
   const [projectOptions, setProjectOptions] = useState<
     { value: string; label: string }[]
@@ -53,18 +52,7 @@ const EditarDemanda = () => {
     }
   }, [availableProjects]);
 
-  const getDemand = useGetOnePrivateDemand(
-    (data) => {
-      setDemanda(data);
-    },
-    () => {},
-  );
-
-  useEffect(() => {
-    const idDemanda = params.id;
-
-    if (idDemanda) getDemand.mutate(idDemanda);
-  }, [params.id, getDemand]);
+  const { data: demanda } = useGetOnePrivateDemand(params.id);
 
   const {
     handleSubmit,
@@ -76,7 +64,10 @@ const EditarDemanda = () => {
 
   useEffect(() => {
     if (demanda) {
-      if (demanda.keywords)
+      if (
+        demanda.keywords &&
+        selectedKeywords.length !== demanda.keywords.length
+      )
         setSelectedKeywords(
           demanda.keywords.map((keyword) => (keyword as Keyword).id),
         );

@@ -28,6 +28,40 @@ export class SimilarityService {
       where: { sourceType, sourceId },
     });
 
+    top3.forEach(async (match) => {
+      let userId;
+      if (match.type === SimilarityMatchType.PROJECT) {
+        const project = await this.prismaService.project.findUnique({
+          where: { id: match.id },
+          include: {
+            researchGroup: {
+              include: { leader: { select: { userId: true } } },
+            },
+          },
+        });
+        userId = project?.researchGroup?.leader?.userId || '';
+      } else {
+        const demand = await this.prismaService.demand.findUnique({
+          where: { id: match.id },
+          include: { company: { select: { userId: true } } },
+        });
+        userId = demand?.company?.userId || '';
+      }
+
+      console.log(
+        `Enviando notificação para o usuário ${userId} sobre o match com ${match.id}`,
+      );
+
+      await this.prismaService.notification.create({
+        data: {
+          message:
+            'Você tem um novo match! Clique aqui para ver todos os seus matches.',
+          url: '/meus-matches',
+          userId: userId,
+        },
+      });
+    });
+
     await this.prismaService.similarityMatch.createMany({
       data: top3.map((match) => ({
         sourceType,

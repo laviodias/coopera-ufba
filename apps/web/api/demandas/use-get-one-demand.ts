@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/axios';
 import { Demand } from '@/types/Demand';
 
@@ -10,13 +10,9 @@ async function getOneDemand(id: string): Promise<Demand> {
   return data;
 }
 
-export default function useGetOneDemand(
-  onSuccess: (data: Demand) => void,
-  onError: () => void,
-) {
-  return useMutation({
-    mutationFn: (id: string) => getOneDemand(id),
-    onSuccess,
-    onError,
+export default function useGetOneDemand(id: string) {
+  return useQuery({
+    queryKey: ['get-one-demand'],
+    queryFn: () => getOneDemand(id),
   });
 }

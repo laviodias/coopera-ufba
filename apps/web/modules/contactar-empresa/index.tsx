@@ -10,7 +10,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { PiArrowBendDoubleUpLeft } from 'react-icons/pi';
 import { CustomIcon } from '../components/icon/customIcon';
-import Link from 'next/link';
 import {
   Select,
   SelectContent,
@@ -30,13 +29,13 @@ import { MyResearchGroup } from '../meus-grupos-pesquisa/interfaces/pesquisador-
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/navigation';
 import useSendNotification from '@/api/notifications/use-send-notifications';
-import { Demand } from '@/types/Demand';
+import { Project } from '@/types/Project';
+import { Keyword } from '@/types/Keyword';
 
 interface Props {
   query: any;
 }
 const ContactCompany = ({ query }: Props) => {
-  const [demanda, setDemanda] = useState<Demand>();
   const [message, setMessage] = useState<string>('');
   const [myResearchGroups, setMyResearchGroups] = useState<MyResearchGroup[]>(
     [],
@@ -44,12 +43,7 @@ const ContactCompany = ({ query }: Props) => {
   const { user } = useUser();
   const router = useRouter();
   const [selectedGroup, setSelectedGroup] = useState<string>('');
-  const getDemand = useGetOneDemand(
-    (data) => {
-      setDemanda(data);
-    },
-    () => {},
-  );
+  const { data: demanda } = useGetOneDemand(query.get('idDemanda') || '');
 
   if (!user) {
     router.push('/login');
@@ -93,14 +87,6 @@ const ContactCompany = ({ query }: Props) => {
   );
 
   const myResearchGroup = useGetMyResearchGroups('', 'asc');
-
-  useEffect(() => {
-    const idDemanda = query.get('idDemanda');
-
-    if (idDemanda) {
-      getDemand.mutate(idDemanda);
-    }
-  }, [query]);
 
   useEffect(() => {
     if (myResearchGroup.data) {
@@ -176,20 +162,20 @@ const ContactCompany = ({ query }: Props) => {
             {demanda
               ? demanda.projects?.map((project) => (
                   <div
-                    key={project.id}
+                    key={(project as Project).id}
                     className="bg-secondary rounded-full py-2 px-3 text-xs text-blue-strong w-28 text-center"
                   >
-                    {project.name}
+                    {(project as Project).name}
                   </div>
                 ))
               : ''}
             {demanda
               ? demanda.keywords?.map((keyoword) => (
                   <div
-                    key={keyoword.id}
+                    key={(keyoword as Keyword).id}
                     className="bg-secondary rounded-full py-2 px-3 text-xs text-blue-strong w-28 text-center"
                   >
-                    {keyoword.name}
+                    {(keyoword as Keyword).name}
                   </div>
                 ))
               : ''}
