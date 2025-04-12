@@ -35,7 +35,6 @@ O projeto segue a estrutura de pastas a seguir:
 	|__ 📂context
 		|__ 📂userContext
 		|__ 📂\[nomeDoContexto]
-	|__ 📂cypress
 	|__ 📂hooks
 	|__ 📂lib
 	|__ 📂modules
