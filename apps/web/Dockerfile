@@ -1,25 +1,25 @@
-# Base comum
-FROM node:22 AS base
+# Estágio base
+FROM node:22-alpine AS base
 WORKDIR /app
 ENV NODE_ENV=production
 
 # Estágio de dependências
 FROM base AS deps
-COPY package.json package-lock.json* ./
-RUN npm install --cache .npm --prefer-offline
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Estágio de build
 FROM base AS builder
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
 ARG API_URL
 ENV NEXT_PUBLIC_API_URL=${API_URL}
 
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
 RUN npm run build
 
-# Estágio de produção
-FROM node:22-slim AS runner
+# Estágio final
+FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
