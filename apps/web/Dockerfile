@@ -1,25 +1,27 @@
-FROM node:22-alpine AS base
+# Base comum
+FROM node:22 AS base
+WORKDIR /app
+ENV NODE_ENV=production
 
 # Estágio de dependências
 FROM base AS deps
-WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm install
+RUN npm install --cache .npm --prefer-offline
 
 # Estágio de build
 FROM base AS builder
-WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Variável passada como ARG via docker-compose
+
 ARG API_URL
 ENV NEXT_PUBLIC_API_URL=${API_URL}
+
 RUN npm run build
 
 # Estágio de produção
-FROM base AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
