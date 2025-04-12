@@ -5,7 +5,7 @@ ENV NODE_ENV=production
 
 # Estágio de dependências
 FROM base AS deps
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci
 
 # Estágio de build
