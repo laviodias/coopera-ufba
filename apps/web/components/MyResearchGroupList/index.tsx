@@ -16,11 +16,12 @@ function MyResearchGroupList({ pesquisador }: MyResearchGroupListProps) {
     <ul className="grid grid-cols-2 gap-3">
       {data.length > 0 ? (
         data.map((group) => (
-          <Item
-            key={group.id}
-            idPesquisador={pesquisador.id}
-            researchGroup={group as Partial<ResearchGroup>}
-          />
+          <li key={group.id}>
+            <Item
+              idPesquisador={pesquisador.id}
+              researchGroup={group as Partial<ResearchGroup>}
+            />
+          </li>
         ))
       ) : (
         <div>Nenhum grupo de pesquisa encontrado</div>

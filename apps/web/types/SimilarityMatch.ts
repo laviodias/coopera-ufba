@@ -1,8 +1,8 @@
 import { Demand } from "./Demand";
-import { Project } from "./Project";
+import { ResearchGroup } from "./ResearchGroup";
 
 export enum SimilarityMatchType {
-    PROJECT = 'PROJECT',
+    GROUP = 'GROUP',
     DEMAND = 'DEMAND',
 }
 
@@ -11,6 +11,6 @@ export type SimilarityMatch = {
   score: number;
   sourceType: SimilarityMatchType;
   targetType: SimilarityMatchType;
-  target: Demand | Project;
+  target: ResearchGroup | Demand;
   targetId: string;
 }

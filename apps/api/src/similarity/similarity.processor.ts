@@ -11,22 +11,17 @@ export class SimilarityProcessor implements OnModuleInit, OnModuleDestroy {
 
   onModuleInit() {
     this.worker = new Worker(
-      'similarity',
+      'similarity_queue',
       async (job) => {
-        if (job.name === 'project') {
-          const { projectId } = job.data;
+        if (job.name === 'group') {
+          const { groupId } = job.data;
           const result =
-            await this.similarityService.compareProjectWithAllDemands(
-              projectId,
-            );
-          console.log(
-            `Resultado da similaridade do projeto ${projectId}`,
-            result,
-          );
+            await this.similarityService.compareGroupWithAllDemands(groupId);
+          console.log(`Resultado da similaridade do grupo ${groupId}`, result);
         } else if (job.name === 'demand') {
           const { demandId } = job.data;
           const result =
-            await this.similarityService.compareDemandWithAllProjects(demandId);
+            await this.similarityService.compareDemandWithAllGroups(demandId);
           console.log(
             `Resultado da similaridade da demanda ${demandId}`,
             result,

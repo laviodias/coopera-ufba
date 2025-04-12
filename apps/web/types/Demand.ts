@@ -10,6 +10,13 @@ export enum DemandStatusEnum {
   DELETED = 'DELETED'
 }
 
+export enum DemandStatusTranslationEnum {
+  CREATED = 'Sem parceiro',
+  ACCEPTED = 'Parceria aceita',
+  FINISHED = 'Finalizada',
+  DELETED = 'Excluida'
+}
+
 export type Demand = {
   id: string;
   name: string;

@@ -1,85 +1,78 @@
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { ProjectService } from '../project/project.service';
 import { DemandService } from '../demand/demand.service';
 import * as stringSimilarity from 'string-similarity';
 import { Queue } from 'bullmq';
 import { InjectQueue } from '@nestjs/bullmq';
 import { SimilarityMatchType } from '@prisma/client';
+import { ResearchGroupService } from '@/research-group/research-group.service';
 
 @Injectable()
 export class SimilarityService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly projectService: ProjectService,
+    private readonly researchGroupService: ResearchGroupService,
     private readonly demandService: DemandService,
-    @InjectQueue('similarity')
-    private readonly queue: Queue,
+    @InjectQueue('similarity_queue') private readonly queue: Queue,
   ) {}
 
-  async saveTopMatches(
+  async saveTopMatch(
     sourceType: SimilarityMatchType,
     sourceId: string,
-    matches: { id: string; similarity: number; type: SimilarityMatchType }[],
+    match: { id: string; similarity: number; type: SimilarityMatchType },
   ) {
-    const top3 = matches.slice(0, 3);
-
     await this.prismaService.similarityMatch.deleteMany({
       where: { sourceType, sourceId },
     });
 
-    top3.forEach(async (match) => {
-      let userId;
-      if (match.type === SimilarityMatchType.PROJECT) {
-        const project = await this.prismaService.project.findUnique({
-          where: { id: match.id },
-          include: {
-            researchGroup: {
-              include: { leader: { select: { userId: true } } },
-            },
-          },
-        });
-        userId = project?.researchGroup?.leader?.userId || '';
-      } else {
-        const demand = await this.prismaService.demand.findUnique({
-          where: { id: match.id },
-          include: { company: { select: { userId: true } } },
-        });
-        userId = demand?.company?.userId || '';
-      }
-
-      console.log(
-        `Enviando notificação para o usuário ${userId} sobre o match com ${match.id}`,
-      );
-
-      await this.prismaService.notification.create({
-        data: {
-          message:
-            'Você tem um novo match! Clique aqui para ver todos os seus matches.',
-          url: '/meus-matches',
-          userId: userId,
+    let userId;
+    if (match.type === SimilarityMatchType.RESEARCH_GROUP) {
+      const group = await this.prismaService.researchGroup.findUnique({
+        where: { id: match.id },
+        include: {
+          leader: { select: { userId: true } },
         },
       });
+      userId = group?.leader?.userId || '';
+    } else {
+      const demand = await this.prismaService.demand.findUnique({
+        where: { id: match.id },
+        include: { company: { select: { userId: true } } },
+      });
+      userId = demand?.company?.userId || '';
+    }
+
+    console.log(
+      `Enviando notificação para o usuário ${userId} sobre o match com ${match.id}`,
+    );
+
+    await this.prismaService.notification.create({
+      data: {
+        message:
+          'Você tem uma nova oportunidade! Clique aqui para ver todas as suas oportunidades.',
+        url: '/oportunidades',
+        userId: userId,
+      },
     });
 
-    await this.prismaService.similarityMatch.createMany({
-      data: top3.map((match) => ({
+    await this.prismaService.similarityMatch.create({
+      data: {
         sourceType,
         sourceId,
         targetType: match.type,
         targetId: match.id,
         score: match.similarity,
-      })),
+      },
     });
   }
 
-  async compareProjectWithAllDemands(projectId: string) {
-    const project = await this.projectService.findOne(projectId);
+  async compareGroupWithAllDemands(groupId: string) {
+    const group = await this.researchGroupService.findOne(groupId);
     const demands = await this.demandService.all();
 
     const matches = demands.map((demand) => {
       const similarity = stringSimilarity.compareTwoStrings(
-        project.description as string,
+        group.description as string,
         demand.description as string,
       );
       return {
@@ -89,42 +82,38 @@ export class SimilarityService {
       };
     });
 
-    const sortedResults = matches.sort((a, b) => b.similarity - a.similarity);
+    const bestMatch = matches.sort((a, b) => b.similarity - a.similarity)[0];
 
-    await this.saveTopMatches(
-      SimilarityMatchType.PROJECT,
-      projectId,
-      sortedResults,
+    await this.saveTopMatch(
+      SimilarityMatchType.RESEARCH_GROUP,
+      groupId,
+      bestMatch,
     );
 
-    return sortedResults;
+    return matches;
   }
 
-  async compareDemandWithAllProjects(demandId: string) {
+  async compareDemandWithAllGroups(demandId: string) {
     const demand = await this.demandService.findOne(demandId);
-    const projects = await this.projectService.findAll();
+    const groups = await this.researchGroupService.findAll();
 
-    const matches = projects.map((project) => {
+    const matches = groups.map((group) => {
       const similarity = stringSimilarity.compareTwoStrings(
         demand.description as string,
-        project.description as string,
+        group.description as string,
       );
       return {
-        id: project.id,
+        id: group.id,
         similarity: similarity,
-        type: SimilarityMatchType.PROJECT,
+        type: SimilarityMatchType.RESEARCH_GROUP,
       };
     });
 
-    const sortedResults = matches.sort((a, b) => b.similarity - a.similarity);
+    const bestMatch = matches.sort((a, b) => b.similarity - a.similarity)[0];
 
-    await this.saveTopMatches(
-      SimilarityMatchType.DEMAND,
-      demandId,
-      sortedResults,
-    );
+    await this.saveTopMatch(SimilarityMatchType.DEMAND, demandId, bestMatch);
 
-    return sortedResults;
+    return matches;
   }
 
   async getMatches(type: SimilarityMatchType, id: string) {
@@ -141,7 +130,7 @@ export class SimilarityService {
           match.sourceId === id ? match.targetId : match.sourceId;
         const data =
           type === SimilarityMatchType.DEMAND
-            ? await this.projectService.findOne(searchId)
+            ? await this.researchGroupService.findOne(searchId)
             : await this.demandService.findOne(searchId);
 
         return {

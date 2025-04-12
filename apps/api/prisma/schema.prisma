@@ -43,7 +43,7 @@ enum ProposalStatus {
 }
 
 enum SimilarityMatchType {
-  PROJECT
+  RESEARCH_GROUP
   DEMAND
 }
 

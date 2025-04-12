@@ -20,12 +20,19 @@ import { CustomIcon } from '@/modules/components/icon/customIcon';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { format } from 'date-fns';
 import { DeleteModal } from '../modal/deleteModal';
-import { Demand, DemandStatusEnum } from '@/types/Demand';
+import {
+  Demand,
+  DemandStatusEnum,
+  DemandStatusTranslationEnum,
+} from '@/types/Demand';
+import { FaRegStar } from 'react-icons/fa';
+
 interface Params {
   data: Demand[];
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
 }
+
 const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
   const columns: ColumnDef<Demand>[] = [
     {
@@ -41,8 +48,8 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) =>
-        DemandStatusEnum[
-          row.getValue('status') as keyof typeof DemandStatusEnum
+        DemandStatusTranslationEnum[
+          row.getValue('status') as keyof typeof DemandStatusTranslationEnum
         ],
     },
     {
@@ -106,6 +113,13 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                 ))}
                 <TableCell>
                   <div className="flex gap-2 justify-center">
+                    <Button
+                      variant={'ghost'}
+                      size={'icon'}
+                      title="Ver oportunidades"
+                    >
+                      <CustomIcon icon={FaRegStar} className="!size-5" />
+                    </Button>
                     <Button
                       variant={'ghost'}
                       size={'icon'}

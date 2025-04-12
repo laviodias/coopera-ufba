@@ -9,9 +9,17 @@ import {
   UpdateResearchGroupDto,
 } from './research-group.dto';
 import { MailService } from '../mailsend/mail.service';
+import { Queue } from 'bullmq';
+import { InjectQueue } from '@nestjs/bullmq';
 
 @Injectable()
 export class ResearchGroupService {
+  constructor(
+    private readonly mailService: MailService,
+    private readonly prismaService: PrismaService,
+    @InjectQueue('similarity_queue') private similarityQueue: Queue,
+  ) {}
+
   findAll() {
     return this.prismaService.researchGroup.findMany({
       include: {
@@ -19,13 +27,8 @@ export class ResearchGroupService {
       },
     });
   }
-  constructor(
-    private readonly mailService: MailService,
-    private readonly prismaService: PrismaService,
-  ) {}
 
   async create(group: CreateResearchGroupDto, researcherId: string) {
-    console.log('aq', researcherId);
     const groupAlreadyExists =
       await this.prismaService.researchGroup.findUnique({
         where: {
@@ -51,6 +54,10 @@ export class ResearchGroupService {
           connect: knowledgeAreasId,
         },
       },
+    });
+
+    await this.similarityQueue.add('group', {
+      groupId: createdGroup.id,
     });
 
     return {
@@ -278,6 +285,10 @@ export class ResearchGroupService {
         img: group.img,
         researcherId: group.researcherId,
       },
+    });
+
+    await this.similarityQueue.add('group', {
+      groupId: id,
     });
 
     return {

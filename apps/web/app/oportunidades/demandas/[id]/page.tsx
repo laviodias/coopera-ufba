@@ -23,7 +23,7 @@ export default function MeusMatchesProjetos() {
     <main className="flex justify-center flex-grow m-8">
       <section className="flex flex-col w-full max-w-7xl pt-12 gap-6">
         <h1 className="font-bold text-2xl text-blue-strong sm:text-4xl">
-          Meus Matches
+          Oportunidades
         </h1>
 
         <div className="bg-white rounded-2xl px-3 py-4 w-[100%]">

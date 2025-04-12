@@ -1,6 +1,6 @@
 'use client';
 
-import useGetMyDemands from '@/api/demandas/use-get-my-demands';
+import useGetMyProjects from '@/api/projects/use-get-my-projects';
 import { Button } from '@/components/ui/button';
 import {
   TableHeader,
@@ -12,14 +12,14 @@ import {
 } from '@/components/ui/table';
 import Link from 'next/link';
 
-function MeusMatchesEmpresa() {
-  const { data: demands } = useGetMyDemands();
+function MeusMatchesPesquisador() {
+  const { data: projects } = useGetMyProjects();
 
   return (
     <main className="flex justify-center flex-grow m-8">
       <section className="flex flex-col w-full max-w-7xl pt-12 gap-6">
         <h1 className="font-bold text-2xl text-blue-strong sm:text-4xl">
-          Demandas
+          Projetos
         </h1>
 
         <div className="bg-white rounded-2xl px-3 py-4 w-[100%]">
@@ -31,7 +31,7 @@ function MeusMatchesEmpresa() {
                 </TableHead>
 
                 <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
-                  Status
+                  Grupo de Pesquisa
                 </TableHead>
 
                 <TableHead className="text-blue-strong font-semibold text-lg text-center sm:text-2xl">
@@ -40,19 +40,19 @@ function MeusMatchesEmpresa() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {demands ? (
-                demands.map((demand) => (
-                  <TableRow key={demand.id}>
+              {projects ? (
+                projects.map((project) => (
+                  <TableRow key={project.id}>
                     <TableCell className="text-blue-light py-6 flex gap-2 items-center">
-                      {demand.name}
+                      {project.name}
                     </TableCell>
                     <TableCell className="text-blue-light py-6">
-                      {demand.status}
+                      {project.researchGroup.name}
                     </TableCell>
                     <TableCell className="text-blue-light text-center">
                       <Link
                         href={{
-                          pathname: `/meus-matches/demandas/${demand.id}`,
+                          pathname: `/oportunidades/projetos/${project.id}`,
                         }}
                       >
                         <Button
@@ -68,7 +68,7 @@ function MeusMatchesEmpresa() {
               ) : (
                 <TableRow>
                   <TableCell className="text-blue-light py-6 flex gap-2 items-center">
-                    Nenhuma demanda encontrada
+                    Nenhum projeto encontrado
                   </TableCell>
                 </TableRow>
               )}
@@ -80,4 +80,4 @@ function MeusMatchesEmpresa() {
   );
 }
 
-export default MeusMatchesEmpresa;
+export default MeusMatchesPesquisador;

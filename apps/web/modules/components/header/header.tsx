@@ -48,10 +48,10 @@ const headerLinks = {
       label: 'Minhas demandas',
       path: '/minhas-demandas',
     },
-    {
-      label: 'Meus Matches',
-      path: '/meus-matches',
-    },
+    /* {
+      label: 'Oportunidades',
+      path: '/oportunidades',
+    }, */
   ],
   RESEARCHER_TEACHER: [
     {
@@ -66,10 +66,10 @@ const headerLinks = {
       label: 'Meus Grupos de pesquisa',
       path: '/meus-grupos-pesquisa',
     },
-    {
-      label: 'Meus Matches',
-      path: '/meus-matches',
-    },
+    /* {
+      label: 'Oportunidades',
+      path: '/oportunidades',
+    }, */
   ],
   RESEARCHER_STUDENT: [
     {

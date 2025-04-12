@@ -15,7 +15,7 @@ export class DemandService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly userService: UserService,
-    @InjectQueue('similarity') private similarityQueue: Queue,
+    @InjectQueue('similarity_queue') private similarityQueue: Queue,
   ) {}
 
   async create(demand: CreateDemandDTO, companyId: string): Promise<Demand> {

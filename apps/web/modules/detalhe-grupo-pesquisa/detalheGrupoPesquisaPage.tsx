@@ -21,12 +21,14 @@ import Link from 'next/link';
 import { GerenciarMembrosModal } from '../gerenciar-membros/gerenciarMembrosModal';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { Researcher } from '@/types/Researcher';
+import OpportunitiesSection from './components/opportunitiesSection';
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 
 enum ETabs {
-  MEMBERS = 'membros',
   PROJECTS = 'projetos',
+  MEMBERS = 'membros',
+  OPPORTUNITIES = 'oportunidades',
 }
 export default function DetalheGrupoPesquisaPage() {
   const params = useParams();
@@ -62,6 +64,55 @@ export default function DetalheGrupoPesquisaPage() {
       </main>
     );
   }
+
+  const getCTAFromTab = () => {
+    switch (selectedTab) {
+      case ETabs.MEMBERS:
+        return (
+          <Button
+            className="ml-1 rounded-full"
+            onClick={() => openAddMemberModal()}
+          >
+            <CustomIcon icon={IoPersonCircleOutline} className="!size-5" />{' '}
+            Gerenciar Membros
+          </Button>
+        );
+      case ETabs.PROJECTS:
+        return (
+          <Link href={`/cadastro-projetos/${groupId}`}>
+            <Button className="rounded-full">
+              <CustomIcon icon={IoIosAddCircleOutline} className="!size-5" />{' '}
+              Novo Projeto
+            </Button>
+          </Link>
+        );
+      case ETabs.OPPORTUNITIES:
+        return null;
+    }
+  };
+
+  const getTabContent = () => {
+    if (!researchGroup) return null;
+
+    switch (selectedTab) {
+      case ETabs.MEMBERS:
+        return (
+          <MembersSection
+            members={researchGroup.members as Researcher[]}
+            leaderId={researchGroup.leader.userId}
+          />
+        );
+      case ETabs.PROJECTS:
+        return (
+          <ProjectsSection
+            projects={researchGroup.projects}
+            leaderId={researchGroup.leader.userId}
+          />
+        );
+      case ETabs.OPPORTUNITIES:
+        return <OpportunitiesSection researchGroupId={groupId.toString()} />;
+    }
+  };
 
   const imageComponent =
     !!researchGroup?.img && researchGroup.img.includes('/uploads') ? (
@@ -107,28 +158,7 @@ export default function DetalheGrupoPesquisaPage() {
 
             {user &&
               (user.utype.includes('RESEARCHER') || user.role === 'ADMIN') &&
-              (selectedTab === ETabs.PROJECTS ? (
-                <Link href={`/cadastro-projetos/${groupId}`}>
-                  <Button className="rounded-full">
-                    <CustomIcon
-                      icon={IoIosAddCircleOutline}
-                      className="!size-5"
-                    />{' '}
-                    Novo Projeto
-                  </Button>
-                </Link>
-              ) : (
-                <Button
-                  className="ml-1 rounded-full"
-                  onClick={() => openAddMemberModal()}
-                >
-                  <CustomIcon
-                    icon={IoPersonCircleOutline}
-                    className="!size-5"
-                  />{' '}
-                  Gerenciar Membros
-                </Button>
-              ))}
+              getCTAFromTab()}
           </div>
         </div>
 
@@ -154,45 +184,18 @@ export default function DetalheGrupoPesquisaPage() {
 
           <div className="flex flex-col gap-5 w-[100%]">
             <div className="flex gap-5">
-              <Button
-                className="rounded-full"
-                variant={
-                  selectedTab === ETabs.PROJECTS ? 'default' : 'secondary'
-                }
-                onClick={() => {
-                  handleTabChange(ETabs.PROJECTS);
-                }}
-              >
-                Projetos
-              </Button>
-
-              <Button
-                className="rounded-full"
-                variant={
-                  selectedTab === ETabs.MEMBERS ? 'default' : 'secondary'
-                }
-                onClick={() => {
-                  handleTabChange(ETabs.MEMBERS);
-                }}
-              >
-                Membros
-              </Button>
+              {Object.values(ETabs).map((tab) => (
+                <Button
+                  key={tab}
+                  className="rounded-full"
+                  variant={selectedTab === tab ? 'default' : 'secondary'}
+                  onClick={() => handleTabChange(tab)}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </Button>
+              ))}
             </div>
-            {researchGroup ? (
-              selectedTab == ETabs.MEMBERS ? (
-                <MembersSection
-                  members={researchGroup?.members as Researcher[]}
-                  leaderId={researchGroup?.leader.userId}
-                />
-              ) : (
-                <ProjectsSection
-                  projects={researchGroup?.projects}
-                  leaderId={researchGroup?.leader.userId}
-                />
-              )
-            ) : (
-              <div>Carregando...</div>
-            )}
+            {researchGroup ? getTabContent() : <div>Carregando...</div>}
           </div>
         </div>
       </section>

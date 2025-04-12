@@ -1,6 +1,7 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import useGetMyDemands from '@/api/demandas/use-get-my-demands';
+import { Button } from '@/components/ui/button';
 import {
   TableHeader,
   TableRow,
@@ -10,20 +11,15 @@ import {
   Table,
 } from '@/components/ui/table';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Demand } from '@/types/Demand';
-import useGetMatches from '@/api/similarities/use-get-matches';
-import { SimilarityMatchType } from '@/types/SimilarityMatch';
 
-export default function MeusMatchesProjetos() {
-  const { id } = useParams<{ id: string }>();
-  const { data: matches } = useGetMatches(id, SimilarityMatchType.PROJECT);
+function MeusMatchesEmpresa() {
+  const { data: demands } = useGetMyDemands();
 
   return (
     <main className="flex justify-center flex-grow m-8">
       <section className="flex flex-col w-full max-w-7xl pt-12 gap-6">
         <h1 className="font-bold text-2xl text-blue-strong sm:text-4xl">
-          Meus Matches
+          Demandas
         </h1>
 
         <div className="bg-white rounded-2xl px-3 py-4 w-[100%]">
@@ -31,15 +27,11 @@ export default function MeusMatchesProjetos() {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
-                  Demanda
+                  Nome
                 </TableHead>
 
                 <TableHead className="text-blue-strong font-semibold text-lg sm:text-2xl">
-                  Empresa
-                </TableHead>
-
-                <TableHead className="text-blue-strong font-semibold text-lg text-center sm:text-2xl">
-                  Similaridade
+                  Status
                 </TableHead>
 
                 <TableHead className="text-blue-strong font-semibold text-lg text-center sm:text-2xl">
@@ -48,28 +40,26 @@ export default function MeusMatchesProjetos() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {matches?.length ? (
-                matches.map((match) => (
-                  <TableRow key={match.target.id}>
+              {demands ? (
+                demands.map((demand) => (
+                  <TableRow key={demand.id}>
+                    <TableCell className="text-blue-light py-6 flex gap-2 items-center">
+                      {demand.name}
+                    </TableCell>
                     <TableCell className="text-blue-light py-6">
-                      {match.target.name}
+                      {demand.status}
                     </TableCell>
-
-                    <TableCell className="text-blue-light py-6">
-                      {(match.target as Demand).company.user.name}
-                    </TableCell>
-
-                    <TableCell className="text-blue-light py-6 text-center">
-                      {(match.score * 100).toFixed(2)}%
-                    </TableCell>
-
                     <TableCell className="text-blue-light text-center">
-                      <Link href={`/enviar-proposta/empresa/${match.targetId}`}>
+                      <Link
+                        href={{
+                          pathname: `/oportunidades/demandas/${demand.id}`,
+                        }}
+                      >
                         <Button
                           variant="outline"
                           className="px-8 py-2.5 rounded-full"
                         >
-                          Fazer proposta
+                          Ver matches
                         </Button>
                       </Link>
                     </TableCell>
@@ -77,11 +67,8 @@ export default function MeusMatchesProjetos() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    className="text-blue-light py-6 text-center"
-                  >
-                    Nenhum match encontrado
+                  <TableCell className="text-blue-light py-6 flex gap-2 items-center">
+                    Nenhuma demanda encontrada
                   </TableCell>
                 </TableRow>
               )}
@@ -92,3 +79,5 @@ export default function MeusMatchesProjetos() {
     </main>
   );
 }
+
+export default MeusMatchesEmpresa;
