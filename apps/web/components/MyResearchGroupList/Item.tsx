@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { TbUserCircle } from 'react-icons/tb';
-import { Button } from '../ui/button';
 import { ResearchGroup } from '@/types/ResearchGroup';
 import { KnowledgeArea } from '@/types/KnowledgeArea';
 
