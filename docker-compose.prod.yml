@@ -18,9 +18,7 @@ services:
       - app-network
 
   backend:
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile
+    image: coopera-backend:prod  # Usando a imagem já buildada e enviada
     env_file:
       - ./apps/api/.env
     depends_on:
@@ -32,11 +30,7 @@ services:
       - app-network
 
   frontend:
-    build:
-      context: ./apps/web
-      dockerfile: Dockerfile
-      args:
-        API_URL: http://backend:8080
+    image: coopera-frontend:prod  # Usando a imagem já buildada e enviada
     ports:
       - "3000:3001"
     networks:
