@@ -1,5 +1,3 @@
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -12,13 +10,6 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   compress: true,
-  webpack(config, { isServer }) {
-    // Só adicione o BundleAnalyzerPlugin no modo de produção
-    if (process.env.ANALYZE === 'true') {
-      config.plugins.push(new BundleAnalyzerPlugin());
-    }
-    return config;
-  },
   headers: async () => [
     {
       source: '/:path*',

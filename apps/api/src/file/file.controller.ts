@@ -10,7 +10,6 @@ import { JwtAuthGuard } from '@/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { Express } from 'express';
 
 @UseGuards(JwtAuthGuard)
 @Controller('file')
@@ -45,7 +44,7 @@ export class FileController {
       },
     }),
   )
-  async upload(@UploadedFile() file: Express.Multer.File) {
+  async upload(@UploadedFile() file: any) {
     if (!file) {
       throw new BadRequestException('Arquivo de imagem não encontrado.');
     }
