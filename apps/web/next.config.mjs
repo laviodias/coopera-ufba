@@ -7,6 +7,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   output: 'standalone',
+  reactStrictMode: true,
+  swcMinify: true,
+  compress: true,
   headers: async () => [
     {
       source: '/:path*',

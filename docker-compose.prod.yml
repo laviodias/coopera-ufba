@@ -18,7 +18,7 @@ services:
       - app-network
 
   backend:
-    image: coopera-backend:prod  # Usando a imagem já buildada e enviada
+    image: coopera-backend:prod
     env_file:
       - ./apps/api/.env
     depends_on:
@@ -30,13 +30,13 @@ services:
       - app-network
 
   frontend:
-    image: coopera-frontend:prod  # Usando a imagem já buildada e enviada
+    image: coopera-frontend:prod
     ports:
       - "3000:3001"
-    networks:
-      - app-network
     depends_on:
       - backend
+    networks:
+      - app-network
 
 volumes:
   db-data:

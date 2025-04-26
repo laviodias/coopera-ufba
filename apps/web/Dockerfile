@@ -1,32 +1,29 @@
-# Estágio base
-FROM node:22-alpine AS base
+# Build Stage
+FROM node:22-alpine AS builder
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Estágio de dependências
-FROM base AS deps
 COPY package*.json ./
 RUN npm ci
 
-# Estágio de build
-FROM base AS builder
 ARG API_URL
 ENV NEXT_PUBLIC_API_URL=${API_URL}
 
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
 RUN npm run build
 
-# Estágio final
-FROM node:22-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
+# Production Stage (nginx)
+FROM nginx:stable-alpine AS runner
+WORKDIR /usr/share/nginx/html
 
+# Remove default nginx website
+RUN rm -rf ./*
+
+# Copia arquivos necessários do build
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/.next/static ./_next/static
 
-EXPOSE 3001
-CMD ["npm", "run", "start"]
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
