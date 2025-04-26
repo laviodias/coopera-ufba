@@ -33,4 +33,6 @@ COPY --from=builder /app/start.sh ./start.sh
 ENV NODE_ENV=production
 EXPOSE 8080
 
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 CMD ["/bin/bash", "/app/start.sh"]
