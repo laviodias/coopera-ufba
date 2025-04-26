@@ -32,13 +32,11 @@ services:
       - app-network
 
   frontend:
-    build:
-      context: ./apps/web
-      dockerfile: Dockerfile
-    depends_on:
-      - backend
+    image: coopera-frontend:prod
     ports:
       - "3000:3001"
+    depends_on:
+      - backend
     networks:
       - app-network
 
