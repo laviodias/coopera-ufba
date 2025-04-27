@@ -33,4 +33,4 @@ COPY --from=builder /app/start.sh ./start.sh
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["./start.sh"]
+CMD ["npm", "run", "start:prod"]
