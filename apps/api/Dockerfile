@@ -9,6 +9,7 @@ RUN npm ci --legacy-peer-deps --no-audit --progress=false && npm cache clean --f
 
 # Gera o dist e prisma client
 FROM base AS builder
+RUN apk add --no-cache openssl 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
