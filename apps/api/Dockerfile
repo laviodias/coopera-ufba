@@ -20,7 +20,7 @@ COPY package*.json ./
 RUN npm ci --only=production --legacy-peer-deps --no-audit --progress=false && npm cache clean --force
 
 # Final super leve
-FROM gcr.io/distroless/nodejs22-debian12
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 # Copiar apenas os artefatos necessários
@@ -33,4 +33,4 @@ COPY --from=builder /app/start.sh ./start.sh
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["/usr/bin/node", "dist/src/main.js"]
+CMD ["node", "dist/src/main.js"]
