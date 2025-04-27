@@ -33,4 +33,4 @@ COPY --from=builder /app/start.sh ./start.sh
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["node", "dist/src/main.js"]
+CMD ["/usr/bin/node", "dist/src/main.js"]
