@@ -22,10 +22,9 @@ import { format } from 'date-fns';
 import { DeleteModal } from '../modal/deleteModal';
 import {
   Demand,
-  DemandStatusEnum,
   DemandStatusTranslationEnum,
 } from '@/types/Demand';
-import { FaRegStar } from 'react-icons/fa';
+import { MdOutlineBusinessCenter } from 'react-icons/md';
 
 interface Params {
   data: Demand[];
@@ -116,9 +115,9 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                     <Button
                       variant={'ghost'}
                       size={'icon'}
-                      title="Ver oportunidades"
+                      title="Ver sugestões de grupos"
                     >
-                      <CustomIcon icon={FaRegStar} className="!size-5" />
+                      <CustomIcon icon={MdOutlineBusinessCenter} className="!size-5" />
                     </Button>
                     <Button
                       variant={'ghost'}

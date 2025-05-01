@@ -28,7 +28,7 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL || '';
 enum ETabs {
   PROJECTS = 'projetos',
   MEMBERS = 'membros',
-  OPPORTUNITIES = 'oportunidades',
+  DEMANDS = 'demandas',
 }
 export default function DetalheGrupoPesquisaPage() {
   const params = useParams();
@@ -86,7 +86,7 @@ export default function DetalheGrupoPesquisaPage() {
             </Button>
           </Link>
         );
-      case ETabs.OPPORTUNITIES:
+      case ETabs.DEMANDS:
         return null;
     }
   };
@@ -109,7 +109,7 @@ export default function DetalheGrupoPesquisaPage() {
             leaderId={researchGroup.leader.userId}
           />
         );
-      case ETabs.OPPORTUNITIES:
+      case ETabs.DEMANDS:
         return <OpportunitiesSection researchGroupId={groupId.toString()} />;
     }
   };
