@@ -13,18 +13,16 @@ ENV NEXT_PUBLIC_API_URL=${API_URL}
 COPY . .
 RUN npm run build
 
-# Production Stage (nginx)
-FROM nginx:stable-alpine AS runner
-WORKDIR /usr/share/nginx/html
+# Production Stage
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
 
-# Remove default nginx website
-RUN rm -rf ./*
+COPY package*.json ./
+RUN npm install --omit=dev
 
-# Copia arquivos necessários do build
+COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/static ./_next/static
-
-COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"] # Ou o comando para iniciar seu servidor Next.js

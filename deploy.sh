@@ -4,7 +4,7 @@ set -e
 
 # Configurações
 REMOTE_USER=ubuntu
-REMOTE_HOST=18.208.211.41
+REMOTE_HOST=3.81.226.65
 REMOTE_PATH=/home/ubuntu
 SSH_KEY_PATH=~/Downloads/lavio-coopera.pem
 
@@ -25,7 +25,7 @@ echo "🚀 Enviando alterações para o repositório Git..."
 
 # Enviando as alterações para o Git
 git add .
-git commit -m "Atualizando frontend"
+git commit -m "Atualizando frontend e adicionando config nginx"
 git push origin main
 
 echo "📂 Entrando na instância EC2 e atualizando o repositório..."
