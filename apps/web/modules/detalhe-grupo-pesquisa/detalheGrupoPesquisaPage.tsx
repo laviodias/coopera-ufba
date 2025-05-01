@@ -30,9 +30,11 @@ enum ETabs {
   MEMBERS = 'membros',
   DEMANDS = 'demandas',
 }
+
+const LEADER_ONLY_TABS = [ETabs.DEMANDS];
+
 export default function DetalheGrupoPesquisaPage() {
   const params = useParams();
-  const router = useRouter();
   const groupId = params.id;
 
   const [selectedTab, setSelectedTab] = React.useState<ETabs>(ETabs.PROJECTS);
@@ -40,11 +42,9 @@ export default function DetalheGrupoPesquisaPage() {
 
   const { user } = useUser();
 
-  const {
-    data: researchGroup,
-    isError,
-    isLoading,
-  } = useGetResearchGroup(groupId as string);
+  const { data: researchGroup, isLoading } = useGetResearchGroup(
+    groupId as string,
+  );
 
   const handleTabChange = (tab: ETabs) => {
     setSelectedTab(tab);
@@ -54,9 +54,12 @@ export default function DetalheGrupoPesquisaPage() {
     setShowAddMemberModal(true);
   };
 
-  if (isError) {
-    router.push('/404');
-  }
+  const isUserLeader = () => {
+    if (!user || !researchGroup) return false;
+
+    return researchGroup.leader.userId === user.id;
+  };
+
   if (isLoading) {
     return (
       <main className="p-8 w-full flex justify-center flex-grow ">
@@ -110,7 +113,9 @@ export default function DetalheGrupoPesquisaPage() {
           />
         );
       case ETabs.DEMANDS:
-        return <OpportunitiesSection researchGroupId={groupId.toString()} />;
+        return isUserLeader() ? (
+          <OpportunitiesSection researchGroupId={groupId.toString()} />
+        ) : null;
     }
   };
 
@@ -157,7 +162,7 @@ export default function DetalheGrupoPesquisaPage() {
             </h1>
 
             {user &&
-              (user.utype.includes('RESEARCHER') || user.role === 'ADMIN') &&
+              (isUserLeader() || user.role === 'ADMIN') &&
               getCTAFromTab()}
           </div>
         </div>
@@ -169,7 +174,7 @@ export default function DetalheGrupoPesquisaPage() {
             <h1 className="font-size-lg text-2xl">{researchGroup?.name}</h1>
 
             <p>{researchGroup?.description}</p>
-            {user?.utype == 'COMPANY' && (
+            {user && user.utype == 'COMPANY' && (
               <Button
                 asChild
                 variant={'outline'}
@@ -184,16 +189,19 @@ export default function DetalheGrupoPesquisaPage() {
 
           <div className="flex flex-col gap-5 w-[100%]">
             <div className="flex gap-5">
-              {Object.values(ETabs).map((tab) => (
-                <Button
-                  key={tab}
-                  className="rounded-full"
-                  variant={selectedTab === tab ? 'default' : 'secondary'}
-                  onClick={() => handleTabChange(tab)}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </Button>
-              ))}
+              {Object.values(ETabs).map((tab) =>
+                !isUserLeader() &&
+                LEADER_ONLY_TABS.includes(tab as ETabs) ? null : (
+                  <Button
+                    key={tab}
+                    className="rounded-full"
+                    variant={selectedTab === tab ? 'default' : 'secondary'}
+                    onClick={() => handleTabChange(tab)}
+                  >
+                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  </Button>
+                ),
+              )}
             </div>
             {researchGroup ? getTabContent() : <div>Carregando...</div>}
           </div>

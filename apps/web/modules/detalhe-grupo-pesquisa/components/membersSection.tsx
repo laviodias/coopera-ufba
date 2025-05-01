@@ -10,7 +10,6 @@ import {
 import React from 'react';
 import { translateResearchType } from '@/modules/shared/utils/translateReasearchType.util';
 import { Crown } from 'lucide-react';
-import { useUser } from '@/context/UserContext';
 import { Researcher } from '@/types/Researcher';
 
 type TProps = {
@@ -18,8 +17,6 @@ type TProps = {
   leaderId: string;
 };
 export default function MembersSection(props: TProps) {
-  const { user } = useUser();
-
   const isMemberLeader = (id: string) => {
     return props.leaderId == id;
   };

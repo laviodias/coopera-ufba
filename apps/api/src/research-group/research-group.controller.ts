@@ -59,7 +59,6 @@ export class ResearchGroupController {
     return this.researchGroupsService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(
     @Param('id') id: string,

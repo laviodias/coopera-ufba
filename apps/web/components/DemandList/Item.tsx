@@ -52,7 +52,8 @@ function Item(demand: Demand) {
         </div>
       </div>
 
-      {user?.utype !== 'COMPANY' &&
+      {user &&
+        user.utype !== 'COMPANY' &&
         demand.status == DemandStatusEnum.CREATED && (
           <Button
             asChild
