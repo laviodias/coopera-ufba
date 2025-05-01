@@ -20,10 +20,7 @@ import { CustomIcon } from '@/modules/components/icon/customIcon';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { format } from 'date-fns';
 import { DeleteModal } from '../modal/deleteModal';
-import {
-  Demand,
-  DemandStatusTranslationEnum,
-} from '@/types/Demand';
+import { Demand, DemandStatusTranslationEnum } from '@/types/Demand';
 import { MdOutlineBusinessCenter } from 'react-icons/md';
 
 interface Params {
@@ -117,7 +114,10 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                       size={'icon'}
                       title="Ver sugestões de grupos"
                     >
-                      <CustomIcon icon={MdOutlineBusinessCenter} className="!size-5" />
+                      <CustomIcon
+                        icon={MdOutlineBusinessCenter}
+                        className="!size-5"
+                      />
                     </Button>
                     <Button
                       variant={'ghost'}
