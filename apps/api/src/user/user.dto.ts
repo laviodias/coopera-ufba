@@ -24,14 +24,17 @@ export class CreateCompanyDto {
 export class CreateResearcherDto {
   urlLattes?: string;
 
+  @IsOptional()
   @IsEnum(ResearcherType)
   researcherType?: ResearcherType;
 }
 
 export class UpdateUserDto {
+  @IsOptional()
   @IsEnum(UserRole)
   role: UserRole;
 
+  @IsOptional()
   @IsEnum(UserStatus)
   status: UserStatus;
 
@@ -53,6 +56,7 @@ export class CreateUserDto {
   @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
   passwordConfirmation: string;
 
+  @IsOptional()
   @IsEnum(UserType)
   utype: UserType;
 
