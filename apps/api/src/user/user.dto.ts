@@ -32,11 +32,11 @@ export class CreateResearcherDto {
 export class UpdateUserDto {
   @IsOptional()
   @IsEnum(UserRole)
-  role: UserRole;
+  role?: UserRole;
 
   @IsOptional()
   @IsEnum(UserStatus)
-  status: UserStatus;
+  status?: UserStatus;
 
   @IsOptional()
   utype?: 'RESEARCHER_STUDENT' | 'RESEARCHER_TEACHER';
@@ -58,7 +58,7 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsEnum(UserType)
-  utype: UserType;
+  utype?: UserType;
 
   @IsOptional()
   company?: CreateCompanyDto;
