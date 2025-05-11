@@ -37,7 +37,9 @@ services:
       - app-network
 
   frontend:
-    image: coopera-frontend:prod
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
     ports:
       - "3000"
     depends_on:
