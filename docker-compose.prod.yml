@@ -57,7 +57,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /apps/web/nginx.conf:/etc/nginx/nginx.conf
+      - ./apps/web/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend
     networks:
