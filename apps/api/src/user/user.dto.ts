@@ -5,11 +5,26 @@ import {
   IsOptional,
   Matches,
 } from 'class-validator';
-import { ResearcherType, UserRole, UserStatus } from '@prisma/client';
 
 enum UserType {
   RESEARCHER = 'RESEARCHER',
   COMPANY = 'COMPANY',
+}
+
+enum ResearcherType {
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
+}
+
+enum UserRole {
+  ADMIN = 'ADMIN',  
+  USER = 'USER',
+}
+
+enum UserStatus {
+  APPROVED = 'APPROVED',
+  BLOCK = 'BLOCK',
+  PENDING = 'PENDING',
 }
 
 export class CreateCompanyDto {
