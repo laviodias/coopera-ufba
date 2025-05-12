@@ -45,8 +45,6 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
-    ports:
-      - "3000"
     depends_on:
       - backend
     networks:
