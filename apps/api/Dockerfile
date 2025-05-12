@@ -3,6 +3,7 @@ WORKDIR /app
 
 FROM base AS deps
 COPY package*.json ./
+RUN apk add --no-cache openssl
 RUN npm ci --legacy-peer-deps --no-audit --progress=false \
   && npm cache clean --force
 
@@ -26,8 +27,6 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
 
-# Se necessário:
-# RUN chmod +x start.sh
 COPY .env ./
 
 ENV NODE_ENV=production
