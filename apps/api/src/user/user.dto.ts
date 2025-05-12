@@ -1,6 +1,6 @@
 import {
   IsEmail,
-  IsEnum,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   Matches,
@@ -24,19 +24,16 @@ export class CreateCompanyDto {
 export class CreateResearcherDto {
   urlLattes?: string;
 
-  @IsOptional()
-  @IsEnum(ResearcherType)
-  researcherType?: ResearcherType;
+  @IsIn([ResearcherType.STUDENT, ResearcherType.TEACHER])
+  researcherType: ResearcherType;
 }
 
 export class UpdateUserDto {
-  @IsOptional()
-  @IsEnum(UserRole)
-  role?: UserRole;
+  @IsIn([UserRole.ADMIN, UserRole.USER])
+  role: UserRole;
 
-  @IsOptional()
-  @IsEnum(UserStatus)
-  status?: UserStatus;
+  @IsIn([UserStatus.APPROVED, UserStatus.BLOCK, UserStatus.PENDING])
+  status: UserStatus;
 
   @IsOptional()
   utype?: 'RESEARCHER_STUDENT' | 'RESEARCHER_TEACHER';
@@ -57,7 +54,7 @@ export class CreateUserDto {
   passwordConfirmation: string;
 
   @IsOptional()
-  @IsEnum(UserType)
+  @IsIn([UserType.COMPANY, UserType.RESEARCHER])
   utype?: UserType;
 
   @IsOptional()
