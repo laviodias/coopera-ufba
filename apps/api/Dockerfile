@@ -7,7 +7,7 @@ RUN npm ci --legacy-peer-deps --no-audit --progress=false \
   && npm cache clean --force
 
 FROM base AS builder
-RUN apk add --no-cache openssl
+RUN apt-get update && apt-get install -y openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
