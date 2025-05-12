@@ -24,12 +24,16 @@ RUN npm ci --only=production --legacy-peer-deps --no-audit --progress=false && n
 FROM node:22-alpine AS runner
 WORKDIR /app
 
-# Copiar apenas os artefatos necessários
+# Copiar node_modules e dist
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/start.sh ./start.sh
+
+# 👇 Adicione isso se o Prisma Client estiver sendo gerado em node_modules
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
 ENV NODE_ENV=production
 EXPOSE 8080
