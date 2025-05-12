@@ -3,12 +3,16 @@ WORKDIR /app
 
 FROM base AS deps
 COPY package*.json ./
-RUN apk add --no-cache openssl
+RUN apk add --no-cache --update \
+    openssl1.1 \
+    libcrypto1.1
 RUN npm ci --legacy-peer-deps --no-audit --progress=false \
   && npm cache clean --force
 
 FROM base AS builder
-RUN apk add --no-cache openssl # Use apk instead of apt-get
+RUN apk add --no-cache --update \
+    openssl1.1 \
+    libcrypto1.1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
