@@ -33,4 +33,4 @@ COPY .env ./
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["node", "dist/src/main.js"]
+CMD ["sh", "-c", "npx prisma generate && node dist/src/main.js"]
