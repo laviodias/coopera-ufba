@@ -1,18 +1,14 @@
-FROM node:20-alpine AS base
+FROM node:20 AS base
 WORKDIR /app
 
 FROM base AS deps
 COPY package*.json ./
-RUN apk add --no-cache --update \
-    openssl1.1 \
-    libcrypto1.1
+RUN apt-get update && apt-get install -y --no-install-recommends libssl1.1
 RUN npm ci --legacy-peer-deps --no-audit --progress=false \
   && npm cache clean --force
 
 FROM base AS builder
-RUN apk add --no-cache --update \
-    openssl1.1 \
-    libcrypto1.1
+RUN apt-get update && apt-get install -y --no-install-recommends libssl1.1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
@@ -23,7 +19,7 @@ COPY package*.json ./
 RUN npm ci --only=production --legacy-peer-deps --no-audit --progress=false \
   && npm cache clean --force
 
-FROM node:20-alpine AS runner
+FROM node:20 AS runner
 WORKDIR /app
 
 COPY --from=prod-deps /app/node_modules ./node_modules
