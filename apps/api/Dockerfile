@@ -3,12 +3,12 @@ WORKDIR /app
 
 FROM base AS deps
 COPY package*.json ./
-RUN apt-get update && apt-get install -y --no-install-recommends libssl1.1
+RUN apt-get update && apt-get install -y --no-install-recommends libssl-dev
 RUN npm ci --legacy-peer-deps --no-audit --progress=false \
   && npm cache clean --force
 
 FROM base AS builder
-RUN apt-get update && apt-get install -y --no-install-recommends libssl1.1
+RUN apt-get update && apt-get install -y --no-install-recommends libssl-dev
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
