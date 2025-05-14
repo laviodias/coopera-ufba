@@ -24,7 +24,7 @@ services:
       - "8080"
     ports:
       - "8080:8080"
-    entrypoint: sh -c 'set -e && npm install --legacy-peer-deps && npx prisma db push && npx prisma generate && npm run seed-db && npm run build && npm run start:prod'
+    entrypoint: sh -c 'set -e && npm install --legacy-peer-deps && npx prisma db push && npx prisma generate && npm run seed-db && npm run build'
 
   frontend:
     image: "node:22-alpine"
@@ -40,7 +40,7 @@ services:
       - "3001"
     ports:
       - "3001:3001"
-    entrypoint: tail -f /dev/null
+    entrypoint: sh -c 'npm install && npm run build && npm run start'
 
 networks:
   nginxproxymanager_default:
