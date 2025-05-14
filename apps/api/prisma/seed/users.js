@@ -1,4 +1,4 @@
-import { hashPassword } from '../../src/user/utils/hashPassword.util';
+import { hashPassword } from '../../src/user/utils/hashPassword.util.js';
 import { UserRole } from '@prisma/client';
 
 export async function SeedUsers(prisma) {
