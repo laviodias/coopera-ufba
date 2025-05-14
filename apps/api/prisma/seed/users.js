@@ -1,7 +1,7 @@
 import { hashPassword } from '../../src/user/utils/hashPassword.util';
-import { PrismaClient, UserRole } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 
-export async function SeedUsers(prisma: PrismaClient) {
+export async function SeedUsers(prisma) {
   const users = [
     {
       name: 'Administrador',

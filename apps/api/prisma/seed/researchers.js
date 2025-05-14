@@ -1,6 +1,6 @@
-import { PrismaClient, ResearcherType } from '@prisma/client';
+import { ResearcherType } from '@prisma/client';
 
-export async function SeedResearchers(prisma: PrismaClient) {
+export async function SeedResearchers(prisma) {
   const reseachers = [
     {
       userId: '789e4567-e89b-12d3-a456-426614174000',

@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client';
 
-export async function SeedKeywords(prisma: PrismaClient) {
+export async function SeedKeywords(prisma) {
   const keywords = [
     {
       id: '2b8ae025-be48-4c6f-b771-f828a1c1a54d',

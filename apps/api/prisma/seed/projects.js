@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-export async function SeedProjects(prisma: PrismaClient) {
+export async function SeedProjects(prisma) {
   const projects = [
     {
       name: 'Fog of Things: devices and gateways',

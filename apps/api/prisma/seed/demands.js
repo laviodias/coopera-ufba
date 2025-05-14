@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-export async function SeedDemands(prisma: PrismaClient) {
+export async function SeedDemands(prisma) {
   const demands = [
     {
       id: '21a64aad-5c76-45a7-82b9-20fd56be6ad6',

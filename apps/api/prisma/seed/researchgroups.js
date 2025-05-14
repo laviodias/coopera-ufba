@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-export async function SeedResearchGroups(prisma: PrismaClient) {
+export async function SeedResearchGroups(prisma) {
   const reseachGroups1 = {
     id: '5df58413-dadb-446b-91d7-e82ffce3e24a',
     name: 'RECSYS: Recommender Systems Research Group',

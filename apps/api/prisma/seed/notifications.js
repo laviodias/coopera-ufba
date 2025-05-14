@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-export async function SeedNotifications(prisma: PrismaClient) {
+export async function SeedNotifications(prisma) {
   const notifications = [
     {
       id: '9e1f3d8-6ff2-4187-8e99-55de3fb97041',

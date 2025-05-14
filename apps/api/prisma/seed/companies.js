@@ -1,6 +1,6 @@
-import { PrismaClient, DemandStatus } from '@prisma/client';
+import { DemandStatus } from '@prisma/client';
 
-export async function SeedCompanies(prisma: PrismaClient) {
+export async function SeedCompanies(prisma) {
   const companies = [
     {
       userId: '0e1bc090-3273-4eb9-acdd-e214e8cd724f',

@@ -2,15 +2,15 @@
 require('dotenv').config();
 
 import { PrismaClient } from '@prisma/client';
-import { SeedKnowledgeAreas } from './seed/knowledgeareas';
-import { SeedKeywords } from './seed/keywords';
-import { SeedUsers } from './seed/users';
-import { SeedResearchers } from './seed/researchers';
-import { SeedResearchGroups } from './seed/researchgroups';
-import { SeedProjects } from './seed/projects';
-import { SeedCompanies } from './seed/companies';
-import { SeedDemands } from './seed/demands';
-import { SeedNotifications } from './seed/notifications';
+import { SeedKnowledgeAreas } from './seed/knowledgeareas.js';
+import { SeedKeywords } from './seed/keywords.js';
+import { SeedUsers } from './seed/users.js';
+import { SeedResearchers } from './seed/researchers.js';
+import { SeedResearchGroups } from './seed/researchgroups.js';
+import { SeedProjects } from './seed/projects.js';
+import { SeedCompanies } from './seed/companies.js';
+import { SeedDemands } from './seed/demands.js';
+import { SeedNotifications } from './seed/notifications.js';
 
 const prisma = new PrismaClient();
 
