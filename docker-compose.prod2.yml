@@ -15,8 +15,7 @@ services:
     user: "root"
     working_dir: /home/node/app
     volumes:
-      - /marketplace/IC045-marketplace-ufba/apps/api:/home/node/app
-      - /marketplace/IC045-marketplace-ufba/apps/api/node_modules:/home/node/app/node_modules
+      - /coopera-ufba/apps/api:/home/node/app
     networks:
       - nginxproxymanager_default
     depends_on:
@@ -25,14 +24,14 @@ services:
       - "8080"
     ports:
       - "8080:8080"
-    entrypoint: sh -c 'set -e && rm -rf node_modules && npm install --legacy-peer-deps && npx prisma db push && npx prisma generate && npm run seed-db && npm run build && npm run start:prod'
+    entrypoint: sh -c 'set -e && npm install --legacy-peer-deps && npx prisma db push && npx prisma generate && npm run seed-db && npm run build && npm run start:prod'
 
   frontend:
     image: "node:22-alpine"
     user: "root"
     working_dir: /home/node/web
     volumes:
-      - /marketplace/IC045-marketplace-ufba/apps/web:/home/node/web
+      - /coopera-ufba/apps/web:/home/node/web
     networks:
       - nginxproxymanager_default
     depends_on:
