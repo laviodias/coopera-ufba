@@ -26,10 +26,9 @@ COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
-
-COPY .env ./
+COPY --from=builder /app/.env ./
 
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["sh", "-c", "npx prisma generate && node dist/src/main.js"]
+CMD ["node", "dist/src/main.js"]
