@@ -29,7 +29,7 @@ services:
       npm install --legacy-peer-deps &&
       npx prisma db push &&
       npx prisma generate &&
-      npx tsc -p tsconfig.build.json &&
+      npm run build &&
       while [ ! -f dist/main.js ]; do sleep 0.5; done &&
       npm run start:prod"
 
