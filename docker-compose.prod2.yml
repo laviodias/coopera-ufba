@@ -24,14 +24,14 @@ services:
       - "8080"
     ports:
       - "8080:8080"
-    entrypoint: sh -c 'set -e \
-      && npm install --legacy-peer-deps \
-      && npx prisma db push \
-      && npx prisma generate \
-      && npm run seed-db \
-      && npx tsc -p tsconfig.build.json \
-      && while [ ! -f dist/main.js ]; do sleep 0.5; done \
-      && npm run start:prod'
+    entrypoint: >
+      sh -c "set -e &&
+      npm install --legacy-peer-deps &&
+      npx prisma db push &&
+      npx prisma generate &&
+      npx tsc -p tsconfig.build.json &&
+      while [ ! -f dist/main.js ]; do sleep 0.5; done &&
+      npm run start:prod"
 
   frontend:
     image: "node:22-alpine"
