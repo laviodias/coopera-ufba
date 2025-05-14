@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, NotFoundException } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { JwtService } from '@nestjs/jwt';
 import { DemandController } from '@/demand/demand.controller';
 import { DemandService } from '@/demand/demand.service';

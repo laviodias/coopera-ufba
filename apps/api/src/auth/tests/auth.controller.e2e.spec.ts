@@ -3,7 +3,7 @@ dotenv.config({ path: ['.env.ci', '.env'] });
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '@/core/app.module';
 
 describe('AuthController (e2e)', () => {
