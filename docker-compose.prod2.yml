@@ -15,7 +15,7 @@ services:
     user: "root"
     working_dir: /home/node/app
     volumes:
-      - /apps/api:/home/node/app
+      - ./apps/api:/home/node/app
     networks:
       - nginxproxymanager_default
     depends_on:
@@ -31,7 +31,7 @@ services:
     user: "root"
     working_dir: /home/node/web
     volumes:
-      - /apps/web:/home/node/web
+      - ./apps/web:/home/node/web
     networks:
       - nginxproxymanager_default
     depends_on:
