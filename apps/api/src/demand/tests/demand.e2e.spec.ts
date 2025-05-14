@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config({ path: ['.env.ci', '.env'] });
+import dotenv from 'dotenv';
+dotenv.config({ path: ['.env.ci', '.env'] });
 
 import { PrismaService } from '@/infra/database/prisma.service';
 import { Test, TestingModule } from '@nestjs/testing';

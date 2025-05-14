@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config({ path: ['.env.ci', '.env'] });
+import dotenv from 'dotenv';
+dotenv.config({ path: ['.env.ci', '.env'] });
 import { v4 } from 'uuid';
 
 import { Test, TestingModule } from '@nestjs/testing';
