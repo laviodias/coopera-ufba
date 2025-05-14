@@ -1,5 +1,9 @@
-import { hashPassword } from '../../src/user/utils/hashPassword.util.js';
 import { UserRole } from '@prisma/client';
+import bcrypt from 'bcrypt';
+
+async function hashPassword(password) {
+  return await bcrypt.hash(password, 10);
+}
 
 export async function SeedUsers(prisma) {
   const users = [
