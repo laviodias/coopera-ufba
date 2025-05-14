@@ -3,9 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "declaration": true,
+    "declaration": false,
+    "noEmit": false,
     "declarationMap": true,
     "sourceMap": true
   },
-  "exclude": ["node_modules", "test", "dist", "**/*.spec.ts"]
+  "include": ["src/**/*"]
 }
