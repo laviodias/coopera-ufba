@@ -1,4 +1,5 @@
-import { DemandStatus } from '@prisma/client';
+import pkg from '@prisma/client';
+const { DemandStatus } = pkg;
 
 export async function SeedCompanies(prisma) {
   const companies = [

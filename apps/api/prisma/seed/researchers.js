@@ -1,4 +1,5 @@
-import { ResearcherType } from '@prisma/client';
+import pkg from '@prisma/client';
+const { ResearcherType } = pkg;
 
 export async function SeedResearchers(prisma) {
   const reseachers = [
