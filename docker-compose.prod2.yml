@@ -24,12 +24,15 @@ services:
       - "8080"
     ports:
       - "8080:8080"
-    entrypoint: sh -c 'set -e && npm install --legacy-peer-deps && npx prisma db push && npx prisma generate && npm run seed-db && npm run build'
+    entrypoint: sh -c 'set -e && npm install --legacy-peer-deps && npx prisma db push && npx prisma generate && npm run seed-db && npm run build && npm run start:prod'
 
   frontend:
     image: "node:22-alpine"
     user: "root"
     working_dir: /home/node/web
+    environment:
+      NEXT_PUBLIC_API_URL: "http://89.117.33.60:8080"
+      NEXT_PUBLIC_FRONT_END_URL: "http://89.117.33.60:3001"
     volumes:
       - ./apps/web:/home/node/web
     networks:
