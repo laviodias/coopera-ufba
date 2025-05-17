@@ -31,7 +31,7 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'production') {
     app.enableCors({
-      origin: 'https://front-production-c630.up.railway.app',
+      origin: '*',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       credentials: true,
       allowedHeaders: '*',
