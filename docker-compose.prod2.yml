@@ -31,7 +31,7 @@ services:
     user: "root"
     working_dir: /home/node/web
     environment:
-      NEXT_PUBLIC_API_URL: "http://89.117.33.60:8080"
+      NEXT_PUBLIC_API_URL: "http://89.117.33.60:8080/api"
       NEXT_PUBLIC_FRONT_END_URL: "http://89.117.33.60:3001"
     volumes:
       - ./apps/web:/home/node/web
