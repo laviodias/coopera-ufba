@@ -45,7 +45,7 @@ services:
       - "3001"
     ports:
       - "3001:3001"
-    entrypoint: sh -c 'npm install && npm run build && npm run start'
+    entrypoint: sh -c 'npm install && npm run build && npm run start-prod'
 
 networks:
   nginxproxymanager_default:

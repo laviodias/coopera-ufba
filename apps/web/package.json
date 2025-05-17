@@ -7,6 +7,7 @@
     "build": "NODE_ENV=production next build",
     "format": "prettier --write \"{app,components,modules,api,hooks,lib,context}/**/*.{js,jsx,ts,tsx}\"",
     "start": "next start -p 3001",
+    "start:prod": "NODE_ENV=production next start -p 3001",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "test": "jest"
