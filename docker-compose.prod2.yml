@@ -26,7 +26,7 @@ services:
       - "8080"
     ports:
       - "8080:8080"
-    entrypoint: sh npm run start:prod"
+    entrypoint: sh npm run start:prod
 
   frontend:
     image: "node:22-alpine"
