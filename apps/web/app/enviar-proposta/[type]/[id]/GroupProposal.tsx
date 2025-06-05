@@ -20,7 +20,11 @@ import { Project } from '@/types/Project';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const ContactResearchGroup = (id: string) => {
+interface ContactResearchGroupProps {
+  id: string;
+}
+
+const ContactResearchGroup = ({ id }: ContactResearchGroupProps) => {
   const { data: demands = [] } = useGetMyDemands();
   const { data: projects = [] } = useGetGroupProjects(id);
   const [selectedDemand, setSelectedDemand] = useState<string>('');

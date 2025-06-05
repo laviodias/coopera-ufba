@@ -25,7 +25,11 @@ import { ResearchGroup } from '@/types/ResearchGroup';
 import { CustomIcon } from '@/modules/components/icon/customIcon';
 import { useRouter } from 'next/navigation';
 
-const ContactCompany = (id: string) => {
+interface ContactCompanyProps {
+  id: string;
+}
+
+const ContactCompany = ({ id }: ContactCompanyProps) => {
   const { data: demand } = useGetDemand(id);
   const [message, setMessage] = useState<string>('');
   const [myResearchGroups, setMyResearchGroups] = useState<ResearchGroup[]>([]);
@@ -98,8 +102,10 @@ const ContactCompany = (id: string) => {
             className="rounded-full w-fit"
             onClick={() => router.back()}
           >
-            <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
-            Voltar
+            <div className="flex items-center gap-2">
+              <CustomIcon icon={PiArrowBendDoubleUpLeft} className="!size-5" />
+              Voltar
+            </div>
           </Button>
         </div>
       </section>
