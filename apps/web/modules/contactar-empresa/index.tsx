@@ -122,14 +122,14 @@ const ContactCompany = ({ query }: Props) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="text-primary font-bold">
-                Contactar Empresa
+                Contatar Empresa
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <div className="flex flex-col sm:flex-row w-full gap-4 justify-between mb-4">
           <h2 className="text-3xl sm:text-4xl font-semibold text-blue-strong">
-            Contactar Empresa
+            Contatar Empresa
           </h2>
           <Button
             asChild

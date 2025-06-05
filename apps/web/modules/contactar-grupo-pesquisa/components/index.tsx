@@ -124,13 +124,13 @@ const ContactResearchGroup = ({ query }: Props) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage className="text-primary font-bold">
-                Contactar Grupo de Pesquisa
+                Contatar Grupo de Pesquisa
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <h2 className="text-3xl sm:text-4xl font-semibold text-blue-strong mb-3">
-          Contactar Grupo de Pesquisa
+          Contatar Grupo de Pesquisa
         </h2>
       </section>
       <section className="flex flex-col lg:flex-row gap-6 max-w-7xl">

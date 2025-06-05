@@ -102,7 +102,7 @@ const ContactResearchGroup = ({ id }: ContactResearchGroupProps) => {
     <main className="p-8 w-full flex flex-col flex-grow items-center">
       <section className="max-w-7xl itens-center w-full flex flex-col">
         <h2 className="text-3xl sm:text-4xl font-semibold text-blue-strong mb-4">
-          Contactar Grupo de Pesquisa
+          Contatar Grupo de Pesquisa
         </h2>
       </section>
       <section className="flex flex-col lg:flex-row gap-6 max-w-7xl">
