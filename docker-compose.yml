@@ -29,7 +29,9 @@ services:
       - "8080"
     ports: 
       - "8080:8080"
-    entrypoint: sh -c 'rm -rf node_modules && npm install --legacy-peer-deps && npx prisma db push --accept-data-loss && npx prisma generate && npm run seed-db && npm run start:dev'
+    environment:
+      - DATABASE_URL=postgresql://postgres:root@db:5432/marketplace_db?schema=public
+    entrypoint: sh -c "echo 'Limpando arquivos...' && rm -rf node_modules package-lock.json dist tsconfig.build.tsbuildinfo && echo 'Limpando cache npm...' && npm cache clean --force && echo 'Instalando dependências...' && npm install --legacy-peer-deps && echo 'Gerando Prisma...' && npx prisma generate && echo 'Aplicando migrações do banco...' && npx prisma migrate deploy && echo 'Executando seed do banco...' && npm run seed-db && echo 'Executando build...' && npm run build && echo 'Verificando dist...' && ls -la dist/ && echo 'Iniciando servidor...' && npm run start:dev"
 
   frontend:
     image: "node:22-alpine"
