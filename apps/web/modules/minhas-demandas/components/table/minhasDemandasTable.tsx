@@ -21,7 +21,7 @@ import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { format } from 'date-fns';
 import { DeleteModal } from '../modal/deleteModal';
 import { Demand, DemandStatusTranslationEnum } from '@/types/Demand';
-import { MdOutlineBusinessCenter } from 'react-icons/md';
+import { SuggestionsModal } from '../modal/suggestionsModal';
 
 interface Params {
   data: Demand[];
@@ -109,16 +109,7 @@ const MinhasDemandasTable = ({ data, onDelete, onEdit }: Params) => {
                 ))}
                 <TableCell>
                   <div className="flex gap-2 justify-center">
-                    <Button
-                      variant={'ghost'}
-                      size={'icon'}
-                      title="Ver sugestões de grupos"
-                    >
-                      <CustomIcon
-                        icon={MdOutlineBusinessCenter}
-                        className="!size-5"
-                      />
-                    </Button>
+                    <SuggestionsModal demandId={row.original.id} />
                     <Button
                       variant={'ghost'}
                       size={'icon'}
