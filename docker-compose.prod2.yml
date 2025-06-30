@@ -10,6 +10,16 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis_marketplace
+    networks:
+      - nginxproxymanager_default
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
   api:
     build:
       context: ./apps/api
@@ -18,6 +28,7 @@ services:
       - nginxproxymanager_default
     depends_on:
       - db
+      - redis
     expose:
       - "8080"
     ports:
@@ -25,6 +36,7 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://postgres:root@db:5432/marketplace_db
+      REDIS_PUBLIC_URL: redis://redis:6379
 
   frontend:
     build:
@@ -46,3 +58,6 @@ networks:
   nginxproxymanager_default:
     name: nginxproxymanager_default
     external: true
+
+volumes:
+  redis-data:

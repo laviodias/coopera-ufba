@@ -10,9 +10,20 @@ wait_for_db() {
   done
 }
 
-echo "Aplicando migrações do Prisma..."
-wait_for_db
+# Função para verificar se o Redis está acessível
+wait_for_redis() {
+  echo "Aguardando Redis..."
+  until nc -z -v -w30 redis 6379; do
+    echo "Aguardando Redis..."
+    sleep 1
+  done
+}
 
+echo "Aguardando serviços..."
+wait_for_db
+wait_for_redis
+
+echo "Aplicando migrações do Prisma..."
 if ! npx prisma migrate deploy; then
   echo "Erro ao aplicar migrações. Abortando."
   exit 1
