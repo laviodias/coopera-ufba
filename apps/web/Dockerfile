@@ -26,9 +26,11 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3001
 
-# Copiar node_modules de produção do builder
-COPY --from=builder /app/node_modules ./node_modules
+# Copiar package.json
 COPY --from=builder /app/package*.json ./
+
+# Instalar apenas dependências de produção
+RUN npm install --only=production --legacy-peer-deps --no-audit --progress=false && npm cache clean --force
 
 # Copiar o build gerado pela etapa anterior
 COPY --from=builder /app/.next ./.next
