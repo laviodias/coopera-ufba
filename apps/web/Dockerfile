@@ -10,7 +10,7 @@ ENV NEXT_MAX_WORKERS=2
 
 # Copiar arquivos de dependências e instalar TODAS as dependências (incluindo devDependencies)
 COPY package*.json ./
-RUN npm ci --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
 # Copiar o código-fonte e rodar o build
 COPY . .
