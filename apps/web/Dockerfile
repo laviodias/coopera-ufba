@@ -8,7 +8,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_MAX_WORKERS=2
 
-# Copiar arquivos de dependências e instalar
+# Copiar arquivos de dependências e instalar TODAS as dependências (incluindo devDependencies)
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 
@@ -26,9 +26,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3001
 
-# Instalar apenas dependências de produção
-COPY package*.json ./
-RUN npm install --only=production --legacy-peer-deps --no-audit --progress=false && npm cache clean --force
+# Copiar node_modules de produção do builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
 
 # Copiar o build gerado pela etapa anterior
 COPY --from=builder /app/.next ./.next
