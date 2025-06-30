@@ -22,13 +22,16 @@ RUN npm ci --only=production --legacy-peer-deps --no-audit --progress=false \
 FROM node:20 AS runner
 WORKDIR /app
 
+# Instalar netcat para verificar conectividade com o banco
+RUN apt-get update && apt-get install -y --no-install-recommends netcat-openbsd
+
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/.env ./
+COPY --from=builder /app/start.sh ./start.sh
 
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["node", "dist/src/main.js"]
+CMD ["/app/start.sh"]

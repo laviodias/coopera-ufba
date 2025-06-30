@@ -24,6 +24,7 @@ WORKDIR /app
 
 # Definir variáveis de ambiente
 ENV NODE_ENV=production
+ENV PORT=3001
 
 # Instalar apenas dependências de produção
 COPY package*.json ./
@@ -33,8 +34,8 @@ RUN npm install --only=production --legacy-peer-deps --no-audit --progress=false
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-# Expor a porta padrão do Next.js
-EXPOSE 3000
+# Expor a porta 3001
+EXPOSE 3001
 
 # Rodar o servidor Next.js
 CMD ["npm", "start"]
