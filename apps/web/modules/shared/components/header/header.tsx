@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/modules/shared/ui/button';
+import { Button } from '@/components/ui/button';
 import '../../../app/globals.css';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import {
@@ -11,7 +11,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '@/modules/shared/ui/drawer';
+} from '@/components/ui/drawer';
 import { FiMenu } from 'react-icons/fi';
 
 import { TbBell, TbUserCircle } from 'react-icons/tb';
@@ -19,10 +19,10 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/modules/shared/ui/popover';
+} from '@/components/ui/popover';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Separator } from '@/modules/shared/ui/separator';
+import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 
 const headerLinks = {

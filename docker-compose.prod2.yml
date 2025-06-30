@@ -40,8 +40,8 @@ services:
 
   frontend:
     build:
-      context: ./apps/web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web/Dockerfile
     networks:
       - nginxproxymanager_default
     depends_on:

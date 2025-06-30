@@ -8,12 +8,31 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_MAX_WORKERS=2
 
-# Copiar arquivos de dependências e instalar TODAS as dependências (incluindo devDependencies)
-COPY package*.json ./
-RUN npm install --legacy-peer-deps
+# Copiar apenas a pasta web e arquivos de config necessários
+COPY apps/web/package*.json ./
+COPY apps/web/tsconfig.json ./
+COPY apps/web/next.config.mjs ./
+COPY apps/web/postcss.config.mjs ./
+COPY apps/web/tailwind.config.ts ./
+COPY apps/web/ ./
 
-# Copiar o código-fonte e rodar o build
-COPY . .
+# Debug: listar todos os arquivos e paths
+RUN echo "=== Estrutura de arquivos ===" && \
+    find . -type f | sort && \
+    echo "=== Arquivos card* ===" && \
+    find . -iname 'card*' && \
+    echo "=== Arquivos input* ===" && \
+    find . -iname 'input*' && \
+    echo "=== Arquivos label* ===" && \
+    find . -iname 'label*' && \
+    echo "=== Arquivos button* ===" && \
+    find . -iname 'button*' && \
+    echo "=== Arquivos use-toast* ===" && \
+    find . -iname 'use-toast*' && \
+    echo "=== tsconfig.json ===" && \
+    cat tsconfig.json
+
+RUN npm install --legacy-peer-deps
 RUN npm run build
 
 # Etapa de Produção
