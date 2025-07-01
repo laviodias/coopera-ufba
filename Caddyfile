@@ -22,10 +22,4 @@ coopera.laviovale.com {
     }
 
     encode gzip
-
-    rate_limit {
-        zone api
-        events 100
-        window 10s
-    }
 } 
