@@ -34,7 +34,7 @@ mkdir -p $(dirname ./.seeds-executed)
 
 if [ ! -f ./.seeds-executed ]; then
   echo "Executando seeds do banco de dados..."
-  if ! node dist/prisma/seed.js; then
+  if ! npm run seed-db; then
     echo "Erro ao executar seeds. Abortando."
     exit 1
   fi
