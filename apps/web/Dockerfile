@@ -54,7 +54,6 @@ RUN npm install --only=production --legacy-peer-deps --no-audit --progress=false
 # Copiar o build gerado pela etapa anterior
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.env ./.env
 
 # Expor a porta 3001
 EXPOSE 3001

@@ -51,6 +51,7 @@ services:
     ports:
       - "3001:3001"
     environment:
+      NODE_ENV: production
       NEXT_PUBLIC_API_URL: "http://89.117.33.60:8080/api"
       NEXT_PUBLIC_FRONT_END_URL: "http://89.117.33.60:3001"
 
