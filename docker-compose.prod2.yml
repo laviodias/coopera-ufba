@@ -7,18 +7,18 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: marketplace_db
       POSTGRES_PASSWORD: root
-    ports:
-      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
   redis:
     image: redis:7.2-alpine
     container_name: redis_marketplace
     networks:
       - nginxproxymanager_default
-    ports:
-      - "6379:6379"
     volumes:
       - redis-data:/data
+    restart: unless-stopped
 
   api:
     build:
@@ -29,14 +29,11 @@ services:
     depends_on:
       - db
       - redis
-    expose:
-      - "8080"
-    ports:
-      - "8080:8080"
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://postgres:root@db:5432/marketplace_db
       REDIS_PUBLIC_URL: redis://redis:6379
+    restart: unless-stopped
 
   frontend:
     build:
@@ -46,14 +43,29 @@ services:
       - nginxproxymanager_default
     depends_on:
       - api
-    expose:
-      - "3001"
-    ports:
-      - "3001:3001"
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: "http://89.117.33.60:8080/api"
-      NEXT_PUBLIC_FRONT_END_URL: "http://89.117.33.60:3001"
+      NEXT_PUBLIC_API_URL: "https://coopera.laviovale.com/api"
+      NEXT_PUBLIC_FRONT_END_URL: "https://coopera.laviovale.com"
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy_proxy
+    networks:
+      - nginxproxymanager_default
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./logs/caddy:/var/log/caddy
+    depends_on:
+      - api
+      - frontend
+    restart: unless-stopped
 
 networks:
   nginxproxymanager_default:
@@ -61,4 +73,7 @@ networks:
     external: true
 
 volumes:
+  postgres_data:
   redis-data:
+  caddy_data:
+  caddy_config:
