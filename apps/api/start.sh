@@ -29,6 +29,12 @@ if ! npx prisma migrate deploy; then
   exit 1
 fi
 
+echo "Gerando Prisma Client..."
+if ! npx prisma generate; then
+  echo "Erro ao gerar Prisma Client. Abortando."
+  exit 1
+fi
+
 # Criar diretório para o arquivo de controle se necessário
 mkdir -p $(dirname ./.seeds-executed)
 
