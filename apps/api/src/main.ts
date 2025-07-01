@@ -18,6 +18,22 @@ async function bootstrap() {
     }),
   );
 
+  if (process.env.NODE_ENV === 'production') {
+    app.enableCors({
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      credentials: true,
+      allowedHeaders: '*',
+    });
+    app.setGlobalPrefix('api');
+  } else {
+    app.enableCors({
+      origin: '*',
+    });
+  }
+
+  app.useGlobalFilters(new GlobalExceptionFilter());
+
   const config = new DocumentBuilder()
     .setTitle('Marketplace UFBA')
     .setDescription('API documentation for My Application')
@@ -27,22 +43,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  app.useGlobalFilters(new GlobalExceptionFilter());
-
-  if (process.env.NODE_ENV === 'production') {
-    app.enableCors({
-      origin: '*',
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      credentials: true,
-      allowedHeaders: '*',
-    });
-
-    app.setGlobalPrefix('api');
-  } else {
-    app.enableCors({
-      origin: '*',
-    });
-  }
 
   const serverPort = process.env.SERVER_PORT || 8080;
   await app.listen(serverPort);
